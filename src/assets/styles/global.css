@@ -1,0 +1,112 @@
+/* Main container with background gradient */
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: radial-gradient(circle at center, rgba(5, 15, 10, 0.9) 20%, rgba(0, 0, 0, 1) 80%);
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Content alignment */
+.content {
+  z-index: 2;
+}
+
+/* YoPayX logo styling */
+.yopayx-logo {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: #FFC107;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.yopayx-icon {
+  width: 30px;
+  height: auto;
+  margin-left: 10px;
+}
+
+/* Heading styling */
+.main-heading {
+  font-size: 56px;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+/* Withdrawal icon */
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.withdrawal-icon {
+  width: 180px;
+  height: auto;
+}
+
+/* Get Started button */
+.get-started {
+  padding: 8px 24px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 15px;
+  transition: all 0.3s ease-in-out;
+  width: 219px;
+  height: 49px;
+}
+
+.get-started:hover {
+  background-color: #28a745;
+  transform: scale(1.05);
+}
+
+/* Floating Crypto Icons */
+.crypto-icon {
+  position: absolute;
+  font-size: 2rem;
+  animation: float 5s infinite ease-in-out;
+  opacity: 0.8;
+}
+
+/* Individual Crypto Icon Styles */
+.BTC {
+  top: 10%;
+  left: 15%;
+  color: #f2a900;
+}
+
+.DOGE {
+  top: 30%;
+  right: 15%;
+  color: #843a3a;
+}
+
+.BNB {
+  bottom: 20%;
+  left: 25%;
+  color: #f3ba2f;
+}
+
+.ETH {
+  bottom: 10%;
+  right: 25%;
+  color: #3c3c3d;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(10deg);
+  }
+}
