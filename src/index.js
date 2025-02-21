@@ -8,7 +8,7 @@ const rootElement = document.getElementById("root");
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-  <HashRouter>  {/* ⬅️ Yeh important hai! */}
+  <HashRouter basename="/">  {/* ⬅️ Yeh important hai! */}
     <App />
   </HashRouter>
 );
