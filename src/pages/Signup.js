@@ -1,14 +1,15 @@
 import React from "react";
-import SocialLogin from "../components/SocialLogin";
+// import SocialLogin from "../components/SocialLogin";
 import InputField from "../components/InputField";
 import CryptoFloatingIcons from "../components/CryptoFloatingIcons";
 import "../assets/styles/styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Logo from "../components/logo"
 
 function Signup() {
   return (
     <div className="signup-container">
-      <h1 className="logo">Yatri<span>Pay</span> 🚀</h1>
+       <Logo />
       <h2 className="sign-in-text">Sign up with us!</h2>
       
       {/* Social Login Buttons */}
@@ -36,7 +37,7 @@ function Signup() {
       <button className="submit-btn">SUBMIT</button>
 
       <p className="login-link">
-        Already a member? <a href="/login">Log in</a>
+        Already a member? <a href="/YoPayX#/login">Log in</a>
       </p>
       <p className="terms">
         By creating an account, you agree to YatriPay's <a href="#">Terms & Privacy</a>
