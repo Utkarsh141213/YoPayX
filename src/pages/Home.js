@@ -2,8 +2,10 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/styles/global.css";
 import withdrawalIcon from "../assets/withdrawal-icon.webp";
+import { useNavigate } from "react-router-dom"
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <div className="main-container">
       <div className="content">
@@ -19,7 +21,7 @@ function Home() {
           <img src={withdrawalIcon} alt="Withdrawal Icon" className="withdrawal-icon" />
         </div>
 
-        <button className="btn btn-success get-started">Get Started</button>
+        <button className="btn btn-success get-started" onClick={() => navigate("/signup")}>Get Started</button>
 
         {/* Floating Crypto Icons */}
         <span className="crypto-icon BTC">₿</span>
