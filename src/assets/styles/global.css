@@ -1,10 +1,4 @@
 /* Main container with background gradient */
-body {
-  background: radial-gradient(circle, rgba(30, 50, 30, 1) 20%, black 80%);
-  color: white;
-  font-family: "Poppins", sans-serif;
-  text-align: center;
-}
 .main-container {
   display: flex;
   align-items: center;
