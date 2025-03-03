@@ -3,16 +3,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/styles/global.css";
 import withdrawalIcon from "../assets/withdrawal-icon.webp";
 import { useNavigate } from "react-router-dom"
+import Logo from "../components/logo"
 
 function Home() {
   const navigate = useNavigate();
   return (
     <div className="main-container">
       <div className="content">
-        <h3 className="yopayx-logo">
-          YoPayX <img src="/assets/yopayx-icon.png" alt="YoPayX Icon" className="yopayx-icon" />
-        </h3>
-
+        <div className="yopayx-logo">
+        <Logo />
+        </div>
         <h1 className="main-heading">
           365 Days <br /> Withdrawal
         </h1>
