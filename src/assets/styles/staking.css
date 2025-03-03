@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+.staking-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  height: 528px;
+  border-radius: 45px;
+  border-width: 1px;
+  border: 1px solid #4BAF2A;
+  background-color: #00FFA01A;
+}
+
+.subheading {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29.05px;
+  letter-spacing: 0%;
+  text-align: center;
+}
+
+.main-heading {
+  font-family: Inter;
+font-weight: 700;
+font-size: 46px;
+line-height: 55.67px;
+letter-spacing: 0%;
+text-align: center;
+width: 205;
+height: 56;
+top: 268px;
+left: 618px;
+
+
+}
+
+.return-rate {
+  font-family: Inter;
+font-weight: 700;
+font-size: 126px;
+line-height: 152.49px;
+letter-spacing: 0%;
+text-align: center;
+
+}
+
+.annual-return {
+  font-family: Inter;
+font-weight: 400;
+font-size: 25px;
+line-height: 30.26px;
+letter-spacing: 0%;
+text-align: center;
+
+}
+
+.highlight {
+  font-family: Inter;
+font-weight: 600;
+font-size: 25px;
+line-height: 30.26px;
+letter-spacing: 0%;
+text-align: center;
+color: yellow;
+
+}
+
+.add-funds {
+  background-color: transparent;
+  border: 2px solid #4BAF2A;
+  color: #4BAF2A;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24.2px;
+  text-align: center;
+  padding: 12px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  width: 160px;
+  height: 50px;
+
+  /* Centering fix */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;  /* Yeh auto margin button ko center karega */
+}
+
+.add-funds-text {
+  color: #4BAF2A;
+}
+
+.note-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; 
+  margin-top: 10px;
+}
+
+.note {
+  color: #4BAF2A;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18.15px;
+  letter-spacing: 0%;
+  text-align: center;
+
+}

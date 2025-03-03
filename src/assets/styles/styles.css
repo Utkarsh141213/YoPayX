@@ -13,16 +13,22 @@ body {
     padding: 20px;
 }
 
-.logo {
-    font-size: 28px;
-    font-weight: bold;
-    color: yellow;
+.logo-container {
     margin-top:30px ;
 }
 
-.logo span {
-    color: white;
-}
+.login-container {
+    width: 90%;               
+    margin: 0 auto;           
+    padding: 20px;            
+  }
+  
+  
+  .logo-img {
+    width: 150px;      
+    max-width: 100%;  
+    height: auto;
+  }
 
 .sign-in-text {
     font-size: 18px;

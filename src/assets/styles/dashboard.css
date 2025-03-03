@@ -1,0 +1,195 @@
+ /* Dashboard Container */
+.dashboard-container {
+    background-color: #0a0a0a;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* Header */
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+
+  .profile-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .profile-btn {
+    background: black;
+    color: white;
+    border: 1px solid #4BAF2A;
+    padding: 10px 20px;
+    border-radius: 21.5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 114px;
+    height: 43px;
+  }
+
+  .profile-img {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #4BAF2A;
+  }
+  
+  .profile-placeholder {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background-color: #4BAF2A; /* Green Circle */
+    border: 2px solid #4BAF2A;
+  }
+  
+  .staking-card {
+    padding: 20px;
+    margin: 20px auto;
+
+    width: 937;
+    height: 528;
+  top: 186px;
+  left: 252px;
+  border-radius: 45px;
+  border-width: 1px;
+
+  }
+  
+  .add-funds-btn {
+    background: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  /* Features */
+  .features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  
+  .feature-card {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px rgba(0, 255, 0, 0.5);
+  }
+  
+  /* Card Section */
+  .card-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .crypto-card {
+    background: green;
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
+  }
+  
+  .card-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .withdraw-btn,
+  .buy-ytp-btn {
+    background: green;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  /* Services */
+  .services {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+  }
+  
+  .service-card {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0px 0px 5px rgba(0, 255, 0, 0.5);
+  }
+  
+  /* Banner */
+  .banner {
+    background: white;
+    color: black;
+    padding: 50px;
+    margin: 20px auto;
+    border-radius: 10px;
+  }
+  
+  /* Invite */
+  .invite {
+    margin: 20px 0;
+  }
+  
+  .invite-btn {
+    background: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  /* Videos */
+  .videos {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  .video-card {
+    background: black;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px rgba(0, 255, 0, 0.5);
+  }
+  
+  /* Chart */
+  .chart {
+    background: white;
+    color: black;
+    padding: 50px;
+    margin: 20px auto;
+    border-radius: 10px;
+  }
+  
+  /* Footer */
+  .dashboard-footer {
+    margin-top: 20px;
+    padding: 20px;
+    background: #111;
+    border-radius: 10px;
+  }
+  
+  .dashboard-footer p {
+    margin: 5px 0;
+  }
