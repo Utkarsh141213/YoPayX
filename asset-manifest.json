@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/YoPayX/static/css/main.740ed30c.css",
-    "main.js": "/YoPayX/static/js/main.ff2ee73a.js",
+    "main.css": "/YoPayX/static/css/main.39ffe9cd.css",
+    "main.js": "/YoPayX/static/js/main.bbb94872.js",
     "static/media/withdrawal-icon.webp": "/YoPayX/static/media/withdrawal-icon.e71edd975d25d2cd19b2.webp",
     "index.html": "/YoPayX/index.html",
-    "main.740ed30c.css.map": "/YoPayX/static/css/main.740ed30c.css.map",
-    "main.ff2ee73a.js.map": "/YoPayX/static/js/main.ff2ee73a.js.map"
+    "main.39ffe9cd.css.map": "/YoPayX/static/css/main.39ffe9cd.css.map",
+    "main.bbb94872.js.map": "/YoPayX/static/js/main.bbb94872.js.map"
   },
   "entrypoints": [
-    "static/css/main.740ed30c.css",
-    "static/js/main.ff2ee73a.js"
+    "static/css/main.39ffe9cd.css",
+    "static/js/main.bbb94872.js"
   ]
 }
