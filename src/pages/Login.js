@@ -1,47 +1,94 @@
-import React from "react";
-// import SocialLogin from "../components/SocialLogin";
+import React, { useState } from "react";
 import InputField from "../components/InputField";
 import CryptoFloatingIcons from "../components/CryptoFloatingIcons";
 import "../assets/styles/styles.css";
 import "../assets/styles/login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Logo from "../components/logo"
+import Logo from "../components/logo";
+import { API_ENDPOINTS } from "../apiConfig"; // Import API endpoints
+import { useNavigate } from "react-router-dom";
+
+
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await fetch(API_ENDPOINTS.LOGIN, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Login Successful!");
+        console.log(data);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.data.user)); 
+        navigate("/dashboard");
+      } else {
+        setError(data.message || "Invalid credentials. Try again.");
+        console.log('error');
+      }
+    } catch (error) {
+      setError("Something went wrong. Please try again later.");
+    }
+  };
+
   return (
     <div className="login-container">
       <Logo />
       <h2 className="sign-in-text">Sign in</h2>
-      
-      {/* Social Login Buttons */}
+
       <div className="social-login social-login-signin">
         <button className="social-btn facebook-btn">Facebook</button>
         <button className="social-btn google-btn">Google</button>
       </div>
 
       <div className="divider-signin-form">
-      <div className="divider">–––––––––––––––––– or ––––––––––––––––––</div>
+        <div className="divider">–––––––––––––––––– or ––––––––––––––––––</div>
       </div>
 
-      {/* Input Fields */}
-      <div className="form-group">
-        <InputField type="text" className="form-control" placeholder="Username" />
-        <InputField type="password" className="form-control" placeholder="Password" />
-      </div>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+        <InputField
+          type="text"
+          placeholder="Email"
+          value={email} // Controlled state
+          onChange={(e) => setEmail(e.target.value)} // Update email state
+        />
 
-      {/* Floating Crypto Icons */}
-      <CryptoFloatingIcons />
+        <InputField
+          type="password"
+          placeholder="Password"
+          value={password} // Controlled state
+          onChange={(e) => setPassword(e.target.value)} // Update password state
+        />
+        </div>
 
-      {/* Submit Button */}
-      <button className="submit-btn">SUBMIT</button>
+        <CryptoFloatingIcons />
+
+        {error && <p className="error-message">{error}</p>}
+
+        <button type="submit" className="submit-btn">SUBMIT</button>
+      </form>
+
       <p className="forgotpassword">
         <a href="/YoPayX#/forgotPassword">Forgot Password</a>
       </p>
       <p className="signup-link mt-2 login-link">
         Not signed in yet? <a href="/YoPayX#/signup">Sign up</a>
       </p>
-      <p className="terms">
-        Terms of Service & Privacy Policy
-      </p>
+      <p className="terms">Terms of Service & Privacy Policy</p>
     </div>
   );
 }
