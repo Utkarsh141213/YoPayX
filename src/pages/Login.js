@@ -82,7 +82,7 @@ function Login() {
         <button type="submit" className="submit-btn">SUBMIT</button>
       </form>
 
-      <p className="forgotpassword">
+      <p className="forgotpassword d-none">
         <a href="/YoPayX#/forgotPassword">Forgot Password</a>
       </p>
       <p className="signup-link mt-2 login-link">
