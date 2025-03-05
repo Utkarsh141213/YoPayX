@@ -5,6 +5,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/forgotPassword";
 import Dashboard from "./pages/Dashboard";
+import N from "./components/N";
 
 // import Navbar from "./components/Navbar";
 
@@ -19,6 +20,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/n" element={<N />} />
+
       </Routes>
     </>
   );
