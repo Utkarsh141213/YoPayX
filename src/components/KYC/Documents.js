@@ -173,6 +173,7 @@ const Document = () => {
           <div className="flex mt-3 justify-center sm:w-2/3">
             <button
               type="submit"
+              onClick={handleSubmit}
               className="bg-[#4BAF2A] text-xl mt-3 text-white font-semibold py-6 px-12 flex items-center justify-center rounded hover:bg-green-600 transition w-full sm:w-fit"
             >
               Submit
