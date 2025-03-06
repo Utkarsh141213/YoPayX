@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "../assets/styles/dashboard.css";
 import Logo from "../components/logo";
 import StakingCard from "../components/StakingCard";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-
   const location = useLocation();
   const [user, setUser] = useState({
     name: "Profile",
@@ -40,9 +38,7 @@ const Dashboard = () => {
       <header className="dashboard-header">
         <Logo />
         <div className="profile-section">
-          <button onClick={() => navigate("/profile")} className="profile-btn">
-            {user.name}
-          </button>
+          <button className="profile-btn">{user.name}</button>
           {user.avatar ? (
             <img src={user.avatar} alt="Profile" className="profile-img" />
           ) : (
@@ -52,7 +48,7 @@ const Dashboard = () => {
       </header>
 
       <section className="staking-card">
-        <StakingCard />
+      <StakingCard />
       </section>
 
       <section className="features">
@@ -95,9 +91,7 @@ const Dashboard = () => {
       <section className="chart">Chart</section>
 
       <footer className="dashboard-footer">
-        <p>
-          YatriPay is <strong>100% Safe and Decentralized!</strong>
-        </p>
+        <p>YatriPay is <strong>100% Safe and Decentralized!</strong></p>
         <p>Your assets and transactions are secured with our VM Blockchain.</p>
         <p>Copyright © 2025 YatriPay. All Rights Reserved.</p>
       </footer>
