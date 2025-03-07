@@ -16,6 +16,9 @@ import TradingScreen from "./components/Funds/TradingScreen";
 import { ToastContainer } from "react-toastify"
 import TransferFund from "./components/Funds/TransferFund";
 import Profile from "./pages/Profile";
+import AddFunds from "./pages/Funds/AddFunds";
+import BuyAssets from "./pages/Funds/BuyAssets";
+import OTP from "./components/KYC/OPT";
 
 // import Navbar from "./components/Navbar";
 
@@ -39,10 +42,14 @@ function App() {
           <Route path="documents" element={<Document />} />
           <Route path="mfa" element={<MultiFactorAuth />} />
           <Route path="transaction-pin" element={<TransactionPin />} />
+          <Route path="otp" element={<OTP />} />
         </Route>
         <Route path="/fund" element={<TradingScreen />} />
         <Route path="/transfer-fund" element={<TransferFund />} />
+        <Route path="/add-fund" element={<AddFunds />} />
+        <Route path="/buy-assets" element={<BuyAssets />} />
         <Route path="/background" element={<Background />} />
+        
       </Routes>
     </>
   );

@@ -14,21 +14,6 @@ export const createKYC = async (formData) => {
   }
 };
 
-export const createKYCMoblieOTP = async (data) => {
-  try {
-    //NO BASE URL PROVIDED
-    const response = await axiosInstance.post("url", JSON.stringify(data), {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    return response;
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const createBankDetials = async (data) => {
     try {
         const response = await axiosInstance.post("url", JSON.stringify(data), {
@@ -42,3 +27,15 @@ export const createBankDetials = async (data) => {
         throw error
     }
 }
+
+export const generateOPT = async (phoneData) => {
+  if(!Number.isInteger(phoneData.phone_no)){
+    throw new Error('invalid phone number format') 
+  }
+  await axiosInstance.post('/auth/genrate_mobile_otp', phoneData, {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  return 
+} 
