@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
-import { createKYC, createKYCMoblieOTP } from "../services/kycService";
+import { createKYC,  generateOPT } from "../services/kycService";
 
 const KycContext = createContext();
 
@@ -16,6 +16,7 @@ export const KycProvider = ({ children }) => {
     photoFile: null,
     panNumber: "",
     phoneNumber: "",
+    otp: ""
   });
 
   const updateBasicDetails = (basicData) => {
@@ -25,6 +26,10 @@ export const KycProvider = ({ children }) => {
   const updateDocumentDetails = (docData) => {
     setKycData((prev) => ({ ...prev, ...docData }));
   };
+
+  const initiateOTP = async () => {
+    await generateOPT({phone_no: kycData.phoneNumber, country_code: 91});
+  }
 
   const submitKyc = async () => {
     try {
@@ -44,15 +49,7 @@ export const KycProvider = ({ children }) => {
       }
       formData.append("id_number", kycData.panNumber);
       //   formData.append("mo", kycData.phoneNumber);
-
-      const phoneData = new FormData();
-
-      phoneData.append("phone_no", kycData.phoneNumber);
-      phoneData.append("country_code", kycData.countryCode || 91);
-
-      const otp = await createKYCMoblieOTP(phoneData);
-
-      formData.append("mobile_otp", otp)
+      formData.append("mobile_otp", kycData.otp)
       
       await createKYC(formData);
     } catch (error) {
@@ -67,6 +64,7 @@ export const KycProvider = ({ children }) => {
         updateBasicDetails,
         updateDocumentDetails,
         submitKyc,
+        initiateOTP
       }}
     >
       {children}

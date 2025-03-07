@@ -104,7 +104,7 @@ const Signup = ()=> {
         Already a member? <a href="/YoPayX#/login">Log in</a>
       </p>
       <p className="terms">
-        By creating an account, you agree to YatriPay's <a href="#">Terms & Privacy</a>
+        By creating an account, you agree to YatriPay's <a href="/">Terms & Privacy</a>
       </p>
 
       

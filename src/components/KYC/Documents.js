@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const Document = () => {
-  const { updateDocumentDetails, submitKyc } = useKycContext();
+  const { updateDocumentDetails, initiateOTP } = useKycContext();
   const navigate = useNavigate()
 
   const [govtIdFile, setGovtIdFile] = useState(null);
@@ -42,9 +42,9 @@ const Document = () => {
     });
 
     try {
-      await submitKyc();
+      await initiateOTP();
       toast.success("KYC submitted successfully");
-      navigate('/dashboard')
+      navigate('/kyc/otp')
     } catch (error) {
       toast.error(`${error}`);
     }
