@@ -19,6 +19,7 @@ import Profile from "./pages/Profile";
 import AddFunds from "./pages/Funds/AddFunds";
 import BuyAssets from "./pages/Funds/BuyAssets";
 import OTP from "./components/KYC/OPT";
+import ConfirmAddFund from "./pages/Funds/ConfirmAddFund";
 
 // import Navbar from "./components/Navbar";
 
@@ -48,6 +49,7 @@ function App() {
         <Route path="/transfer-fund" element={<TransferFund />} />
         <Route path="/add-fund" element={<AddFunds />} />
         <Route path="/buy-assets" element={<BuyAssets />} />
+        <Route path="/confirm-add-fund" element={<ConfirmAddFund />} />
         <Route path="/background" element={<Background />} />
         
       </Routes>
