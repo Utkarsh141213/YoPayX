@@ -120,7 +120,7 @@ const Document = () => {
               />
 
               {/* Camera + Take Photo */}
-              <div className="flex items-center justify-between py-3 px-8 sm:px-8 gap-2 mb-4 bg-white rounded">
+              <div className="relative flex items-center justify-between py-3 px-8 sm:px-8 gap-2 mb-4 bg-white rounded">
                 <div className="p-2 rounded text-black">
                   <img
                     src={cameraSVG}
@@ -128,15 +128,14 @@ const Document = () => {
                     className="h-8 sm:h-16"
                   />
                 </div>
-                <button
-                  type="button"
+                <div
                   onClick={() => {
                     profileInputRef.current && profileInputRef.current.click();
                   }}
-                  className="bg-[#4BAF2A] text-lg sm:text-xl font-bold text-white w-fit py-4 sm:py-4 px-6 flex items-center rounded-xl hover:bg-green-600 transition"
+                  className="bg-[#4BAF2A] text-lg sm:text-xl font-bold text-white w-fit py-3 sm:py-3 px-8 flex items-center rounded-xl hover:bg-green-600 transition"
                 >
                   Take Photo
-                </button>
+                </div>
                 <input
                   id="photoFile"
                   ref={profileInputRef}
@@ -161,7 +160,7 @@ const Document = () => {
             </div>
 
             {/* Right Column (Preview Box) - Only visible on md+ */}
-            <div className="hidden md:flex items-center justify-center w-1/3">
+            <div className={`${ photoFile ? 'w-full md:w-1/3 flex' : 'hidden'} relative md:flex items-center justify-center w-1/3`}>
               {photoFile ? (
                 <img
                   src={URL.createObjectURL(photoFile)}

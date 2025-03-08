@@ -22,13 +22,12 @@ const BuyAssets = () => {
   const [selectedAsset, setSelectedAsset] = useState("");
   const [exchangeRate, setExchangeRate] = useState(0);
 
-  // amountYTP: Coin amount the user wants to receive (editable)
-  // amountINR: INR cost calculated (disabled)
+
   const [amountYTP, setAmountYTP] = useState("");
   const [amountINR, setAmountINR] = useState("");
 
   const [availableBalance, setAvailableBalance] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState("Express");
+  // const [paymentMethod, setPaymentMethod] = useState("Express");
 
   useEffect(() => {
     (async () => {
@@ -78,20 +77,11 @@ const BuyAssets = () => {
 
   const handleAssetChange = (symbol) => {
     setSelectedAsset(symbol);
-    // Reset amounts when asset changes
     calculateAmounts("", true);
   };
 
-  /**
-   * Conversion Logic:
-   * - When the user enters the YTP amount (first input):
-   *     INR cost = YTP × exchangeRate × 1.01
-   * - When the user enters an INR amount (if ever enabled):
-   *     YTP = INR ÷ (exchangeRate × 1.01)
-   */
   const calculateAmounts = (value, isFirstInput) => {
     if (isFirstInput) {
-      // User enters YTP amount
       setAmountYTP(value);
       if (value && exchangeRate > 0) {
         const cost = parseFloat(value) * exchangeRate * 1.01;
@@ -100,7 +90,6 @@ const BuyAssets = () => {
         setAmountINR("");
       }
     } else {
-      // User enters INR amount (this branch is not active since the INR field is disabled)
       setAmountINR(value);
       if (value && exchangeRate > 0) {
         const coinAmount = parseFloat(value) / (exchangeRate * 1.01);
@@ -118,30 +107,32 @@ const BuyAssets = () => {
       return;
     }
     try {
-      const response = await buyAssets({
+      await buyAssets({
         buy_amount: parseInt(amountYTP),
         fiat: "INR",
       });
-      console.log("succ");
-      console.log(response);
+      toast.success('Transaction Successful')
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
-      console.log(error);
     }
   };
 
   return (
     <Background>
       <div className="text-white p-6">
-        {/* Header */}
-        <header className="flex justify-between items-center mb-6 py-2 px-6">
-          <div className="flex items-center">
+        {/* Responsive Header */}
+        <header className="flex flex-col sm:flex-row items-center justify-between mb-6 py-2 px-6 gap-2 sm:gap-0">
+          {/* Logo Section */}
+          <div className="flex items-center justify-center sm:justify-start w-full sm:w-auto">
             <div className="text-yellow-300 text-2xl font-bold">
               <img src={yatripayLogo} alt="yatripay logo" />
             </div>
           </div>
-          <div className="text-white text-sm md:text-2xl font-bold">
-            Available Balance : {availableBalance || "0.00"}
+
+          {/* Balance Section - separate lines on small screens, single line on larger */}
+          <div className="text-white text-base sm:text-lg md:text-2xl font-bold flex flex-col sm:flex-row items-center sm:gap-2 pt-3">
+            <div className="text-white text-xl md:text-xl font-semibold">Available Balance:</div>
+            <div className="text-white/50 md:text-white text-xl ">{availableBalance} INR</div>
           </div>
         </header>
 

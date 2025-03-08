@@ -30,7 +30,7 @@ const ConfirmAddFund = () => {
   // Handle file selection
   const handleGovtIdChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-        setScreenshot(e.target.files[0]);
+      setScreenshot(e.target.files[0]);
     }
   };
 
@@ -50,9 +50,9 @@ const ConfirmAddFund = () => {
 
     // Prepare form data
     const formData = new FormData();
-    formData.append("amount", amount);            // from location.state
+    formData.append("amount", amount); // from location.state
     formData.append("transaction_id", transactionId);
-    formData.append("fiat", "INR");              // hard-coded or from state
+    formData.append("fiat", "INR"); // hard-coded or from state
     formData.append("screen_shot", screenshot);
 
     try {
@@ -82,6 +82,8 @@ const ConfirmAddFund = () => {
             {/* Placeholder for QR code display */}
             <div className="h-32 w-32 bg-white/70"></div>
             <p className="text-center text-sm text-white/50">QR Code</p>
+            {/* UPI ID Display */}
+            <p className="text-center text-sm text-white">UPI ID: {upi_id}</p>
           </div>
 
           <div className="text-left w-full">
