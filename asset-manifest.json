@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/YoPayX/static/css/main.7f08f31c.css",
-    "main.js": "/YoPayX/static/js/main.71936168.js",
+    "main.js": "/YoPayX/static/js/main.ae7eb422.js",
     "static/media/withdrawal-icon.webp": "/YoPayX/static/media/withdrawal-icon.e71edd975d25d2cd19b2.webp",
     "static/media/kyc_document_camera_icon.svg": "/YoPayX/static/media/kyc_document_camera_icon.dd304b03c55d44e2c7060ff1e48eeceb.svg",
     "static/media/yatripay_logo.svg": "/YoPayX/static/media/yatripay_logo.8521ba0db18fd37fcad8e54602583998.svg",
     "index.html": "/YoPayX/index.html",
     "main.7f08f31c.css.map": "/YoPayX/static/css/main.7f08f31c.css.map",
-    "main.71936168.js.map": "/YoPayX/static/js/main.71936168.js.map"
+    "main.ae7eb422.js.map": "/YoPayX/static/js/main.ae7eb422.js.map"
   },
   "entrypoints": [
     "static/css/main.7f08f31c.css",
-    "static/js/main.71936168.js"
+    "static/js/main.ae7eb422.js"
   ]
 }
