@@ -48,20 +48,17 @@ export const createKYC = async (formData) => {
 
 
 export const createBankDetials = async (data) => {
-  console.log(data);
-    try {
-        const response = await axiosInstance.post("/finance/bank-account-details/create/", data, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-        })
-console.log('res');
-        return response
-    } catch (error) {
-      console.log('er');
-        throw error
-    }
-}
+  try {
+    const response = await axiosInstance.post("/finance/bank-account-details/create/", data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const generateOPT = async (phoneData) => {
   // if(!Number.isInteger(phoneData.phone_no)){
