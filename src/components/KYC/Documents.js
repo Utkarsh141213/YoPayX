@@ -1,4 +1,3 @@
-// Document.js
 import React, { useEffect, useRef, useState } from "react";
 import cameraSVG from "../../assets/kyc_icons/kyc_document_camera_icon.svg";
 import { useKycContext } from "../../context/KycContext"; // Use the context
@@ -6,16 +5,17 @@ import { toast } from "react-toastify";
 import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 
-
 const Document = () => {
   const { updateDocumentDetails, initiateOTP } = useKycContext();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [govtIdFile, setGovtIdFile] = useState(null);
   const [photoFile, setPhotoFile] = useState(null);
   const [panNumber, setPanNumber] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  // Create a ref for the form
+  const formRef = useRef(null);
   const govIdInputRef = useRef(null);
   const profileInputRef = useRef(null);
 
@@ -34,6 +34,12 @@ const Document = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Check if the form is valid; if not, report validity and exit
+    if (!formRef.current.checkValidity()) {
+      formRef.current.reportValidity();
+      return;
+    }
+
     updateDocumentDetails({
       govtIdFile,
       photoFile,
@@ -44,16 +50,15 @@ const Document = () => {
     try {
       await initiateOTP();
       toast.success("KYC submitted successfully");
-      navigate('/kyc/otp')
+      navigate("/kyc/otp");
     } catch (error) {
       toast.error(`${error}`);
     }
   };
 
-
   useEffect(() => {
     console.log(localStorage.getItem("token"));
-  },[])
+  }, []);
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4">
@@ -62,7 +67,7 @@ const Document = () => {
           Identity Verification
         </h1>
 
-        <form onSubmit={handleSubmit} className="flex flex-col">
+        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col">
           <div className="flex items-center justify-between mb-3">
             <label className="text-white/50">Government ID</label>
           </div>
@@ -83,7 +88,7 @@ const Document = () => {
                 />
                 {govtIdFile ? (
                   <div className="flex items-center gap-2 w-full p-2 text-xs rounded text-black/50 text-left whitespace-nowrap truncate cursor-pointer">
-                    <span className=" whitespace-nowrap truncate ">
+                    <span className="whitespace-nowrap truncate">
                       {govtIdFile.name}
                     </span>
                     <span
@@ -98,7 +103,7 @@ const Document = () => {
                     onClick={() => {
                       govIdInputRef.current && govIdInputRef.current.click();
                     }}
-                    className="  w-full p-3 text-xs rounded text-black/50 text-left whitespace-nowrap truncate cursor-pointer"
+                    className="w-full p-3 text-xs rounded text-black/50 text-left whitespace-nowrap truncate cursor-pointer"
                   >
                     Govt. ID (PAN, Aadhaar card, Passport...)
                   </div>
@@ -117,6 +122,8 @@ const Document = () => {
                 required
                 value={panNumber}
                 onChange={(e) => setPanNumber(e.target.value)}
+                pattern="^[A-Z]{5}[0-9]{4}[A-Z]$"
+                title="Enter a valid PAN number in uppercase (e.g., ABCDE1234F)"
               />
 
               {/* Camera + Take Photo */}
@@ -149,18 +156,23 @@ const Document = () => {
 
               {/* Phone Number Input */}
               <input
-                type="number"
-                // pattern="[0-9]{10}"
+                type="tel"
                 placeholder="Phone Number"
                 className="w-full p-3 text-black rounded focus:outline-none"
                 required
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
+                pattern="^[6-9]\d{9}$"
+                title="Enter a valid 10-digit Indian phone number (e.g., 9876543210)"
               />
             </div>
 
             {/* Right Column (Preview Box) - Only visible on md+ */}
-            <div className={`${ photoFile ? 'w-full md:w-1/3 flex' : 'hidden'} relative md:flex items-center justify-center w-1/3`}>
+            <div
+              className={`${
+                photoFile ? "w-full md:w-1/3 flex" : "hidden"
+              } relative md:flex items-center justify-center w-1/3`}
+            >
               {photoFile ? (
                 <img
                   src={URL.createObjectURL(photoFile)}

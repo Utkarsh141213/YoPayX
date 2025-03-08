@@ -37,7 +37,9 @@ const CustomSelectField = ({ name, placeholder, value, onChange, options }) => {
     <div className="mb-3 relative">
       <div
         className={`bg-white text-left w-full border border-gray-300 rounded  px-3 focus:outline-none focus:border-green-500  cursor-pointer ${
-          value === "" ? "text-gray-500 text-[0.8rem] py-3" : "text-black py-[14px]"
+          value === ""
+            ? "text-gray-500 text-[0.8rem] py-3"
+            : "text-black py-[14px]"
         }`}
         onClick={handleDivClick}
       >
@@ -51,7 +53,7 @@ const CustomSelectField = ({ name, placeholder, value, onChange, options }) => {
         required
         className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
         onBlur={handleSelectBlur}
-        style={{ pointerEvents: 'auto' }}
+        style={{ pointerEvents: "auto" }}
       >
         <option value="" disabled>
           {placeholder}
@@ -65,7 +67,6 @@ const CustomSelectField = ({ name, placeholder, value, onChange, options }) => {
     </div>
   );
 };
-
 
 const BasicDetials = () => {
   const { updateBasicDetails } = useKycContext();
@@ -142,7 +143,7 @@ const BasicDetials = () => {
           type="text"
           value={formData.dateOfBirth}
           onChange={handleChange}
-          pattern="(0[1-9]|[12]\\d|3[01])-(0[1-9]|1[0-2])-(19|20)\\d{2}"
+          pattern="^(0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-(19|20)\d{2}$"
           title="Must follow DD-MM-YYYY pattern"
         />
 
@@ -162,8 +163,7 @@ const BasicDetials = () => {
           options={countries}
         />
 
-
-        <input
+        <InputField
           type="submit"
           className="w-fit px-12 mt-4 bg-[#4BAF2A] text-white font-semibold py-3 rounded hover:bg-green-600 transition-colors"
         />
