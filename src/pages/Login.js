@@ -28,11 +28,10 @@ function Login() {
       });
 
       const data = await response.json();
-
       if (response.ok) {
         alert("Login Successful!");
         console.log(data);
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.data.token);
         localStorage.setItem("user", JSON.stringify(data.data.user)); 
         navigate("/dashboard");
       } else {
