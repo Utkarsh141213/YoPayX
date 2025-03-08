@@ -19,7 +19,7 @@ const AddFunds = () => {
   const [amount, setAmount] = useState("");
   const [availableBalance, setAvailableBalance] = useState('0.00')
 
-  const quickAmounts = [250, 500, 1000, 2000];
+  const quickAmounts = [250, 500, 1000, 2000]
 
   const handleQuickAmount = (val) => {
     setAmount(val.toString());
