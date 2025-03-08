@@ -39,8 +39,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/kyc" element={<KYC />}>
           <Route path="basic-details" element={<BasicDetials />} />
-          <Route path="bank-details" element={<BankDetails />} />
           <Route path="documents" element={<Document />} />
+          <Route path="bank-details" element={<BankDetails />} />
           <Route path="mfa" element={<MultiFactorAuth />} />
           <Route path="transaction-pin" element={<TransactionPin />} />
           <Route path="otp" element={<OTP />} />

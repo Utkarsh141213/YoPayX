@@ -63,8 +63,29 @@ const Dashboard = () => {
       <section className="card-section">
         <div className="crypto-card"></div>
         <div className="card-buttons">
-          <button className="withdraw-btn">Withdraw</button>
-          <button className="buy-ytp-btn">Buy YTP</button>
+          <button onClick={() => navigate("/add-fund")} className="buy-ytp-btn">
+            Add Fund
+          </button>
+          <button
+            onClick={() => navigate("/buy-assets")}
+            className="buy-ytp-btn"
+          >
+            Buy YTP
+          </button>
+          
+          <button
+            onClick={() => navigate("/fund", { state: { tab: "sell" } })}
+            className="buy-ytp-btn"
+          >
+            Sell YTP
+          </button>
+          <button
+            onClick={() => navigate("/fund", { state: { tab: "withdraw" } })}
+            className="withdraw-btn"
+          >
+            Withdraw
+          </button>
+
         </div>
       </section>
 

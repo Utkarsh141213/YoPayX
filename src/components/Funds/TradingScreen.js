@@ -9,54 +9,60 @@ import {
   getAvailableFunds,
   getCurrencyList,
 } from "../../services/fundsAPI/tradingScreenAPI";
-import { LiaChessKingSolid } from "react-icons/lia";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
-// Main Trading Screen Component
 const TradingScreen = () => {
   const [activeTab, setActiveTab] = useState("Sell");
   const [availableBalance, setAvailableBalance] = useState("0.00 INR");
   const [assets, setAssets] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
 
-  // const calculateYouWillGet = () => {
-  //   if (amount && exchangeRate) {
-  //     const total = parseFloat(amount) * parseFloat(exchangeRate);
-  //     const tds = total * 0.01; // 1% TDS
-  //     return (total - tds).toFixed(2);
-  //   }
-  //   return "0.00";
-  // };
+  const location = useLocation();
 
   useEffect(() => {
-    // Fetch assets
+    const { tab } = location.state || {};
+    if (tab) {
+      const lowerTab = tab.toLowerCase();
+      if (lowerTab === "sell") {
+        setActiveTab("Sell");
+      } else if (lowerTab === "withdraw") {
+        setActiveTab("Withdrawal");
+      }
+    }
+
     (async () => {
       try {
-        const assetsData = await getAssets();
+
+        const [assetsData, currency] = await Promise.all([
+          getAssets(),
+          getCurrencyList(),
+        ]);
         setAssets(assetsData.data);
-        const currency = await getCurrencyList();
         setCurrencyList(currency.data);
       } catch (error) {
         console.error(error);
       }
     })();
-  }, []);
+  }, [location.state]);
+
 
   useEffect(() => {
     (async () => {
       try {
+        const active = activeTab.toLowerCase();
         let funds;
-        if (activeTab.toLocaleLowerCase() === "sell") {
+        if (active === "sell") {
           funds = await getAvailableBalace();
           console.log(funds.data);
           setAvailableBalance(funds.data.balance);
         } else {
           funds = await getAvailableFunds();
           console.log(funds);
-          setAvailableBalance(funds.inr_balance)
+          setAvailableBalance(funds.inr_balance);
         }
       } catch (error) {
-        toast.error(error.response.data.message || error.message)
+        toast.error(error.response?.data?.message || error.message);
         console.error(error);
       }
     })();
@@ -64,14 +70,15 @@ const TradingScreen = () => {
 
   return (
     <Background>
-      <div className="min-h-screen text-white p-4">
+
+      <div className="min-h-screen text-white p-4 relative">
         <div className="w-fit mx-auto">
           <div className="flex mb-4 justify-center">
             <div
               className={`min-w-40 h-fit py-2 text-lg font-bold mr-2 rounded-lg cursor-pointer ${
                 activeTab === "Sell"
                   ? "bg-[#4BAF2A] text-white"
-                  : "bg-white text-black "
+                  : "bg-white text-black"
               }`}
               onClick={() => setActiveTab("Sell")}
             >
@@ -81,7 +88,7 @@ const TradingScreen = () => {
               className={`min-w-40 h-fit py-2 text-lg font-bold rounded-lg cursor-pointer ${
                 activeTab === "Withdrawal"
                   ? "bg-[#4BAF2A] text-white"
-                  : "bg-white text-black "
+                  : "bg-white text-black"
               }`}
               onClick={() => setActiveTab("Withdrawal")}
             >
@@ -89,20 +96,38 @@ const TradingScreen = () => {
             </div>
           </div>
 
-          <div className="text-center mb-2">
-            <div className="text-white">
+
+          <div
+            className={`${
+              activeTab.toLowerCase() === "sell"
+                ? "md:absolute top-4 right-4 md:text-right md:flex gap-2 text-center pt-2 pr-3"
+                : "text-center mb-2"
+            }`}
+          >
+            <div className="text-white text-xl md:text-xl font-semibold">
               Available{" "}
-              {`${
-                activeTab.toLocaleLowerCase() === "sell" ? "Balance" : "Fund"
-              }`}
+              {activeTab.toLowerCase() === "sell" ? "Balance:" : "Fund"}
             </div>
-            <div className="text-white/50 text-xl">{availableBalance}</div>
+
+            <div
+              className={`${
+                activeTab.toLowerCase() === "sell"
+                  ? "md:text-white text-white/50 text-xl md:text-lg font-semibold"
+                  : "text-white/50 text-xl "
+              }`}
+            >
+              {availableBalance}
+            </div>
           </div>
 
-          {activeTab.toLocaleLowerCase() === "sell" ? (
-            <SellScreen assets={assets} currencyList={currencyList} setAvailableBalance={setAvailableBalance} />
+          {activeTab.toLowerCase() === "sell" ? (
+            <SellScreen
+              assets={assets}
+              currencyList={currencyList}
+              setAvailableBalance={setAvailableBalance}
+            />
           ) : (
-            <WithdrawalScreen setAvailableBalance={setAvailableBalance}/>
+            <WithdrawalScreen setAvailableBalance={setAvailableBalance} />
           )}
         </div>
       </div>

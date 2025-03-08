@@ -13,13 +13,11 @@ const Badge = ({ badge }) => (
 );
 
 const AddFunds = () => {
-
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
   const [amount, setAmount] = useState("");
-  const [availableBalance, setAvailableBalance] = useState('0.00')
+  const [availableBalance, setAvailableBalance] = useState("0.00");
 
-  const quickAmounts = [250, 500, 1000, 2000]
+  const quickAmounts = [250, 500, 1000, 2000];
 
   const handleQuickAmount = (val) => {
     setAmount(val.toString());
@@ -27,7 +25,6 @@ const AddFunds = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     try {
       const response = await addFundInINR({
         amount: parseInt(amount),
@@ -44,30 +41,34 @@ const AddFunds = () => {
   };
 
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       try {
-          const balance = await getAvailableBalace()
-          if(balance.data){
-            setAvailableBalance(balance.data.balance)
-          }
+        const balance = await getAvailableBalace();
+        if (balance.data) {
+          setAvailableBalance(balance.data.balance);
+        }
       } catch (error) {
         console.log(error);
       }
-    })()
-  },[])
+    })();
+  }, []);
 
   return (
     <Background>
       <div className="text-white p-4">
-        {/* Header */}
-        <header className="flex justify-between items-center mb-6 py-2 px-6">
-          <div className="flex items-center">
+        {/* Responsive Header */}
+        <header className="flex flex-col sm:flex-row items-center justify-between mb-6 py-2 px-6 gap-2 sm:gap-0">
+          {/* Logo Section */}
+          <div className="flex items-center justify-center sm:justify-start w-full sm:w-auto">
             <div className="text-yellow-300 text-2xl font-bold">
               <img src={yatripayLogo} alt="yatripay logo" />
             </div>
           </div>
-          <div className="text-white text-sm md:text-2xl font-bold">
-            Available Balance : {availableBalance} INR
+
+          {/* Balance Section - separate lines on small screens, single line on larger */}
+          <div className="text-white text-base sm:text-lg md:text-2xl font-bold flex flex-col sm:flex-row items-center sm:gap-2 pt-3">
+            <div className="text-white text-xl md:text-xl font-semibold">Available Balance:</div>
+            <div className="text-white/50 md:text-white text-xl ">{availableBalance} INR</div>
           </div>
         </header>
 
@@ -95,7 +96,7 @@ const AddFunds = () => {
               {quickAmounts.map((val) => (
                 <div
                   key={val}
-                  className="cursor-pointer "
+                  className="cursor-pointer"
                   onClick={() => handleQuickAmount(val)}
                 >
                   <Badge badge={`+${val}`} />
