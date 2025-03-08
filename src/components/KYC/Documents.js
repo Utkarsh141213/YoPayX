@@ -1,5 +1,5 @@
 // Document.js
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import cameraSVG from "../../assets/kyc_icons/kyc_document_camera_icon.svg";
 import { useKycContext } from "../../context/KycContext"; // Use the context
 import { toast } from "react-toastify";
@@ -49,6 +49,11 @@ const Document = () => {
       toast.error(`${error}`);
     }
   };
+
+
+  useEffect(() => {
+    console.log(localStorage.getItem("token"));
+  },[])
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4">
@@ -145,8 +150,8 @@ const Document = () => {
 
               {/* Phone Number Input */}
               <input
-                type="tel"
-                pattern="[0-9]{10}"
+                type="number"
+                // pattern="[0-9]{10}"
                 placeholder="Phone Number"
                 className="w-full p-3 text-black rounded focus:outline-none"
                 required

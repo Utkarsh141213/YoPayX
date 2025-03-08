@@ -32,8 +32,14 @@ const BankDetails = () => {
     bankData.append("upi_id", formData.UPIId);
 
     try {
-      await createBankDetials(bankData);
-      navigate("/dashboard");
+      await createBankDetials({
+        "account_holder_name": formData.accountHolderName,
+        "bank_name": formData.bankName,
+        "account_number": parseInt(formData.accountNumber),
+        "ifsc_code": formData.IFSCCode,
+        "upi_id": formData.UPIId
+      });
+      // navigate("/dashboard");
     } catch (error) {
       toast.error(error);
     }
@@ -61,6 +67,7 @@ const BankDetails = () => {
         />
         <InputField
           name="accountNumber"
+          type="number"
           placeholder="Account number"
           value={formData.accountNumber}
           onChange={handleChange}

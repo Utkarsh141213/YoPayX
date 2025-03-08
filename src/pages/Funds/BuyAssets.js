@@ -4,9 +4,11 @@ import yatripayLogo from "../../assets/yatripay_logo.svg";
 import Button from "../../components/Button";
 import {
   getAssets,
+  getAvailableBalace,
   getCurrencyList,
 } from "../../services/fundsAPI/tradingScreenAPI";
 import { buyAssets } from "../../services/fundsAPI/fundsAPI";
+import { toast } from "react-toastify";
 
 const Badge = ({ badge }) => (
   <div className="border border-white text-white/60 rounded-xl px-2 py-1 text-[0.5rem] font-extralight">
@@ -15,20 +17,18 @@ const Badge = ({ badge }) => (
 );
 
 const BuyAssets = () => {
-  
   const [assets, setAssets] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
-
-  
   const [selectedAsset, setSelectedAsset] = useState("");
-  const [exchangeRate, setExchangeRate] = useState(0); 
+  const [exchangeRate, setExchangeRate] = useState(0);
 
- 
-  const [amount1, setAmount1] = useState(""); 
-  const [amountINR, setAmountINR] = useState(""); 
+  // amountYTP: Coin amount the user wants to receive (editable)
+  // amountINR: INR cost calculated (disabled)
+  const [amountYTP, setAmountYTP] = useState("");
+  const [amountINR, setAmountINR] = useState("");
 
+  const [availableBalance, setAvailableBalance] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("Express");
-
 
   useEffect(() => {
     (async () => {
@@ -44,6 +44,10 @@ const BuyAssets = () => {
         }
       } catch (error) {
         console.log("ERROR", error);
+      }
+      const balance = await getAvailableBalace();
+      if (balance) {
+        setAvailableBalance(balance.data.balance);
       }
     })();
   }, []);
@@ -74,48 +78,54 @@ const BuyAssets = () => {
 
   const handleAssetChange = (symbol) => {
     setSelectedAsset(symbol);
-
+    // Reset amounts when asset changes
     calculateAmounts("", true);
   };
 
+  /**
+   * Conversion Logic:
+   * - When the user enters the YTP amount (first input):
+   *     INR cost = YTP × exchangeRate × 1.01
+   * - When the user enters an INR amount (if ever enabled):
+   *     YTP = INR ÷ (exchangeRate × 1.01)
+   */
   const calculateAmounts = (value, isFirstInput) => {
     if (isFirstInput) {
-      // user is entering the cost in INR
-      setAmount1(value);
+      // User enters YTP amount
+      setAmountYTP(value);
       if (value && exchangeRate > 0) {
-        // coin = (inr / rate) minus 1% TDS
-        const coinAmount = (parseFloat(value) / exchangeRate) * 0.99;
-        setAmountINR(coinAmount.toFixed(8));
+        const cost = parseFloat(value) * exchangeRate * 1.01;
+        setAmountINR(cost.toFixed(2));
       } else {
         setAmountINR("");
       }
     } else {
-      // user is entering the coin amount (though the second input is disabled in this UI)
+      // User enters INR amount (this branch is not active since the INR field is disabled)
       setAmountINR(value);
       if (value && exchangeRate > 0) {
-        // inr = (coin * rate) plus 1% TDS
-        const cost = parseFloat(value) * exchangeRate * 1.01;
-        setAmount1(cost.toFixed(2));
+        const coinAmount = parseFloat(value) / (exchangeRate * 1.01);
+        setAmountYTP(coinAmount.toFixed(8));
       } else {
-        setAmount1("");
+        setAmountYTP("");
       }
     }
   };
 
-  // 5) Final "Buy" action
+  // Final "Buy" action
   const handleBuy = async () => {
-    if (!selectedAsset || !amount1 || !amountINR) {
+    if (!selectedAsset || !amountYTP || !amountINR) {
       alert("Please fill all fields");
       return;
     }
     try {
       const response = await buyAssets({
-        buy_amount: amount1,
+        buy_amount: parseInt(amountYTP),
         fiat: "INR",
       });
       console.log("succ");
       console.log(response);
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
       console.log(error);
     }
   };
@@ -131,7 +141,7 @@ const BuyAssets = () => {
             </div>
           </div>
           <div className="text-white text-sm md:text-2xl font-bold">
-            Available Balance : 0.00 INR
+            Available Balance : {availableBalance || "0.00"}
           </div>
         </header>
 
@@ -170,10 +180,11 @@ const BuyAssets = () => {
             </div>
           </div>
 
+          {/* YTP Amount Input */}
           <div>
             <div className="flex justify-between items-center mb-1">
               <label className="block mb-1 text-left text-2xl font-bold">
-                Amount INR
+                Amount YTP
               </label>
               <span className="text-sm text-gray-400">
                 {selectedAsset
@@ -185,11 +196,12 @@ const BuyAssets = () => {
               type="number"
               className="w-full bg-white text-black rounded-lg p-[12px] px-4"
               placeholder="0.00"
-              value={amount1}
+              value={amountYTP}
               onChange={(e) => calculateAmounts(e.target.value, true)}
             />
           </div>
 
+          {/* INR Amount Display */}
           <div>
             <div className="flex justify-between items-center mb-1">
               <label className="block mb-1 text-left text-2xl font-bold">
@@ -212,23 +224,12 @@ const BuyAssets = () => {
 
             {/* Payment Method + TDS Info */}
             <div className="flex justify-between items-center mt-3 mb-10">
-              <div className="flex space-x-2">
-                {["Express", "Swap", "P2P"].map((method) => (
-                  <div
-                    key={method}
-                    className="border border-white text-white/60 rounded-lg px-4 py-1 text-[0.6rem] font-extralight cursor-pointer"
-                    onClick={() => setPaymentMethod(method)}
-                  >
-                    {method}
-                  </div>
-                ))}
-              </div>
               <div className="text-white/60 text-xl">TDS = 1%</div>
             </div>
           </div>
 
           {/* Buy Button */}
-          <div className="flex justify-center ">
+          <div className="flex justify-center">
             <Button
               handleFun={handleBuy}
               text={`Buy ${selectedAsset || "XXX"}`}
