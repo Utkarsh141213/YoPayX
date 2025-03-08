@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { LiaAngleDownSolid } from "react-icons/lia";
-import Swip from "./Swip";
 import TransactionHistory from "./TransactionHistory";
-import { getTransactionHistory, sellAsset } from "../../../services/fundsAPI/tradingScreenAPI";
+import {
+  getAvailableBalace,
+  getTransactionHistory,
+  sellAsset,
+} from "../../../services/fundsAPI/tradingScreenAPI";
 import { toast } from "react-toastify";
 
 const Badge = ({ badge }) => (
@@ -16,12 +19,13 @@ const Badge = ({ badge }) => (
  * @param {Array} assets - Array of asset objects (e.g., [{id, symbol, price_usd}, ...])
  * @param {Array} currencyList - Array of currency objects (e.g., [{id, symbol, price_usd}, ...])
  */
-const SellScreen = ({ assets, currencyList }) => {
+const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
   const [selectedAsset, setSelectedAsset] = useState("");
   const [amount, setAmount] = useState("");
+  // "youWillGet" now reflects the INR amount received after deducting 1% TDS on coins
   const [youWillGet, setYouWillGet] = useState("0.00");
   const [exchangeRate, setExchangeRate] = useState(0); // 1 coin => X INR
-  const [transactions, setTransactions] = useState([])
+  const [transactions, setTransactions] = useState([]);
 
   // 1) Whenever user picks an asset, compute its INR rate from currencyList
   useEffect(() => {
@@ -47,18 +51,19 @@ const SellScreen = ({ assets, currencyList }) => {
     // Calculate final rate: asset's price in USD * USD→INR
     const usdToInr = parseFloat(inrObj.price_usd); // e.g. 82
     const assetUsd = parseFloat(assetObj.price_usd);
-    const finalRate = usdToInr * assetUsd;         // 1 coin => finalRate INR
+    const finalRate = usdToInr * assetUsd; // 1 coin => finalRate INR
 
     setExchangeRate(finalRate);
   }, [selectedAsset, assets, currencyList]);
 
-  // 2) User enters coin amount => we calculate "You will get" in INR (no TDS deduction)
+  // 2) User enters coin amount => we calculate "You will get" in INR (after 1% TDS deduction)
   const handleAmountChange = (e) => {
     const val = e.target.value;
     setAmount(val);
 
     if (val && exchangeRate > 0) {
-      const totalInr = parseFloat(val) * exchangeRate;
+      // Deduct 1% TDS on the coin amount: only 99% of the coin amount is converted
+      const totalInr = parseFloat(val) * exchangeRate * 0.99;
       setYouWillGet(totalInr.toFixed(2));
     } else {
       setYouWillGet("0.00");
@@ -66,18 +71,17 @@ const SellScreen = ({ assets, currencyList }) => {
   };
 
   useEffect(() => {
-    ;(async () => {
-        
-        try {
-            const result = await getTransactionHistory()
-            if(result.data){
-                setTransactions(result.data)
-            }
-        } catch (error) {
-            console.log(error);
+    (async () => {
+      try {
+        const result = await getTransactionHistory();
+        if (result.data) {
+          setTransactions(result.data);
         }
-    })()
-  },[])
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   // 3) User selects an asset from the dropdown or badges
   const handleAssetSelect = (value) => {
@@ -88,23 +92,27 @@ const SellScreen = ({ assets, currencyList }) => {
 
   // 4) Final Sell Action
   const handleSell = async () => {
-    console.log("STRT");
     if (!selectedAsset || !amount || !youWillGet) {
       toast.error("Please fill all fields");
       return;
     }
-
     try {
-        console.log('INT');
       const result = await sellAsset({
-        fiat_currency: "INR",   // Adjust if your API needs a different currency
+        fiat_currency: "INR", // Adjust if your API needs a different currency
         coin_amount: parseInt(amount),
         coin_symbol: selectedAsset,
       });
       console.log("Sell successful:", result);
       toast.success("Sell successful");
+      setSelectedAsset(null)
+      setAmount(null)
+      setYouWillGet(null)
+      const balanceResult = await getAvailableBalace();
+      if (balanceResult && balanceResult.data) {
+        setAvailableBalance(balanceResult.data.balance);
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
       toast.error(error?.response?.data?.message || error.message);
     }
   };
@@ -149,7 +157,7 @@ const SellScreen = ({ assets, currencyList }) => {
         {/* User enters coin amount here */}
         <div>
           <label className="text-white text-lg font-bold block mb-2 w-full text-left">
-            XXX Amount
+            {selectedAsset || "XXX"} Amount
           </label>
           <input
             type="number"
@@ -163,7 +171,7 @@ const SellScreen = ({ assets, currencyList }) => {
         {/* "You will get" in INR (disabled) */}
         <div>
           <label className="text-white text-lg font-bold block mb-2 w-full text-left">
-            XXX / INR
+            {selectedAsset || "XXX"} / INR
           </label>
           <input
             type="text"
@@ -177,14 +185,19 @@ const SellScreen = ({ assets, currencyList }) => {
 
       {/* Swipe button to sell */}
       <div className="px-5 my-4">
-        <Swip text={"sell"} handleFun={handleSell} />
+        <div
+          onClick={handleSell}
+          className="w-full h-14 bg-[#4BAF2A] rounded-lg  relative flex items-center justify-center select-none cursor-pointer"
+        >
+          Sell
+        </div>
       </div>
 
       {/* Transaction history */}
       <h2 className="text-white text-lg font-semibold mb-4">
         Transaction History
       </h2>
-      <TransactionHistory transactions={transactions}/>
+      <TransactionHistory transactions={transactions} />
     </div>
   );
 };

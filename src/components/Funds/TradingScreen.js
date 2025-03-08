@@ -3,16 +3,21 @@ import Background from "../Background";
 
 import SellScreen from "./Sell-Withdraw/SellScreen";
 import WithdrawalScreen from "./Sell-Withdraw/WithdrawalScreen";
-import { getAssets, getAvailableBalace, getAvailableFunds, getCurrencyList } from "../../services/fundsAPI/tradingScreenAPI";
-
+import {
+  getAssets,
+  getAvailableBalace,
+  getAvailableFunds,
+  getCurrencyList,
+} from "../../services/fundsAPI/tradingScreenAPI";
+import { LiaChessKingSolid } from "react-icons/lia";
+import { toast } from "react-toastify";
 
 // Main Trading Screen Component
 const TradingScreen = () => {
   const [activeTab, setActiveTab] = useState("Sell");
-  const [availableFund, setAvailableFund] = useState("0.00 INR");
-  const [assets, setAssets] = useState(["BTC", "ETH", "USDT", "BNB"])
-  const [currencyList, setCurrencyList] = useState([])
-
+  const [availableBalance, setAvailableBalance] = useState("0.00 INR");
+  const [assets, setAssets] = useState([]);
+  const [currencyList, setCurrencyList] = useState([]);
 
   // const calculateYouWillGet = () => {
   //   if (amount && exchangeRate) {
@@ -23,30 +28,39 @@ const TradingScreen = () => {
   //   return "0.00";
   // };
 
-
   useEffect(() => {
-    // Fetch available funds
-    (async () => {
-      try {
-        const funds = await getAvailableBalace();
-        setAvailableFund(funds.data.balance); // or funds.balance, etc.
-      } catch (error) {
-        console.error(error);
-      }
-    })();
-
     // Fetch assets
     (async () => {
       try {
         const assetsData = await getAssets();
         setAssets(assetsData.data);
-        const currency = await getCurrencyList()
-        setCurrencyList(currency.data)
+        const currency = await getCurrencyList();
+        setCurrencyList(currency.data);
       } catch (error) {
         console.error(error);
       }
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        let funds;
+        if (activeTab.toLocaleLowerCase() === "sell") {
+          funds = await getAvailableBalace();
+          console.log(funds.data);
+          setAvailableBalance(funds.data.balance);
+        } else {
+          funds = await getAvailableFunds();
+          console.log(funds);
+          setAvailableBalance(funds.inr_balance)
+        }
+      } catch (error) {
+        toast.error(error.response.data.message || error.message)
+        console.error(error);
+      }
+    })();
+  }, [activeTab]);
 
   return (
     <Background>
@@ -82,12 +96,14 @@ const TradingScreen = () => {
                 activeTab.toLocaleLowerCase() === "sell" ? "Balance" : "Fund"
               }`}
             </div>
-            <div className="text-white/50 text-xl">{availableFund}</div>
+            <div className="text-white/50 text-xl">{availableBalance}</div>
           </div>
 
-          {activeTab.toLocaleLowerCase() === "sell" ? <SellScreen assets={assets} currencyList={currencyList} /> : <WithdrawalScreen assets={assets} currencyList={currencyList} />}
-
-
+          {activeTab.toLocaleLowerCase() === "sell" ? (
+            <SellScreen assets={assets} currencyList={currencyList} setAvailableBalance={setAvailableBalance} />
+          ) : (
+            <WithdrawalScreen setAvailableBalance={setAvailableBalance}/>
+          )}
         </div>
       </div>
     </Background>

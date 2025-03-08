@@ -28,6 +28,7 @@ const Signup = ()=> {
               };
               const handleVerifyEmail = async () => {
                 const response = await verifyEmail(email,otp);
+                console.log(response);
                 if (response){
                   localStorage.setItem("token", response.data.token);
                   setStep(3);
@@ -38,6 +39,7 @@ const Signup = ()=> {
               const handlePassword = async () => {
                 const response = await secondRegister(password,confirmPassword);
                 if (response){
+                  console.log(response);
                   localStorage.setItem("token", response.data.token);
                   localStorage.setItem("user", JSON.stringify(response.data.user));
                   console.log(localStorage.getItem("user"));

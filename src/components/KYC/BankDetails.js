@@ -22,20 +22,24 @@ const BankDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const bankData = new FormData();
-
-    bankData.append("account_holder_name", formData.accountHolderName);
-    bankData.append("bank_name", formData.bankName);
-    bankData.append("account_number", formData.accountNumber);
-    bankData.append("ifsc_code", formData.IFSCCode);
-    bankData.append("upi_id", formData.UPIId);
-
+  
     try {
-      await createBankDetials(bankData);
+      await createBankDetials({
+        "account_holder_name": formData.accountHolderName,
+        "bank_name": formData.bankName,
+        "account_number": parseInt(formData.accountNumber),
+        "ifsc_code": formData.IFSCCode,
+        "upi_id": formData.UPIId
+      });
+      toast.success('Bank details created successfully')
       navigate("/dashboard");
     } catch (error) {
-      toast.error(error);
+      if (error.response && error.response.status === 500) {
+        toast.error("Bank details already exist.");
+      } else {
+        toast.error(error.response?.data?.message || error.message);
+      }
+      console.log(error);
     }
   };
 
@@ -61,6 +65,7 @@ const BankDetails = () => {
         />
         <InputField
           name="accountNumber"
+          type="number"
           placeholder="Account number"
           value={formData.accountNumber}
           onChange={handleChange}
