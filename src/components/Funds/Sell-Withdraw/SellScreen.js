@@ -20,7 +20,7 @@ const Badge = ({ badge }) => (
  * @param {Array} currencyList - Array of currency objects (e.g., [{id, symbol, price_usd}, ...])
  */
 const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
-  const [selectedAsset, setSelectedAsset] = useState("");
+  const [selectedAsset, setSelectedAsset] = useState(null);
   const [amount, setAmount] = useState("");
   // "youWillGet" now reflects the INR amount received after deducting 1% TDS on coins
   const [youWillGet, setYouWillGet] = useState("0.00");
@@ -124,7 +124,9 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
           Choose Assets
         </label>
         <select
-          className="w-full bg-white text-black/50 p-3 rounded-lg appearance-none outline-none"
+          className={`w-full bg-white  p-3 rounded-lg appearance-none outline-none
+            ${selectedAsset ? "text-black" : "text-black/50"}
+            `}
           name="select_option"
           value={selectedAsset}
           onChange={(e) => handleAssetSelect(e.target.value)}
@@ -153,7 +155,7 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="grid md:grid-cols-2 gap-4 mb-4">
         {/* User enters coin amount here */}
         <div>
           <label className="text-white text-lg font-bold block mb-2 w-full text-left">
