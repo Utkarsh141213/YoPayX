@@ -19,7 +19,6 @@ export const getKYC = async () => {
   return res.data
 }
 
-
 export const createBankDetials = async (data) => {
   try {
     const response = await axiosInstance.post("/finance/bank-account-details/create/", data, {
@@ -37,7 +36,6 @@ export const getBankDetails = async () => {
   const response =  await axiosInstance.get("/finance/bank-account-details/list/")
   return response.data.data
 };
-
 
 export const generateOPT = async (phoneData) => {
 

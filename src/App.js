@@ -23,6 +23,7 @@ import Dashboard2 from "./pages/dashboard/Dashboard2";
 import Transaction from "./pages/Funds/Transaction";
 import TransferAmountScreen from "./components/Funds/TransferAmountScreen";
 import Wallet from "./pages/Funds/Wallet";
+import Page1 from "./pages/stacking/Page1";
 
 // import Navbar from "./components/Navbar";
 
@@ -56,6 +57,7 @@ function App() {
         <Route path="/confirm-add-fund" element={<ConfirmAddFund />} />
         <Route path="/transaction-history" element={<Transaction />} />
         <Route path="/wallet" element={<Wallet />} />
+        <Route path="/page1" element={<Page1 />} />
         <Route path="/background" element={<Background />} />
       </Routes>
     </>

@@ -9,7 +9,7 @@ export const addFundInINR = async ({ amount, fiat }) => {
       "/finance/deposit/fiat/request/",
       { amount, fiat }
     );
-    console.log(response);
+
     return response.data;
   } catch (error) {
     throw error;
@@ -34,7 +34,7 @@ export const confirmAddFundService = async (formData) => {
 };
 
 export const buyAssets = async (data) => {
-  console.log(data);
+
   const response = await axiosInstance.post(
     "/finance/buy/coin/request/",
     data,
@@ -44,7 +44,7 @@ export const buyAssets = async (data) => {
       },
     }
   );
-  console.log("RESPONSE", response.data);
+
   return response.data;
 };
 
