@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/YoPayX/static/css/main.81e40f99.css",
-    "main.js": "/YoPayX/static/js/main.20884b56.js",
+    "main.js": "/YoPayX/static/js/main.9dfc1b60.js",
     "static/media/wallet.svg": "/YoPayX/static/media/wallet.fc66761b813fc553ffab286aa8ac6d3d.svg",
     "static/media/withdraw.svg": "/YoPayX/static/media/withdraw.2609a7cb99f42cf88deed3c2bdcebf7a.svg",
     "static/media/transaction.svg": "/YoPayX/static/media/transaction.e84ec116d9a286c1e38b41464945d95f.svg",
@@ -37,10 +37,10 @@
     "static/media/bBG.svg": "/YoPayX/static/media/bBG.df393963c85373b1259ae6ac3505d8b7.svg",
     "static/media/BTCRectangle.svg": "/YoPayX/static/media/BTCRectangle.2f590d0934d7e05908a2a13b7fa82e89.svg",
     "main.81e40f99.css.map": "/YoPayX/static/css/main.81e40f99.css.map",
-    "main.20884b56.js.map": "/YoPayX/static/js/main.20884b56.js.map"
+    "main.9dfc1b60.js.map": "/YoPayX/static/js/main.9dfc1b60.js.map"
   },
   "entrypoints": [
     "static/css/main.81e40f99.css",
-    "static/js/main.20884b56.js"
+    "static/js/main.9dfc1b60.js"
   ]
 }
