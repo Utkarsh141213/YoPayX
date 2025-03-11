@@ -36,7 +36,7 @@ export const confirmAddFundService = async (formData) => {
 export const buyAssets = async (data) => {
   console.log(data);
   const response = await axiosInstance.post(
-    "/finance/buy/coin/request/",
+    "/finance/sell/fiat_to_coin/",
     data,
     {
       headers: {

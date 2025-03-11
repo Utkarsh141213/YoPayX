@@ -99,7 +99,7 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
     try {
       const result = await sellAsset({
         fiat_currency: "INR", // Adjust if your API needs a different currency
-        coin_amount: parseInt(amount),
+        ytp_amount: parseInt(amount),
         coin_symbol: selectedAsset,
       });
       console.log("Sell successful:", result);
