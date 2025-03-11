@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Swip from "./Swip";
 import TransactionHistory from "./TransactionHistory";
 import {
   getTransactionHistory,

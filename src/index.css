@@ -5,3 +5,20 @@
 input::placeholder {
     font-size: 0.75rem;
 }
+
+.add-fund-home{
+    border: 1.5px solid rgb(22 163 74);
+}
+
+.feature-box{
+    border: 1.5px solid rgb(53, 53, 53) ;
+}
+
+.act-btn{
+    border: 1.3px solid rgb(123, 120, 120);
+    cursor: pointer;
+}
+
+.input-tail{
+    width: 10px;
+}

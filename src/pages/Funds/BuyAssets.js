@@ -130,18 +130,18 @@ const BuyAssets = () => {
           </div>
 
           {/* Balance Section - separate lines on small screens, single line on larger */}
-          <div className="text-white text-base sm:text-lg md:text-2xl font-bold flex flex-col sm:flex-row items-center sm:gap-2 pt-3">
+          <div className="text-white text-base sm:text-lg md:text-2xl font-bold flex flex-col sm:flex-row items-center sm:gap-2">
             <div className="text-white text-xl md:text-xl font-semibold">Available Balance:</div>
             <div className="text-white/50 md:text-white text-xl ">{availableBalance} INR</div>
           </div>
         </header>
 
-        <h2 className="text-2xl font-bold text-center mb-6">Buy Assets</h2>
+        <h2 className="text-2xl font-bold text-center mb-10">Buy Assets</h2>
 
         <div className="space-y-6 max-w-xl mx-auto">
           {/* Choose Assets */}
           <div>
-            <label className="block mb-1 text-left text-2xl font-bold">
+            <label className="block mb-1 text-left text-xl font-bold">
               Choose assets
             </label>
             <div className="relative">
@@ -174,7 +174,7 @@ const BuyAssets = () => {
           {/* YTP Amount Input */}
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="block mb-1 text-left text-2xl font-bold">
+              <label className="block mb-1 text-left text-xl font-bold">
                 Amount YTP
               </label>
               <span className="text-sm text-gray-400">
@@ -195,7 +195,7 @@ const BuyAssets = () => {
           {/* INR Amount Display */}
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="block mb-1 text-left text-2xl font-bold">
+              <label className="block mb-1 text-left text-xl font-bold">
                 Amount INR
               </label>
               <span className="text-sm text-gray-400">
@@ -214,7 +214,7 @@ const BuyAssets = () => {
             />
 
             {/* Payment Method + TDS Info */}
-            <div className="flex justify-between items-center mt-3 mb-10">
+            <div className="flex justify-between items-center mt-3 mb-6">
               <div className="text-white/60 text-xl">TDS = 1%</div>
             </div>
           </div>
