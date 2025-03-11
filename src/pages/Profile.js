@@ -155,7 +155,7 @@ const Profile = () => {
             </div>
             <span className="text-sm">Pin</span>
           </div>
-          <div
+          {/* <div
             onClick={() => navigate("/")}
             className="flex flex-col items-center"
           >
@@ -180,7 +180,7 @@ const Profile = () => {
               />
             </div>
             <span className="text-sm">Disable Authentication</span>
-          </div>
+          </div> */}
         </div>
       </div>
     </Background>

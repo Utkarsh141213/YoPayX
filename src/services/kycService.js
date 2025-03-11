@@ -41,7 +41,7 @@ export const getBankDetails = async () => {
 
 export const generateOPT = async (phoneData) => {
 
-  await axiosInstance.post('/users/auth/resend-mobile-otp/', {phone_no: 9365946001, country_code: 91}, {
+  await axiosInstance.post('/users/auth/resend-mobile-otp/', phoneData, {
         headers: {
       "Content-Type": "application/json"
     }
