@@ -1,75 +1,114 @@
 import React, { useState } from "react";
-import "../assets/styles/forgotPassword.css"; 
+import "../assets/styles/forgotPassword.css";
 import InputField from "../components/InputField";
 import { sendOtp, verifyOtp, resetPassword } from "../services/authService";
 import Logo from "../components/logo";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
-    const [step, setStep] = useState(1);  // Steps: 1 -> Email, 2 -> OTP, 3 -> Reset Password
-    const [email, setEmail] = useState("");
-    const [otp, setOtp] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+  const [step, setStep] = useState(1); // Steps: 1 -> Email, 2 -> OTP, 3 -> Reset Password
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-    const handleEmailSubmit = async () => {
-        const response = await sendOtp(email);
-        if (true) setStep(2);
-        else alert("Error sending OTP");
-    };
+  const navigate = useNavigate()
 
-    const handleOtpSubmit = async () => {
-        const response = await verifyOtp(email, otp);
-        if (true) setStep(3);
-        else alert("Invalid OTP");
-    };
+  const handleEmailSubmit = async () => {
+    if (email === "") {
+      return;
+    }
 
-    const handlePasswordReset = async () => {
-        if (password !== confirmPassword) {
-            alert("Passwords do not match");
-            return;
-        }
-        const response = await resetPassword(email, password);
-        if (true) alert("Password reset successful!");
-        else alert("Error resetting password");
-    };
+    try {
+      await sendOtp(email);
+      setStep(2);
+    } catch (error) {
+      toast.error(error.response.data.message || "Error sending OTP");
+    }
+  };
 
-    return (
-        <div className=" forgotpassword-whole mt-5">
-            <div className="logo-forget-password">
-            <Logo />
-            </div>
-           
+  const handleOtpSubmit = async () => {
+    try {
+      await verifyOtp(email, otp);
+      setStep(3);
+    } catch (error) {
+      toast.error(error.response.data.message || "Invalid OTP");
+    }
+  };
 
-            <div className="forgot-password-container">
+  const handlePasswordReset = async () => {
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
 
-            <h2 className="forget-password-text mb-5">Forgot Password?</h2>
+    try {
+      await resetPassword(password, confirmPassword);
+        navigate('/login')
+    } catch (error) {
+        toast.error(error.response.data.message || "Error in changing password, please try again");
+    }
+  };
 
-            {step === 1 && (
-                <>
-                    <InputField type="email" placeholder="Email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    <button onClick={handleEmailSubmit}>SUBMIT</button>
-                </>
-            )}
+  return (
+    <div className=" forgotpassword-whole mt-5">
+      <div className="logo-forget-password">
+        <Logo />
+      </div>
 
-            {step === 2 && (
-                <>
-                    <p>OTP</p>
-                    <InputField type="text" placeholder="OTP" className="form-control" value={otp} onChange={(e) => setOtp(e.target.value)} />
-                    <button onClick={handleOtpSubmit}>SUBMIT</button>
-                </>
-            )}
+      <div className="forgot-password-container">
+        <h2 className="forget-password-text mb-5">Forgot Password?</h2>
 
-            {step === 3 && (
-                <>
-                    <InputField type="password" placeholder="New Password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <InputField type="password" placeholder="Confirm Password" className="form-control" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                    <button onClick={handlePasswordReset}>SUBMIT</button>
-                </>
-            )}
-        </div>  
-        </div>
-        
-    );
+        {step === 1 && (
+          <>
+            <InputField
+              type="email"
+              placeholder="Email"
+              className="form-control"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button onClick={handleEmailSubmit}>SUBMIT</button>
+          </>
+        )}
+
+        {step === 2 && (
+          <>
+            <p>OTP</p>
+            <InputField
+              type="text"
+              placeholder="OTP"
+              className="form-control"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+            />
+            <button onClick={handleOtpSubmit}>SUBMIT</button>
+          </>
+        )}
+
+        {step === 3 && (
+          <>
+            <InputField
+              type="password"
+              placeholder="New Password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <InputField
+              type="password"
+              placeholder="Confirm Password"
+              className="form-control"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <button onClick={handlePasswordReset}>SUBMIT</button>
+          </>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default ForgotPassword;

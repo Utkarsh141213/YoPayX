@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import Webcam from "react-webcam";
 import cameraSVG from "../../assets/kyc_icons/kyc_document_camera_icon.svg";
-import { useKycContext } from "../../context/KycContext"; // Use the context
+import { useKycContext } from "../../context/KycContext";
 import { toast } from "react-toastify";
 import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
@@ -13,11 +14,12 @@ const Document = () => {
   const [photoFile, setPhotoFile] = useState(null);
   const [panNumber, setPanNumber] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [showCamera, setShowCamera] = useState(false);
 
-  // Create a ref for the form
+  // Create a ref for the form and webcam
   const formRef = useRef(null);
   const govIdInputRef = useRef(null);
-  const profileInputRef = useRef(null);
+  const webcamRef = useRef(null);
 
   const handleGovtIdChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -25,10 +27,26 @@ const Document = () => {
     }
   };
 
-  const handlePhotoChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setPhotoFile(e.target.files[0]);
+  // Function to capture photo from webcam
+  const capturePhoto = () => {
+    if (!webcamRef.current) return;
+    
+    const imageSrc = webcamRef.current.getScreenshot();
+    if (imageSrc) {
+      // Convert base64 to file
+      fetch(imageSrc)
+        .then(res => res.blob())
+        .then(blob => {
+          const file = new File([blob], "user-photo.jpg", { type: "image/jpeg" });
+          setPhotoFile(file);
+          setShowCamera(false);
+        });
     }
+  };
+
+  // Toggle webcam visibility
+  const toggleCamera = () => {
+    setShowCamera(prev => !prev);
   };
 
   const handleSubmit = async (e) => {
@@ -49,9 +67,10 @@ const Document = () => {
 
     try {
       await initiateOTP();
-      toast.success("KYC submitted successfully");
+      toast.success("OTP sent to your mobile number");
       navigate("/kyc/otp");
     } catch (error) {
+      console.log(error);
       toast.error(`${error}`);
     }
   };
@@ -67,7 +86,7 @@ const Document = () => {
           Identity Verification
         </h1>
 
-        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col">
+        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col ">
           <div className="flex items-center justify-between mb-3">
             <label className="text-white/50">Government ID</label>
           </div>
@@ -136,22 +155,11 @@ const Document = () => {
                   />
                 </div>
                 <div
-                  onClick={() => {
-                    profileInputRef.current && profileInputRef.current.click();
-                  }}
-                  className="bg-[#4BAF2A] text-lg sm:text-xl font-bold text-white w-fit py-3 sm:py-3 px-8 flex items-center rounded-xl hover:bg-green-600 transition"
+                  onClick={toggleCamera}
+                  className="bg-[#4BAF2A] text-lg sm:text-xl font-bold text-white w-fit py-3 sm:py-3 px-8 flex items-center rounded-xl hover:bg-green-600 transition cursor-pointer"
                 >
-                  Take Photo
+                  {photoFile ? "Retake Photo" : "Take Photo"}
                 </div>
-                <input
-                  id="photoFile"
-                  ref={profileInputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={handlePhotoChange}
-                  required
-                  hidden
-                />
               </div>
 
               {/* Phone Number Input */}
@@ -175,7 +183,7 @@ const Document = () => {
             >
               {photoFile ? (
                 <img
-                  src={URL.createObjectURL(photoFile)}
+                  src={photoFile instanceof File ? URL.createObjectURL(photoFile) : photoFile}
                   alt="Preview"
                   className="w-full h-full object-cover rounded-2xl"
                 />
@@ -197,6 +205,43 @@ const Document = () => {
           </div>
         </form>
       </div>
+
+      {/* Webcam Component - Positioned Absolutely */}
+      {showCamera && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black/80 z-50 p-4">
+          <div className="bg-white rounded-lg p-4 w-full max-w-lg md:max-w-xl">
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-lg font-bold text-black">Take Your Photo</h3>
+              <button 
+                onClick={() => setShowCamera(false)}
+                className="text-black text-xl"
+              >
+                <RxCross2 />
+              </button>
+            </div>
+            <Webcam
+              audio={false}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              videoConstraints={{
+                facingMode: "user",
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
+              }}
+              className="w-full rounded"
+            />
+            <div className="flex justify-center mt-4">
+              <button
+                type="button"
+                onClick={capturePhoto}
+                className="bg-[#4BAF2A] text-white py-2 px-8 rounded-xl text-lg font-semibold hover:bg-green-600 transition"
+              >
+                Capture
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

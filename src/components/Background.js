@@ -5,15 +5,16 @@ const Background = ({ children }) => {
   return (
     <div className="relative min-h-screen bg-black overflow-x-hidden">
       {/* Blurred green gradient backgrounds */}
-      <div className="hidden md:block absolute top-36 -left-40 w-52 lg:w-56 xl:w-96 h-72 bg-green-600 rounded-full opacity-45 blur-[80px]"></div>
-      <div className="hidden md:block absolute top-56 -right-40 w-52 lg:w-56 xl:w-96 h-72 bg-green-600 rounded-full opacity-45 blur-[80px]"></div>
+      <div className="  absolute top-36 md:-left-48 -left-36 w-52 lg:w-56 xl:w-96 h-72 bg-green-700 rounded-full opacity-45 blur-[80px]"></div>
+      <div className="  absolute top-60 md:-right-48 -right-36 w-52 lg:w-56 xl:w-96 h-72 bg-green-700 rounded-full opacity-45 blur-[80px]"></div>
 
       {/* Top-Left Coin: Bitcoin */}
       <div
-        className="hidden md:block absolute top-52 left-36 w-12 h-12 lg:w-16 lg:h-16 rounded-full"
+        className="hidden md:block absolute top-52 left-40 w-12 h-12 lg:w-16 lg:h-16 rounded-full animate-float"
         style={{
           backgroundImage: `url(${bBG})`,
           backgroundSize: 'cover',
+          animation: 'float 3s ease-in-out infinite',
         }}
       >
         <img
@@ -29,6 +30,7 @@ const Background = ({ children }) => {
         style={{
           backgroundImage: `url(${pBG})`,
           backgroundSize: 'cover',
+          animation: 'float 3.5s ease-in-out infinite',
         }}
       >
         <img
@@ -45,6 +47,7 @@ const Background = ({ children }) => {
           top: 'calc(100vh - 215px - 44px)', // Positions initially near bottom, scrolls with container
           backgroundImage: `url(${tBG})`,
           backgroundSize: 'cover',
+          animation: 'float 4s ease-in-out infinite',
         }}
       >
         <img
@@ -61,6 +64,7 @@ const Background = ({ children }) => {
           top: 'calc(100vh - 190px - 44px)', // Positions initially near bottom, scrolls with container
           backgroundImage: `url(${squareBG})`,
           backgroundSize: 'cover',
+          animation: 'float 3.2s ease-in-out infinite',
         }}
       >
         <img
@@ -72,9 +76,101 @@ const Background = ({ children }) => {
 
       {/* Content */}
       {children}
+
+      {/* Add a <style> tag for the animation */}
+      <style jsx global>{`
+        @keyframes float {
+          0% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
+        }
+      `}</style>
     </div>
   );
 };
+
+
+
+// const Background = ({ children }) => {
+//   return (
+//     <div className="relative min-h-screen bg-black overflow-x-hidden">
+//       {/* Blurred green gradient backgrounds */}
+//       <div className="hidden md:block absolute top-36 -left-40 w-52 lg:w-56 xl:w-96 h-72 bg-green-600 rounded-full opacity-45 blur-[80px]"></div>
+//       <div className="hidden md:block absolute top-56 -right-40 w-52 lg:w-56 xl:w-96 h-72 bg-green-600 rounded-full opacity-45 blur-[80px]"></div>
+
+//       {/* Top-Left Coin: Bitcoin */}
+//       <div
+//         className="hidden md:block absolute top-52 left-36 w-12 h-12 lg:w-16 lg:h-16 rounded-full"
+//         style={{
+//           backgroundImage: `url(${bBG})`,
+//           backgroundSize: 'cover',
+//         }}
+//       >
+//         <img
+//           src={b}
+//           className="hidden md:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 lg:w-8 lg:h-8"
+//           alt="Bitcoin Logo"
+//         />
+//       </div>
+
+//       {/* Top-Right Coin: Custom Logo */}
+//       <div
+//         className="hidden md:block absolute top-52 right-32 w-12 h-12 lg:w-16 lg:h-16 rounded-full"
+//         style={{
+//           backgroundImage: `url(${pBG})`,
+//           backgroundSize: 'cover',
+//         }}
+//       >
+//         <img
+//           src={p}
+//           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 lg:w-8 lg:h-8"
+//           alt="Custom Logo"
+//         />
+//       </div>
+
+//       {/* Bottom-Left Coin: Tether */}
+//       <div
+//         className="hidden md:block absolute left-44 w-11 h-11 lg:w-12 lg:h-12 rounded-full"
+//         style={{
+//           top: 'calc(100vh - 215px - 44px)', // Positions initially near bottom, scrolls with container
+//           backgroundImage: `url(${tBG})`,
+//           backgroundSize: 'cover',
+//         }}
+//       >
+//         <img
+//           src={t}
+//           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 lg:w-6 lg:h-6"
+//           alt="Tether Logo"
+//         />
+//       </div>
+
+//       {/* Bottom-Right Coin: Square/Binance */}
+//       <div
+//         className="hidden md:block absolute right-48 w-11 h-11 lg:w-12 lg:h-12 rounded-full"
+//         style={{
+//           top: 'calc(100vh - 190px - 44px)', // Positions initially near bottom, scrolls with container
+//           backgroundImage: `url(${squareBG})`,
+//           backgroundSize: 'cover',
+//         }}
+//       >
+//         <img
+//           src={square}
+//           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 lg:w-6 lg:h-6"
+//           alt="Square Logo"
+//         />
+//       </div>
+
+//       {/* Content */}
+//       {children}
+//     </div>
+//   );
+// };
 
 export default Background;
 

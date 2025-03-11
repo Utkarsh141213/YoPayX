@@ -5,9 +5,12 @@ export const addFundInINR = async ({ amount, fiat }) => {
     throw new Error("Amount must be a Number and greater than 0");
   }
   try {
-    const response = await axiosInstance.post("/finance/deposit/fiat/request/", { amount, fiat });
+    const response = await axiosInstance.post(
+      "/finance/deposit/fiat/request/",
+      { amount, fiat }
+    );
     console.log(response);
-    return response.data; 
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -30,8 +33,6 @@ export const confirmAddFundService = async (formData) => {
   }
 };
 
-
-
 export const buyAssets = async (data) => {
   console.log(data);
   const response = await axiosInstance.post(
@@ -43,8 +44,30 @@ export const buyAssets = async (data) => {
       },
     }
   );
-  console.log('RESPONSE', response.data);
+  console.log("RESPONSE", response.data);
   return response.data;
 };
 
+export const getCoinValueInCurrency = async (currency = null) => {
+  if (currency) {
+    const res = await axiosInstance.get(`/finance/coin/${currency}/value/`);
+    return res.data;
+  }
+  const res = await axiosInstance.get("/finance/coin/YTP/value/");
+  return res.data;
+};
 
+export const sendYTP = async ({
+  pin,
+  amount,
+  ticker,
+  address,
+}) => {
+
+  return axiosInstance.post("/finance/send/amount/", {
+    transaction_pin: pin,
+    amount,
+    ticker,
+    address,
+  });
+}
