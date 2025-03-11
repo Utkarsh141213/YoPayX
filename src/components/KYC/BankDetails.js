@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputField from "./InputField";
-import { createBankDetials } from "../../services/kycService";
+import { createBankDetials, getBankDetails } from "../../services/kycService";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const BankDetails = () => {
   const navigate = useNavigate();
+
+  const [bankDetails, setBankDetails] = useState(null);
 
   const [formData, setFormData] = useState({
     accountHolderName: "",
@@ -15,6 +17,22 @@ const BankDetails = () => {
     UPIId: "",
   });
 
+  useEffect(() => {
+    const fetchBankDetails = async () => {
+      try {
+        const response = await getBankDetails();
+        console.log(response);
+        if (response && response.length > 0) {
+          setBankDetails(response[0]);
+        }
+      } catch (error) {
+        console.error("Error fetching bank details:", error);
+      }
+    };
+
+    fetchBankDetails();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -22,16 +40,16 @@ const BankDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Additional client-side validation logic can be added here if needed.
+
     try {
       await createBankDetials({
-        "account_holder_name": formData.accountHolderName,
-        "bank_name": formData.bankName,
-        "account_number": parseInt(formData.accountNumber, 10),
-        "ifsc_code": formData.IFSCCode,
-        "upi_id": formData.UPIId,
+        account_holder_name: formData.accountHolderName,
+        bank_name: formData.bankName,
+        account_number: parseInt(formData.accountNumber, 10),
+        ifsc_code: formData.IFSCCode,
+        upi_id: formData.UPIId,
       });
-      toast.success('Bank details created successfully');
+      toast.success("Bank details created successfully");
       navigate("/dashboard");
     } catch (error) {
       if (error.response && error.response.status === 500) {
@@ -39,9 +57,59 @@ const BankDetails = () => {
       } else {
         toast.error(error.response?.data?.message || error.message);
       }
-      console.log(error);
+      console.error(error);
     }
   };
+
+  if (bankDetails) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="p-8 rounded-md w-full max-w-2xl shadow-md">
+          <h2 className="text-3xl font-bold text-center mb-10">Bank Details</h2>
+          <div className="mb-4 space-y-2">
+            <div className="flex gap-4">
+              <span className="flex-1 font-semibold text-right">
+                Account Holder Name:
+              </span>
+              <span className="flex-1 text-xl font-semibold text-left">
+                {bankDetails.account_holder_name}
+              </span>
+            </div>
+            <div className="flex gap-4">
+              <span className="flex-1 font-semibold text-right ">
+                Bank Name:
+              </span>
+              <span className="flex-1 text-xl font-semibold text-left">
+                {bankDetails.bank_name}
+              </span>
+            </div>
+            <div className="flex gap-4">
+              <span className="flex-1 font-semibold text-right">
+                Account Number:
+              </span>
+              <span className="flex-1 text-xl font-semibold text-left">
+                {bankDetails.account_number}
+              </span>
+            </div>
+            <div className="flex gap-4">
+              <span className="flex-1 font-semibold text-right">
+                IFSC Code:
+              </span>
+              <span className="flex-1 text-xl font-semibold text-left">
+                {bankDetails.ifsc_code}
+              </span>
+            </div>
+            <div className="flex gap-4">
+              <span className="flex-1 font-semibold text-right">UPI ID:</span>
+              <span className="flex-1 text-xl font-semibold text-left">
+                {bankDetails.upi_id}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -69,7 +137,7 @@ const BankDetails = () => {
         />
         <InputField
           name="accountNumber"
-          type="text" // changed to text to use regex pattern
+          type="text"
           placeholder="Account number"
           value={formData.accountNumber}
           onChange={handleChange}

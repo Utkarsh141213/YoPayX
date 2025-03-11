@@ -24,7 +24,7 @@ const Dashboard = () => {
       if (storedUser) {
         const parsedUser = JSON.parse(storedUser);
         setUser({
-          name: parsedUser.first_name || "Profile",
+          name: parsedUser.first_name.split(' ')[0] || "Profile",
           avatar: parsedUser.avatar
             ? parsedUser.avatar.startsWith("http")
               ? parsedUser.avatar

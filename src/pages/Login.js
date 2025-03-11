@@ -29,8 +29,8 @@ function Login() {
 
       const data = await response.json();
       if (response.ok) {
-        alert("Login Successful!");
-        console.log(data);
+        // alert("Login Successful!");
+        console.log(data.data.token);
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("user", JSON.stringify(data.data.user)); 
         navigate("/dashboard");
@@ -72,6 +72,8 @@ function Login() {
           value={password} // Controlled state
           onChange={(e) => setPassword(e.target.value)} // Update password state
         />
+        {/* <a href="/forgotPassword"
+         className="text-right no-underline text-white hover:underline cursor-pointer ">Forgot ?</a> */}
         </div>
 
         <CryptoFloatingIcons />
@@ -81,8 +83,9 @@ function Login() {
         <button type="submit" className="submit-btn">SUBMIT</button>
       </form>
 
-      <p className="forgotpassword d-none">
-        <a href="/YoPayX#/forgotPassword">Forgot Password</a>
+      <p className="forgotpassword d-non">
+        <a href="/YoPayX#/forgotPassword"
+        className="text-white">Forgot Password</a>
       </p>
       <p className="signup-link mt-2 login-link">
         Not signed in yet? <a href="/YoPayX#/signup">Sign up</a>

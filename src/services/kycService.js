@@ -14,37 +14,10 @@ export const createKYC = async (formData) => {
   }
 };
 
-// export const createBankDetials = async (data) => {
-//   // Convert FormData to a plain object
-  
-
-//   try {
-//     const response = await fetch('https://chiru-stage.yatripay.com/api/v1/finance/bank-account-details/create', {
-//       method: "POST",
-//       headers: { 
-//         "Authorization": "Token " + localStorage.getItem("token"),
-//         // "Content-Type": "application/json"
-//       },
-//       body: data,
-//     });
-
-//     console.log(response);
-
-//     if (!response.ok) {
-//       // Log and throw error if server response is not OK
-//       const errorText = await response.text();
-//       console.error("Server error:", errorText);
-//       throw new Error("Server responded with an error");
-//     }
-
-//     const result = await response.json();
-//     console.log(result);
-//     return result;
-//   } catch (error) {
-//     console.error("Fetch error:", error);
-//     return { success: false, message: error.message };
-//   }
-// };
+export const getKYC = async () => {
+  const res = await axiosInstance.get('/finance/kyc/list')
+  return res.data
+}
 
 
 export const createBankDetials = async (data) => {
@@ -60,14 +33,22 @@ export const createBankDetials = async (data) => {
   }
 };
 
+export const getBankDetails = async () => {
+  const response =  await axiosInstance.get("/finance/bank-account-details/list/")
+  return response.data.data
+};
+
+
 export const generateOPT = async (phoneData) => {
-  // if(!Number.isInteger(phoneData.phone_no)){
-  //   throw new Error('invalid phone number format') 
-  // }
-  await axiosInstance.post('/auth/genrate_mobile_otp/', phoneData, {
-    headers: {
+
+  await axiosInstance.post('/users/auth/resend-mobile-otp/', {phone_no: 9365946001, country_code: 91}, {
+        headers: {
       "Content-Type": "application/json"
     }
   })
   return 
 } 
+
+export const changePIN = async (pin) => {
+  return await axiosInstance.post('/users/pin/reset/', pin)
+}
