@@ -51,9 +51,9 @@ const Wallet = () => {
                 <span className="font-semibold">Locked Balance:</span>{" "}
                 {wallet.lock_balance}
               </p>
-              <p>
+              {/* <p>
                 <span className="font-semibold">Address:</span> {wallet.address}
-              </p>
+              </p> */}
               <p>
                 <span className="font-semibold">Min. Limit:</span>{" "}
                 {wallet.coin.min_limit}
