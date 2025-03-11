@@ -112,6 +112,13 @@ const BuyAssets = () => {
         fiat: "INR",
       });
       toast.success('Transaction Successful')
+
+      const balance = await getAvailableBalace();
+      if (balance) {
+        setAvailableBalance(balance.data.balance);
+        console.log('new balance', balance);
+      }
+
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
     }

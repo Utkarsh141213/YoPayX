@@ -113,7 +113,7 @@ const BasicDetials = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Basic details:", formData);
+
     navigate("/kyc/documents");
   };
 

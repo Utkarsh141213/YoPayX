@@ -21,15 +21,13 @@ export const getAssets = async () => {
 
 
 export const sellAsset = async (sellData) => {
-    console.log(sellData);
-    console.log('IN API');
   const response = await axiosInstance.post("/finance/sell/fiat_to_coin/", sellData, {
     headers: {
         "Content-Type": "application/json"
     }
   }
   );
-  console.log('GOT RES', response);
+
   return response.data;
 };
 

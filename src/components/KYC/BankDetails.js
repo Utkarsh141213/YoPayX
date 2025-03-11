@@ -21,7 +21,7 @@ const BankDetails = () => {
     const fetchBankDetails = async () => {
       try {
         const response = await getBankDetails();
-        console.log(response);
+
         if (response && response.length > 0) {
           setBankDetails(response[0]);
         }

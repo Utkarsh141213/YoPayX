@@ -47,7 +47,7 @@ const Signup = () => {
         navigate("/dashboard2");
       }
     } catch (error) {
-      console.log("ERR", error);
+
       toast.error(error.message || "Something went worng");
     }
   };

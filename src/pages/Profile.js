@@ -155,8 +155,8 @@ const Profile = () => {
             </div>
             <span className="text-sm">Pin</span>
           </div>
-          {/* <div
-            onClick={() => navigate("/")}
+          <div
+            onClick={() => navigate("/forgotPassword", { state: { requiredStep: 3}})}
             className="flex flex-col items-center"
           >
             <div className="w-10 h-10 mb-2">
@@ -168,7 +168,7 @@ const Profile = () => {
             </div>
             <span className="text-sm">Change Password</span>
           </div>
-          <div
+          {/* <div
             onClick={() => navigate("/")}
             className="flex flex-col items-center"
           >

@@ -58,7 +58,7 @@ const TransferAmountScreen = () => {
         ticker: selectedAsset,
         address: receiverAddress,
       });
-      console.log(response);
+
       if (response.data?.success) {
         toast.success(response.data.message || "Transaction successful!");
         setShowTransactionPin(false);

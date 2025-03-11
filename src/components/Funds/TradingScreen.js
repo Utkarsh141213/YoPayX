@@ -54,11 +54,9 @@ const TradingScreen = () => {
         let funds;
         if (active === "sell") {
           funds = await getAvailableBalace();
-          console.log(funds.data);
           setAvailableBalance(funds.data.balance);
         } else {
           funds = await getAvailableFunds();
-          console.log(funds);
           setAvailableBalance(funds.inr_balance);
         }
       } catch (error) {
