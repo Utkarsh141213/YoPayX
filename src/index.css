@@ -22,3 +22,15 @@ input::placeholder {
 .input-tail{
     width: 10px;
 }
+
+.stacting-pag1-card1-btn{
+    border: 4px solid #29ABE2;
+}
+
+.stacting-pag1-card2-btn{
+    border: 4px solid #4BAF2A;
+}
+
+.stacting-pag1-card3-btn{
+    border: 4px solid #F78A1E;
+}

@@ -108,17 +108,18 @@ const BuyAssets = () => {
     }
     try {
       await buyAssets({
-        buy_amount: parseInt(amountYTP),
-        fiat: "INR",
+        coin_amount: parseInt(amountYTP),
+        fiat_currency: "INR",
+        coin_symbol: selectedAsset,
       });
       toast.success('Transaction Successful')
 
-      const balance = await getAvailableBalace();
-      if (balance) {
-        setAvailableBalance(balance.data.balance);
-        console.log('new balance', balance);
+      const funds = await getAvailableBalace();
+      console.log(funds);
+      if (funds) {
+        setAvailableBalance(funds.data.balance);
       }
-
+      
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
     }

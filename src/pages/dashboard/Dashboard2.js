@@ -210,13 +210,13 @@ const Dashboard2 = () => {
                   text1="XX"
                   // text2="X"
                   img={fire}
-                  className="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
+                  className="bg-gradient-to-r py-4 from-[#C5882D] to-[#B72346]"
                 />
                 <FeatureCard
                   text1="XX"
                   // text2="X"
                   img={road}
-                  className="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"
+                  className="bg-gradient-to-r py-4 from-[#979DD8] to-[#4431BA]"
                 />
               </div>
 
