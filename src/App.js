@@ -3,8 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import ForgotPassword from "./pages/forgotPassword";
-import Dashboard from "./pages/Dashboard";
+import ForgotPassword from "./pages/ForgotPassword";
 import Background from "./components/Background";
 import BasicDetials from "./components/KYC/BasicDetials";
 import BankDetails from "./components/KYC/BankDetails";
@@ -23,15 +22,17 @@ import Dashboard2 from "./pages/dashboard/Dashboard2";
 import Transaction from "./pages/Funds/Transaction";
 import TransferAmountScreen from "./components/Funds/TransferAmountScreen";
 import Wallet from "./pages/Funds/Wallet";
-import Page1 from "./pages/stacking/Page1";
-
+import Page1 from "./pages/staking/Page1";
+import TaskList from "./pages/staking/TaskList";
+import PhoneGiveaway from "./pages/staking/PhoneGiveaway";
+import StakingSummary  from "./pages/staking/StakingSummary";
 // import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <>
       {/* <Navbar /> */}
-
+      <Background >
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -58,8 +59,12 @@ function App() {
         <Route path="/transaction-history" element={<Transaction />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/page1" element={<Page1 />} />
+        <Route path="/task-list" element={<TaskList />} />
+        <Route path="/phone-giveaway" element={<PhoneGiveaway />} />
+        <Route path="/staking-summary" element={<StakingSummary />} />
         <Route path="/background" element={<Background />} />
       </Routes>
+      </Background>
     </>
   );
 }

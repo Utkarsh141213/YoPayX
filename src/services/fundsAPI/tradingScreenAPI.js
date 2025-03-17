@@ -1,3 +1,4 @@
+import { API_BASE_URL, API_ENDPOINTS } from "../../apiConfig";
 import axiosInstance from "../axios";
 
 
@@ -44,6 +45,11 @@ export const getTransactionHistory = async () => {
   const response = await axiosInstance.get("/finance/transactions/list");
   return response.data;
 };
+
+export  const getTransactionHistoryWithFilters = async (trans_type_filter) => {
+  const response = await axiosInstance.get(API_ENDPOINTS.FUND.TRANSACTION_HISTORY_FILTER, {trans_type_filter: ['Staking Reward']})
+  return response.data
+}
 
 
 

@@ -7,6 +7,23 @@ const API_ENDPOINTS = {
   VERIFY_EMAIL: `${API_BASE_URL}/users/auth/verify-email/`,
   USER_AUTH_STATUS: `${API_BASE_URL}/users/auth/user-auth/`,
   GENERATE_MOBILE_OTP: `${API_BASE_URL}/auth/genrate_mobile_otp/`,
+
+  FUND: {
+    TRANSACTION_HISTORY_FILTER: '/finance/transaction/list/by_trans_type/',
+  },
+
+  STACKING: {
+    GET_OVERVIEW: '/stakes/staking/overview/details/',
+    STACKING_CARD_DETAILS: '/stakes/staking/types/list/',
+    GET_ALL_STACKNIG: '/stakes/staking/list/',
+    GET_STACKING_REWARDS: '/stakes/staking-rois/list/',
+  },
+
+  PROMOTION: {
+    USER_REFERRAL_LINK: '/promotion/user-referral/'
+  },
+
+  FAQ: '/core/faq/list/'
 };
 
 export { API_BASE_URL, API_ENDPOINTS };

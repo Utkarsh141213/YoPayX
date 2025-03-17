@@ -33,19 +33,23 @@ const TradingScreen = () => {
 
     (async () => {
       try {
-
         const [assetsData, currency] = await Promise.all([
           getAssets(),
           getCurrencyList(),
         ]);
-        setAssets(assetsData.data);
+        const displayOrder = ["BTC", "YTP", "BNB", "USDT"]; 
+
+        const sortedAssets = assetsData.data.sort(
+          (a, b) =>
+            displayOrder.indexOf(a.symbol) - displayOrder.indexOf(b.symbol)
+        );
+        setAssets(sortedAssets);
         setCurrencyList(currency.data);
       } catch (error) {
         console.error(error);
       }
     })();
   }, [location.state]);
-
 
   useEffect(() => {
     (async () => {
@@ -68,7 +72,6 @@ const TradingScreen = () => {
 
   return (
     <Background>
-
       <div className="min-h-screen text-white p-4 relative">
         <div className="w-fit mx-auto">
           <div className="flex mb-4 justify-center">
@@ -93,7 +96,6 @@ const TradingScreen = () => {
               Withdrawal
             </div>
           </div>
-
 
           <div
             className={`${

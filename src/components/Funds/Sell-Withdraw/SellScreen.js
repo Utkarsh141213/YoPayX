@@ -14,20 +14,13 @@ const Badge = ({ badge }) => (
   </div>
 );
 
-/**
- * SellScreen Component
- * @param {Array} assets - Array of asset objects (e.g., [{id, symbol, price_usd}, ...])
- * @param {Array} currencyList - Array of currency objects (e.g., [{id, symbol, price_usd}, ...])
- */
 const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
-  const [selectedAsset, setSelectedAsset] = useState(null);
+  const [selectedAsset, setSelectedAsset] = useState('YTP');
   const [amount, setAmount] = useState("");
-  // "youWillGet" now reflects the INR amount received after deducting 1% TDS on coins
   const [youWillGet, setYouWillGet] = useState("0.00");
-  const [exchangeRate, setExchangeRate] = useState(0); // 1 coin => X INR
+  const [exchangeRate, setExchangeRate] = useState(0);
   const [transactions, setTransactions] = useState([]);
 
-  // 1) Whenever user picks an asset, compute its INR rate from currencyList
   useEffect(() => {
     if (!selectedAsset || !assets.length || !currencyList.length) {
       setExchangeRate(0);
@@ -49,9 +42,9 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
     }
 
     // Calculate final rate: asset's price in USD * USD→INR
-    const usdToInr = parseFloat(inrObj.price_usd); // e.g. 82
+    const usdToInr = parseFloat(inrObj.price_usd);
     const assetUsd = parseFloat(assetObj.price_usd);
-    const finalRate = usdToInr * assetUsd; // 1 coin => finalRate INR
+    const finalRate = usdToInr * assetUsd;
 
     setExchangeRate(finalRate);
   }, [selectedAsset, assets, currencyList]);
@@ -83,14 +76,12 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
     })();
   }, []);
 
-  // 3) User selects an asset from the dropdown or badges
   const handleAssetSelect = (value) => {
     setSelectedAsset(value);
     setAmount("");
     setYouWillGet("0.00");
   };
 
-  // 4) Final Sell Action
   const handleSell = async () => {
     if (!selectedAsset || !amount || !youWillGet) {
       toast.error("Please fill all fields");
@@ -98,15 +89,15 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
     }
     try {
       const result = await sellAsset({
-        fiat_currency: "INR", // Adjust if your API needs a different currency
+        fiat_currency: "INR",
         ytp_amount: parseInt(amount),
         coin_symbol: selectedAsset,
       });
       console.log("Sell successful:", result);
       toast.success("Sell successful");
-      setSelectedAsset(null)
-      setAmount(null)
-      setYouWillGet(null)
+      setSelectedAsset(null);
+      setAmount(null);
+      setYouWillGet(null);
       const balanceResult = await getAvailableBalace();
       if (balanceResult && balanceResult.data) {
         setAvailableBalance(balanceResult.data.balance);
@@ -124,21 +115,26 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
           Choose Assets
         </label>
         <select
-          className={`w-full bg-white  p-3 rounded-lg appearance-none outline-none
-            ${selectedAsset ? "text-black" : "text-black/50"}
+          className={`w-full bg-white "text-black p-3 rounded-lg appearance-none outline-none
             `}
           name="select_option"
           value={selectedAsset}
           onChange={(e) => handleAssetSelect(e.target.value)}
         >
-          <option value="" hidden>
-            xx
-          </option>
-          {assets.map((asset) => (
-            <option key={asset.id} value={asset.symbol}>
-              {asset.symbol}
-            </option>
-          ))}
+          {assets.map((asset) => {
+            if (asset.symbol === "YTP") {
+              return (
+                <option key={asset.id} value={asset.symbol} selected>
+                  {asset.symbol}
+                </option>
+              );
+            }
+            return (
+              <option key={asset.id} value={asset.symbol}>
+                {asset.symbol}
+              </option>
+            );
+          })}
         </select>
         <LiaAngleDownSolid className="absolute right-5 top-14 text-black" />
 
@@ -156,7 +152,6 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
       </div>
 
       <div className="grid md:grid-cols-2 gap-4 mb-4">
-        {/* User enters coin amount here */}
         <div>
           <label className="text-white text-lg font-bold block mb-2 w-full text-left">
             {selectedAsset || "XXX"} Amount
@@ -170,7 +165,6 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
           />
         </div>
 
-        {/* "You will get" in INR (disabled) */}
         <div>
           <label className="text-white text-lg font-bold block mb-2 w-full text-left">
             {selectedAsset || "XXX"} / INR
@@ -185,7 +179,6 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
         </div>
       </div>
 
-      {/* Swipe button to sell */}
       <div className="px-5 my-4">
         <div
           onClick={handleSell}
@@ -195,7 +188,6 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
         </div>
       </div>
 
-      {/* Transaction history */}
       <h2 className="text-white text-lg font-semibold mb-4">
         Transaction History
       </h2>

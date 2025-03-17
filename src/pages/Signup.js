@@ -20,10 +20,18 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otp, setotp] = useState("");
+  const [referral_id, setReferral_id] = useState("");
+
   const navigate = useNavigate();
 
   const handleEmailSubmit = async () => {
-    const response = await registerFirst(email, fullname);
+    let response;
+    if (referral_id) {
+      response = await registerFirst(email, fullname, referral_id);
+    } else {
+      response = await registerFirst(email, fullname);
+    }
+
     if (response.success) {
       setStep(2);
     } else if (!response.success && response.message === "Reset Email") {
@@ -47,7 +55,6 @@ const Signup = () => {
         navigate("/dashboard2");
       }
     } catch (error) {
-
       toast.error(error.message || "Something went worng");
     }
   };
@@ -88,6 +95,13 @@ const Signup = () => {
               className="form-control email-signin"
               value={fullname}
               onChange={(e) => setfullName(e.target.value)}
+            />
+            <InputField
+              type="text"
+              placeholder="Referral ID"
+              className="form-control email-signin"
+              value={referral_id}
+              onChange={(e) => setReferral_id(e.target.value)}
             />
           </div>
           <button className="submit-btn" onClick={handleEmailSubmit}>

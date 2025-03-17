@@ -31,6 +31,8 @@ const Dashboard2 = () => {
     avatar: null,
   });
 
+  const [showAll, setShowAll] = useState(false);
+
   useEffect(() => {
     if (location.state?.userName || location.state?.userImage) {
       setUser({
@@ -60,12 +62,12 @@ const Dashboard2 = () => {
           <header className="flex justify-between items-center py-2 px-4 md:px-12">
             <Logo />
             <div className="flex gap-4 pt-4">
-              <button
+              <div
                 onClick={() => navigate("/profile")}
-                className="profile-btn hidden md:block"
+                className="dashboard-username hidden md:flex justify-center items-center w-fit px-6  rounded-full "
               >
-                {user.name.split(' ')[0]}
-              </button>
+                {user.name.split(" ")[0]}
+              </div>
               {user.avatar ? (
                 <img
                   onClick={() => navigate("/profile")}
@@ -151,7 +153,7 @@ const Dashboard2 = () => {
                       </span>
                     </div>
                     <div className="text-white text-lg md:font-semibold text-right mr-[8vw] md:mr-[6vw]">
-                      with just ₹100
+                      with just ₹500
                     </div>
                   </div>
                 </div>
@@ -166,8 +168,12 @@ const Dashboard2 = () => {
                 <span className="text-white font-thin text-sm md:leading-none block">
                   Highest return on
                 </span>
-                <span className="text-xl md:text-3xl font-bold leading-none">STAKING</span>
-                <div className="text-6xl mt-3 mb-6 md:mt-0 md:text-[6rem] font-bold ">30% p.a.</div>
+                <span className="text-xl md:text-3xl font-bold leading-none">
+                  STAKING
+                </span>
+                <div className="text-6xl mt-3 mb-6 md:mt-0 md:text-[6rem] font-bold ">
+                  30% p.a.
+                </div>
                 <p className="text-sm mb-4 leading-none">
                   Annual return with{" "}
                   <span className="text-yellow-400">yatripay</span>
@@ -193,7 +199,7 @@ const Dashboard2 = () => {
               </div>
 
               {/* Middle cards section */}
-              <div className="w-full grid md:grid-cols-2 gap-12 mb-8 px-[14vw]">
+              <div className="w-[70vw] mx-auto overflow-x-scroll flex gap-12 mb-8 py-[8vh] px-[14vw]">
                 <FeatureCard
                   text1="Zero Transaction"
                   text2="Fees"
@@ -221,23 +227,24 @@ const Dashboard2 = () => {
               </div>
 
               {/* Bottom featured section */}
-              <div className="w-full">
+              {/* <div className="w-full">
                 <p className="text-center mb-4">Featured in</p>
                 <div className="flex gap-10 justify-around w-fit mx-auto">
                   {[...Array(6)].map((_, i) => (
                     <div
                       key={i}
                       className="feature-box bg-[#FFFFFF14] rounded-2xl h-24 w-24 flex items-center justify-center"
-                    >
+                    > */}
                       {/* <img
                         src="/api/placeholder/40/40"
                         alt={`partner logo ${i + 1}`}
                         className="w-10 h-10"
                       /> */}
-                    </div>
+                    {/* </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
+              
             </div>
           </section>
 
@@ -282,120 +289,136 @@ const Dashboard2 = () => {
                 </h2>
 
                 {/* <div className="grid md:grid-cols-2 gap-12"> */}
-                <div className="grid md:grid-cols-2 gap-12 md:px-[14vw]">
-                  {/* Flights */}
-                  <ExploreYatripayCards
-                    text1="Flights"
-                    text2="Budget-friendly travel"
-                    image={flight}
-                    classNameMain="md:justify-self-end py-20"
-                    classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
-                    classNameImgDiv="mb-10"
-                    classNameImg={"md:w-[20rem]"}
-                  />
+                <div>
+                  <div className="grid md:grid-cols-2 gap-12 md:px-[14vw]">
+                    {/* Flights */}
+                    <ExploreYatripayCards
+                      text1="Flights"
+                      text2="Budget-friendly travel"
+                      image={flight}
+                      classNameMain="md:justify-self-end py-20"
+                      classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
+                      classNameImgDiv="mb-10"
+                      classNameImg={"md:w-[20rem]"}
+                    />
 
-                  {/* Staking */}
-                  <div
-                    onClick={() => {}}
-                    className="feature-box h-fit pt-4 pb-2 bg-[#FFFFFF14]  rounded-3xl  w-full relative justify-self-center md:justify-self-start cursor-pointer"
-                  >
-                    <div className=" text-7xl md:text-8xl font-bold text-white mb-[33px]">
-                      30%
+                    {/* Staking */}
+                    <div
+                      onClick={() => {
+                        navigate("/page1");
+                      }}
+                      className="feature-box h-fit pt-4 pb-2 bg-[#FFFFFF14]  rounded-3xl  w-full relative justify-self-center md:justify-self-start cursor-pointer"
+                    >
+                      <div className=" text-7xl md:text-8xl font-bold text-white mb-[33px]">
+                        30%
+                      </div>
+                      <span className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-[#979DD8] to-[#4431BA] text-transparent bg-clip-text leading-none">
+                        Staking
+                      </span>
+                      <p className="text-white text-center md:font-semibold">
+                        Minimum 30% p.a.
+                      </p>
                     </div>
-                    <span className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-[#979DD8] to-[#4431BA] text-transparent bg-clip-text leading-none">
-                      Staking
-                    </span>
-                    <p className="text-white text-center md:font-semibold">
-                      Minimum 30% p.a.
-                    </p>
+
+                    {/* Hotel */}
+                    <ExploreYatripayCards
+                      text1="Hotel"
+                      text2="Book affordable stays"
+                      image={hotel}
+                      classNameMain="md:justify-self-end"
+                      classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
+                      classNameImg="h-[6rem] md:h-[8rem] origin-center"
+                    />
+
+                    {/* Rewards */}
+                    <ExploreYatripayCards
+                      text1="Rewards"
+                      text2="Win a foreign trip"
+                      image={reward}
+                      classNameMain="md:justify-self-start"
+                      classNameTex1="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"
+                      classNameImgDiv={"mb-[11px]"}
+                    />
+
+                    {showAll && (
+                      <>
+                        {/* Buy YTP */}
+                        <ExploreYatripayCards
+                          text1="Buy YTP"
+                          text2="Purchase YTP coins"
+                          image={buyYTP}
+                          onClick={() => {
+                            navigate("/buy-assets");
+                          }}
+                          classNameMain="md:justify-self-end"
+                          classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
+                        />
+
+                        {/* Referrals */}
+                        <ExploreYatripayCards
+                          text1="Referrals"
+                          text2="Invite friends, earn YTP"
+                          image={referral}
+                          classNameMain="md:justify-self-start"
+                          classNameTex1="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"
+                        />
+
+                        {/* Sell YTP */}
+                        <ExploreYatripayCards
+                          text1="Sell YTP"
+                          text2="Convert YTP to fiat"
+                          image={sellYTP}
+                          onClick={() => {
+                            navigate("/fund");
+                          }}
+                          classNameMain="md:justify-self-end"
+                          classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
+                        />
+
+                        {/* Withdraw */}
+                        <ExploreYatripayCards
+                          text1="Withdraw"
+                          text2="Transfer to your bank"
+                          image={withdraw}
+                          onClick={() => {
+                            navigate("/fund", { state: { tab: "withdraw" } });
+                          }}
+                          classNameMain="md:justify-self-start"
+                          classNameTex1="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"
+                        />
+
+                        {/* Wallet */}
+                        <ExploreYatripayCards
+                          text1="Wallet"
+                          text2="Receive and Send YTP"
+                          image={wallet}
+                          onClick={() => {
+                            navigate("/wallet");
+                          }}
+                          classNameMain="md:justify-self-end"
+                          classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
+                        />
+
+                        {/* Transactions */}
+                        <ExploreYatripayCards
+                          text1="Transactions"
+                          text2="Track your transactions"
+                          image={transaction}
+                          onClick={() => navigate("/transaction-history")}
+                          classNameMain="md:justify-self-start"
+                          classNameTex1="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"
+                        />
+                      </>
+                    )}
                   </div>
-
-                  {/* Hotel */}
-                  <ExploreYatripayCards
-                    text1="Hotel"
-                    text2="Book affordable stays"
-                    image={hotel}
-                    classNameMain="md:justify-self-end"
-                    classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
-                    classNameImg="h-[6rem] md:h-[8rem] origin-center"
-                  />
-
-                  {/* Rewards */}
-                  <ExploreYatripayCards
-                    text1="Rewards"
-                    text2="Win a foreign trip"
-                    image={reward}
-                    classNameMain="md:justify-self-start"
-                    classNameTex1="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"
-                    classNameImgDiv={"mb-[11px]"}
-                  />
-
-                  {/* Buy YTP */}
-                  <ExploreYatripayCards
-                    text1="Buy YTP"
-                    text2="Purchase YTP coins"
-                    image={buyYTP}
-                    onClick={() => {
-                      navigate("/buy-assets");
-                    }}
-                    classNameMain="md:justify-self-end"
-                    classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
-                  />
-
-                  {/* Referrals */}
-                  <ExploreYatripayCards
-                    text1="Referrals"
-                    text2="Invite friends, earn YTP"
-                    image={referral}
-                    classNameMain="md:justify-self-start"
-                    classNameTex1="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"
-                  />
-
-                  {/* Sell YTP */}
-                  <ExploreYatripayCards
-                    text1="Sell YTP"
-                    text2="Convert YTP to fiat"
-                    image={sellYTP}
-                    onClick={() => {
-                      navigate("/fund");
-                    }}
-                    classNameMain="md:justify-self-end"
-                    classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
-                  />
-
-                  {/* Withdraw */}
-                  <ExploreYatripayCards
-                    text1="Withdraw"
-                    text2="Transfer to your bank"
-                    image={withdraw}
-                    onClick={() => {
-                      navigate("/fund", {state: { tab: 'withdraw'}});
-                    }}
-                    classNameMain="md:justify-self-start"
-                    classNameTex1="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"
-                  />
-
-                  {/* Wallet */}
-                  <ExploreYatripayCards
-                    text1="Wallet"
-                    text2="Receive and Send YTP"
-                    image={wallet}
-                    onClick={() => {
-                      navigate("/wallet");
-                    }}
-                    classNameMain="md:justify-self-end"
-                    classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
-                  />
-
-                  {/* Transactions */}
-                  <ExploreYatripayCards
-                    text1="Transactions"
-                    text2="Track your transactions"
-                    image={transaction}
-                    onClick={() => navigate('/transaction-history')}
-                    classNameMain="md:justify-self-start"
-                    classNameTex1="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"
-                  />
+                  <div className="flex justify-center">
+                  <div
+                    onClick={() => setShowAll(!showAll)}
+                    className="dashboard-show-more-btn mt-4 text-sm text-center text-white rounded-2xl py-1 px-6 cursor-pointer w-fit"
+                  >
+                    {showAll ? "Show Less" : "Show More"}
+                  </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -413,7 +436,7 @@ const FeatureCard = ({
   img = "",
 }) => {
   return (
-    <div className="feature-box md:min-h-48 flex items-center justify-center  bg-[#FFFFFF14]  rounded-3xl pb-12 pt-16 w-full relative justify-self-center md:justify-self-end">
+    <div className="feature-box md:min-h-48 min-w-[40vw] flex items-center justify-center  bg-[#FFFFFF14]  rounded-3xl pb-12 pt-16 w-full relative justify-self-center md:justify-self-end">
       <div className="absolute -top-3 -right-3 rounded-full flex items-center justify-center backdrop-blur-sm">
         <img src={img} alt="flame icon" className="w-10 h-10" />
       </div>
