@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Background from "../components/Background";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../services/authService";
 import {
   mfaSvg,
-  authSvg,
   bankSvg,
   kycSvg,
   pinSvg,
@@ -13,6 +11,7 @@ import {
 import { changePIN } from "../services/kycService";
 import TransactionPin from "../components/KYC/TransactionPin";
 import { toast } from "react-toastify";
+import { cardPerson } from "../assets/stacking/page1";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -39,7 +38,7 @@ const Profile = () => {
 
   const handlePinSubmit = async (pin) => {
     try {
-     const response = await changePIN({pin})
+      const response = await changePIN({ pin });
       if (response.data?.success) {
         toast.success(response.data.message || "Transaction successful!");
         setShowTransactionPin(false);
@@ -53,7 +52,12 @@ const Profile = () => {
     }
   };
 
-  
+  const handleLogout = () => {
+    logout();
+    window.localStorage.clear();
+    navigate("/");
+  };
+
   if (showTransactionPin) {
     return (
       <TransactionPin
@@ -64,16 +68,12 @@ const Profile = () => {
   }
 
   return (
-    <Background>
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6">
         <h1 className="text-3xl font-bold mb-1">YatriPay</h1>
         <h2 className="text-xl font-semibold mb-8">Profile</h2>
 
         <div
-          onClick={() => {
-            logout();
-            navigate("/");
-          }}
+          onClick={handleLogout}
           className="absolute top-8 right-10 text-lg cursor-pointer"
         >
           Logout
@@ -156,7 +156,9 @@ const Profile = () => {
             <span className="text-sm">Pin</span>
           </div>
           <div
-            onClick={() => navigate("/forgotPassword", { state: { requiredStep: 3}})}
+            onClick={() =>
+              navigate("/forgotPassword", { state: { requiredStep: 3 } })
+            }
             className="flex flex-col items-center"
           >
             <div className="w-10 h-10 mb-2">
@@ -167,6 +169,22 @@ const Profile = () => {
               />
             </div>
             <span className="text-sm">Change Password</span>
+          </div>
+
+          <div
+            onClick={() =>
+              navigate("/ticket")
+            }
+            className="flex flex-col items-center justify-center"
+          >
+            <div className="w-6 h-6 mb-2">
+              <img
+                src={cardPerson}
+                alt="Change Password Icon"
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <span className="text-sm">Support</span>
           </div>
           {/* <div
             onClick={() => navigate("/")}
@@ -183,7 +201,6 @@ const Profile = () => {
           </div> */}
         </div>
       </div>
-    </Background>
   );
 };
 

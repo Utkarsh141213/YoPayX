@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Background from "../Background";
 import logo from "../../assets/yatri-pay-logo-main.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getCoinValueInCurrency, sendYTP } from "../../services/fundsAPI/fundsAPI";
@@ -78,12 +77,12 @@ const TransferAmountScreen = () => {
       <TransactionPin 
         onSubmitPin={handlePinSubmit} 
         onCancel={() => setShowTransactionPin(false)}
+        isTransaction={true}
       />
     );
   }
 
   return (
-    <Background>
       <div className="bg-black min-h-screen flex justify-center items-center">
         <div className="container bg-black p-5 w-full max-w-2xl">
           {/* Header Section */}
@@ -154,7 +153,6 @@ const TransferAmountScreen = () => {
           </div>
         </div>
       </div>
-    </Background>
   );
 };
 

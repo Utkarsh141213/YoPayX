@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getFAQ } from "../services/generalAPI";
+import { getFAQ } from "../../services/generalAPI";
 import { FaAngleUp, FaAngleDown } from "react-icons/fa6";
 
 const FAQ = () => {
@@ -19,7 +19,7 @@ const FAQ = () => {
   }, []);
 
   if (!FAQList || FAQList.length === 0) {
-    return <div>Loding FAQs...</div>;
+    return <div>loading FAQs...</div>;
   }
 
   return (
@@ -38,9 +38,8 @@ const FAQ = () => {
   );
 };
 
-const FAQDetails = ({faq}) => {
+const FAQDetails = ({ faq }) => {
   const [showAns, setShowAns] = useState(false);
-    console.log(faq);
   return (
     <div className="">
       <div className="flex justify-between items-center text-lg">
@@ -49,11 +48,16 @@ const FAQDetails = ({faq}) => {
           <span className="text-black font-medium"> {faq.name}</span>
         </div>
         <span
-        onClick={() => setShowAns(prev => !prev)}
-         className="text-black font-medium">{showAns ? <FaAngleUp /> : <FaAngleDown />}</span>
+          onClick={() => setShowAns((prev) => !prev)}
+          className="text-black font-medium"
+        >
+          {showAns ? <FaAngleUp /> : <FaAngleDown />}
+        </span>
       </div>
-      {showAns && ( 
-        <span className="block text-black text-sm text-left mt-2">{faq.description}</span>
+      {showAns && (
+        <span className="block text-black text-sm text-left mt-2">
+          {faq.description}
+        </span>
       )}
     </div>
   );

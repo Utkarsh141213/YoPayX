@@ -1,5 +1,5 @@
 import React from 'react';
-import { b, bBG, p, pBG, t, tBG, square, squareBG } from '../assets/backgroundAssets';
+import { b, bBG, p, pBG, t, tBG, square, squareBG } from '../../assets/backgroundAssets';
 
 const Background = ({ children }) => {
   return (

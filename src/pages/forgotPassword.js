@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../assets/styles/forgotPassword.css";
-import InputField from "../components/InputField";
 import { sendOtp, verifyOtp, resetPassword } from "../services/authService";
 import Logo from "../components/logo";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
-import Background from "../components/Background";
 
 const ForgotPassword = () => {
   const [step, setStep] = useState(1); // Steps: 1 -> Email, 2 -> OTP, 3 -> Reset Password
@@ -74,7 +72,6 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Background>
       <div className=" mt-5">
         <div className="logo-forget-password">
           <Logo />
@@ -145,7 +142,7 @@ const ForgotPassword = () => {
           )}
         </div>
       </div>
-    </Background>
+
   );
 };
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Background from "../../components/Background";
 import yatripayLogo from "../../assets/yatripay_logo.svg";
 import Button from "../../components/Button";
 import {
@@ -129,7 +128,6 @@ const BuyAssets = () => {
   };
 
   return (
-    <Background>
       <div className="text-white p-6">
 
         <header className="flex flex-col sm:flex-row items-center justify-between mb-6 py-2 px-6 gap-2 sm:gap-0">
@@ -247,7 +245,6 @@ const BuyAssets = () => {
           </div>
         </div>
       </div>
-    </Background>
   );
 };
 

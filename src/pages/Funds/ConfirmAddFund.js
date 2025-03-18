@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Background from "../../components/Background";
 import InputField from "../../components/KYC/InputField";
 import { RxCross2 } from "react-icons/rx";
 
@@ -70,7 +69,6 @@ const ConfirmAddFund = () => {
   };
 
   return (
-    <Background>
       <div className="min-h-screen">
         <form
           onSubmit={handleSubmit}
@@ -141,7 +139,6 @@ const ConfirmAddFund = () => {
           </button>
         </form>
       </div>
-    </Background>
   );
 };
 

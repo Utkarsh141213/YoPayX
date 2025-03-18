@@ -1,67 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { phoneSvg } from "../../assets/stacking";
 import { cardLock } from "../../assets/stacking/page1";
+import { getIphoneTaskList } from "../../services/promotion/promotionAPI";
+import Footer from "../../components/common/Footer";
 
 const PhoneGiveaway = () => {
-  const tasks = [
-    {
-      id: 1,
-      title: "Task 1: Kyc Bonus",
-      maxReward: "₹100",
-      status: "start",
-      additionalReward: null,
-    },
-    {
-      id: 2,
-      title: "Task 2: Extravaganza",
-      maxReward: "₹100",
-      status: "pending",
-      additionalReward: null,
-    },
-    {
-      id: 3,
-      title: "Task 3: Claim Welcome Bonus",
-      maxReward: "₹100",
-      status: "pending",
-      additionalReward: "100 YTP",
-    },
-    {
-      id: 4,
-      title: "Task 4: Cashback Stacking Voucher",
-      maxReward: "₹100",
-      status: "pending",
-      additionalReward: null,
-    },
-    {
-      id: 5,
-      title: "Task 5: Quick Sales & Refer",
-      maxReward: "₹100",
-      status: "pending",
-      additionalReward: null,
-    },
-    {
-      id: 6,
-      title: "Task 6: Participate in Foreign Tour Pool",
-      maxReward: "₹100",
-      status: "pending",
-      additionalReward: "₹100 YTP",
-      stackingReferral: true,
-    },
-    {
-      id: 7,
-      title: "Task 7: iPhone Pool",
-      maxReward: "₹100",
-      status: "pending",
-      additionalReward: null,
-    },
-    {
-      id: 8,
-      title: "Task 8: iPhone Pool Boost",
-      maxReward: "₹100",
-      status: "pending",
-      additionalReward: null,
-    },
-  ];
+
+  const [taskList, setTaskList] = useState([])
+
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const res = await getIphoneTaskList()
+        console.log(res);
+        if(res){
+          setTaskList(res)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })()
+  }, [])
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-8 px-4 text-white">
@@ -95,12 +54,12 @@ const PhoneGiveaway = () => {
         </div>
 
         <div className="xl:px-[16rem]">
-          {tasks.map((task) => (
+          {taskList && taskList.map((task) => (
             <div
               key={task.id}
               className="bg-[#FFFFFF1F] rounded-xl mb-4 p-8 px-10"
             >
-              <h2 className="font-semibold text-xl md:text-2xl mb-8">{task.title}</h2>
+              <h2 className="font-semibold text-xl md:text-2xl mb-8">{task.name}</h2>
 
               <div className="md:flex w-full items-center">
                 <div className="md:px-16 flex-1 mb-4">
@@ -110,7 +69,7 @@ const PhoneGiveaway = () => {
                       <span className="text-xs md:text-sm md:mr-3">Max Reward</span>
                     </div>
                     <div>
-                      <span className="font-medium">{task.maxReward}</span>
+                      <span className="font-medium">{task.reward_amount}</span>
                       {task.additionalReward && (
                         <span className="md:ml-3 font-medium">
                           + {task.additionalReward}
@@ -145,6 +104,9 @@ const PhoneGiveaway = () => {
           ))}
         </div>
       </div>
+      <section className="flex mt-16 md:-ml-[12vw]">
+        <Footer />
+      </section>
     </div>
   );
 };

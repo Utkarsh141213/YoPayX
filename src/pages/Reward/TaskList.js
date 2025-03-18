@@ -1,38 +1,26 @@
+import { useEffect, useState } from "react";
 import { taskListSvg } from "../../assets/stacking";
+import { getTaskList } from "../../services/promotion/promotionAPI";
+import Footer from "../../components/common/Footer";
 
 const TaskList = () => {
-  const tasks = [
-    {
-      id: 1,
-      title: "Task 1",
-      description: "Download the YariPay App",
-      status: "completed",
-    },
-    {
-      id: 2,
-      title: "Task 2",
-      description: "Download the YariPay App",
-      status: "pending",
-    },
-    {
-      id: 3,
-      title: "Task 3",
-      description: "Download the YariPay App",
-      status: "pending",
-    },
-    {
-      id: 4,
-      title: "Task 4",
-      description: "Download the YariPay App",
-      status: "pending",
-    },
-    {
-      id: 5,
-      title: "Task 5",
-      description: "Download the YariPay App",
-      status: "pending",
-    },
-  ];
+
+  const [taskList, setTaskList] = useState([])
+
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const res = await getTaskList()
+        console.log(res);
+        if(res){
+          setTaskList(res)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })()
+  }, [])
+  
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-8 px-4 mt-10">
@@ -59,19 +47,19 @@ const TaskList = () => {
         </div>
 
         <div className="space-y-4 w-full">
-          {tasks.map((task) => (
+          {taskList && taskList.map((task, index) => (
             <div
               key={task.id}
               className="bg-[#FFFFFF1F] rounded-lg p-4"
             >
               <h3 className="text-xl font-bold text-white mb-3">
-                {task.title}
+                Task {index+1}
               </h3>
-              <p className="text-white mt-2">{task.description}</p>
+              <p className="text-white mt-2">{task.name}</p>
               <div className="flex justify-center mt-3">
                 <div
                   className={`px-4 py-1 rounded-lg font-bold ${
-                    task.status === "completed"
+                    task.status.toLowerCase() === "completed"
                       ? "bg-[#4BAF2A] text-white"
                       : "bg-white text-black"
                   }`}
@@ -83,6 +71,9 @@ const TaskList = () => {
           ))}
         </div>
       </div>
+      <section className="flex mt-16 md:-ml-[12vw]">
+        <Footer />
+      </section>
     </div>
   );
 };

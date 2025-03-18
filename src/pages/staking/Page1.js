@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Background from "../../components/Background";
 import logo from "../../assets/yatri-pay-logo-main.png";
 import { card1, card2, card3 } from "../../assets/stacking/page1";
 import {
@@ -10,7 +9,9 @@ import StakingCard from "../../components/Staking/StakingCard";
 import { getUserReferralLink } from "../../services/promotion/promotionAPI";
 import AllStacking from "../../components/Staking/AllStaking";
 import StackingReward from "../../components/Staking/StakingReward";
-import FAQ from "../../components/FAQ";
+import FAQ from "../../components/common/FAQ";
+import Footer from "../../components/common/Footer";
+import { useNavigate } from "react-router-dom";
 
 const Page1 = () => {
   const [activeTab, setActiveTab] = useState("locked");
@@ -20,6 +21,8 @@ const Page1 = () => {
   const [referralLink, setReferralLink] = useState(
     "Referral link is not available"
   );
+
+  const navigate = useNavigate()
 
   const [activeButton, setActiveButton] = useState("allStaking");
 
@@ -51,7 +54,6 @@ const Page1 = () => {
   }, []);
 
   return (
-    <Background>
       <div className="min-h-screen">
         <header>
           <div className="flex justify-start p-8">
@@ -130,7 +132,9 @@ const Page1 = () => {
                     data={cardDetails[0]}
                     background={card1}
                     btnClass="stacting-pag1-card1-btn hover:bg-blue-900/30"
-                    handleFn={() => {}}
+                    handleFn={() => {
+                      navigate('/staking-summary', { state: { cardId: 1, referralLink }})
+                    }}
                   />
                 )}
 
@@ -140,7 +144,9 @@ const Page1 = () => {
                     data={cardDetails[1]}
                     background={card2}
                     btnClass="stacting-pag1-card2-btn hover:bg-green-900/30"
-                    handleFn={() => {}}
+                    handleFn={() => {
+                      navigate('/staking-summary', { state: { cardId: 2, referralLink }})
+                    }}
                   />
                 )}
 
@@ -150,7 +156,9 @@ const Page1 = () => {
                     data={cardDetails[2]}
                     background={card3}
                     btnClass="stacting-pag1-card3-btn hover:bg-orange-900/30"
-                    handleFn={() => {}}
+                    handleFn={() => {
+                      navigate('/staking-summary', { state: { cardId: 3, referralLink }})
+                    }}
                   />
                 )}
               </div>
@@ -236,8 +244,10 @@ const Page1 = () => {
           {/* FAQ Section */}
           <FAQ />
         </main>
+        <section className="flex ml-[4vw] md:ml-[16vw]">
+          <Footer />
+        </section>
       </div>
-    </Background>
   );
 };
 

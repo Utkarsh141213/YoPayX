@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Background from "../Background";
 
 import SellScreen from "./Sell-Withdraw/SellScreen";
 import WithdrawalScreen from "./Sell-Withdraw/WithdrawalScreen";
@@ -71,7 +70,6 @@ const TradingScreen = () => {
   }, [activeTab]);
 
   return (
-    <Background>
       <div className="min-h-screen text-white p-4 relative">
         <div className="w-fit mx-auto">
           <div className="flex mb-4 justify-center">
@@ -131,7 +129,6 @@ const TradingScreen = () => {
           )}
         </div>
       </div>
-    </Background>
   );
 };
 

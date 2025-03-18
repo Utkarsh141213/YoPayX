@@ -1,4 +1,5 @@
-const API_BASE_URL = "https://app.yatripay.com/api/v1"; // Replace with the actual base URL
+// const API_BASE_URL = "https://app.yatripay.com/api/v1"; // Replace with the actual base URL
+const API_BASE_URL = "https://chiru-stage.yatripay.com/api/v1"; // Replace with the actual base URL
 
 const API_ENDPOINTS = {
   LOGIN: `${API_BASE_URL}/users/auth/login/`,
@@ -9,21 +10,35 @@ const API_ENDPOINTS = {
   GENERATE_MOBILE_OTP: `${API_BASE_URL}/auth/genrate_mobile_otp/`,
 
   FUND: {
-    TRANSACTION_HISTORY_FILTER: '/finance/transaction/list/by_trans_type/',
+    TRANSACTION_HISTORY_FILTER: "/finance/transaction/list/by_trans_type/",
+    GET_VALUE_OF_COIN_BY_TYPE: '/finance/coin/',
+    GET_WALLET_DETAILS: '/finance/wallet/', 
   },
 
   STACKING: {
-    GET_OVERVIEW: '/stakes/staking/overview/details/',
-    STACKING_CARD_DETAILS: '/stakes/staking/types/list/',
-    GET_ALL_STACKNIG: '/stakes/staking/list/',
-    GET_STACKING_REWARDS: '/stakes/staking-rois/list/',
+    GET_OVERVIEW: "/stakes/staking/overview/details/",
+    STACKING_CARD_DETAILS: "/stakes/staking/types/list/",
+    GET_ALL_STACKNIG: "/stakes/staking/list/",
+    GET_STACKING_REWARDS: "/stakes/staking-rois/list/",
+    STACKING_CARD_DETAILS_BY_ID: '/stakes/staking/type/',
+    CREATE_STACKING: '/stakes/staking/create/'
   },
 
   PROMOTION: {
-    USER_REFERRAL_LINK: '/promotion/user-referral/'
+    USER_REFERRAL_LINK: "/promotion/user-referral/",
+    GET_TASK_LIST: "/promotion/user-welcome-task/list/",
+    GET_IPHONE_TASK_LIST: "/promotion/user-task/list/",
   },
 
-  FAQ: '/core/faq/list/'
+  GENERAL: {
+    FAQ: "/core/faq/list/",
+    NOTIFICATION: "/core/notifications/list/",
+  },
+
+  TICKET: {
+    CREATE_TICKET: '/support/create-ticket/',
+    GET_TICKETS: '/support/user-tickets/',
+  }
 };
 
 export { API_BASE_URL, API_ENDPOINTS };

@@ -1,3 +1,4 @@
+import { API_ENDPOINTS } from "../../apiConfig";
 import axiosInstance from "../axios";
 
 export const addFundInINR = async ({ amount, fiat }) => {
@@ -71,3 +72,9 @@ export const sendYTP = async ({
     address,
   });
 }
+
+
+export const getValueOfCoinByType = async (coin) => {
+  const response = await axiosInstance.get(`${API_ENDPOINTS.FUND.GET_VALUE_OF_COIN_BY_TYPE}${coin}/value/`)
+  return response.data
+} 
