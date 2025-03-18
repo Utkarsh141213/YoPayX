@@ -19,12 +19,12 @@ const FeatureSection = () => {
     {
       text1: "Transparent Ledger",
       img: fire,
-      className: "bg-gradient-to-r py-[20px] from-[#C5882D] to-[#B72346]",
+      className: "bg-gradient-to-r md:py-[20px] from-[#C5882D] to-[#B72346]",
     },
     {
       text1: "Cashback Reward",
       img: road,
-      className: "bg-gradient-to-r py-[20px] from-[#979DD8] to-[#4431BA]",
+      className: "bg-gradient-to-r min-h-[4.3vh] md:py-[20px] from-[#979DD8] to-[#4431BA]",
     },
   ];
 
@@ -42,9 +42,9 @@ const FeatureSection = () => {
 
   useEffect(() => {
     
-    setInterval(() => {
-      handleNext()
-    }, 3000)
+    // setInterval(() => {
+    //   handleNext()
+    // }, 3000)
   
     return () => {
       
@@ -52,7 +52,7 @@ const FeatureSection = () => {
   }, [])
 
   return (
-    <div className="w-[70vw] mx-auto flex items-center justify-center gap-8 mb-8 py-[8vh] px-[14vw]">
+    <div className="w-[85vw] md:w-[70vw] mx-auto flex items-center justify-center gap-4 md:gap-8 mb-8 py-[8vh] md:px-[14vw]">
       {/* Left Button */}
       <div
         onClick={handlePrev}

@@ -4,7 +4,6 @@ export const createKYC = async (formData) => {
   try {
     const response = await axiosInstance.post("/finance/kyc/create/", formData, {
       headers: {
-        // "Content-Type": "multipart/form-data",
       },
     });
 

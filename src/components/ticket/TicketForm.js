@@ -27,15 +27,15 @@ const TicketForm = () => {
   const navigate = useNavigate()
 
   const ticketOptions = [
-    { id: 1, value: 'deposit', label: 'Deposit', icon: <FaMoneyBillWave /> },
-    { id: 2, value: 'withdrawal', label: 'Withdrawal', icon: <FaMoneyBillWave /> },
-    { id: 3, value: 'ytp', label: 'YTP Buy/Sell', icon: <FaExchangeAlt /> },
-    { id: "4", value: 'twofa', label: 'Two Factor Authentication', icon: <FaShieldAlt /> },
+    { id: 3, value: 'deposit', label: 'Deposit', icon: <FaMoneyBillWave /> },
+    { id: 4, value: 'withdrawal', label: 'Withdrawal', icon: <FaMoneyBillWave /> },
+    { id: 2, value: 'ytp', label: 'YTP Buy/Sell', icon: <FaExchangeAlt /> },
+    { id: 6, value: 'twofa', label: 'Two Factor Authentication', icon: <FaShieldAlt /> },
     { id: 5, value: 'kyc', label: 'KYC Verification', icon: <FaIdCard /> },
-    { id: 6, value: 'staking', label: 'Staking', icon: <FaCoins /> },
-    { id: 7, value: 'referral', label: 'Referral', icon: <FaUserFriends /> },
-    { id: 8, value: 'offers', label: 'Offers', icon: <FaGift /> },
-    { id: 9, value: 'general', label: 'General Query', icon: <FaQuestionCircle /> },
+    { id: 7, value: 'staking', label: 'Staking', icon: <FaCoins /> },
+    { id: 10, value: 'referral', label: 'Referral', icon: <FaUserFriends /> },
+    { id: 9, value: 'offers', label: 'Offers', icon: <FaGift /> },
+    { id: 1, value: 'general', label: 'General Query', icon: <FaQuestionCircle /> },
   ];
 
   const handleAttachmentChange = (e) => {
@@ -52,7 +52,8 @@ const TicketForm = () => {
         ticket_category,
         subject,
         message,
-        // attachment
+        status: true,
+        attachment,
       })
 
       toast.success('Ticket created successfully')

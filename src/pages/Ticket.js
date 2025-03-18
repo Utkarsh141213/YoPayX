@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FaPlus, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { getTickets } from '../services/ticketAPI';
+import logo from "../assets/yatri-pay-logo-main.png";
 
 const Ticket = () => {
   const navigate = useNavigate();
@@ -40,10 +41,16 @@ const Ticket = () => {
 
   return (
     <div className="min-h-screen text-white p-6">
+       <header>
+          <div className="flex flex-col justify-center items-center py-6">
+            <img src={logo} alt="logo" className="h-8 md:h-12" />
+            <h1 className=''>Support Center</h1>
+          </div>
+        </header>
       <div className="max-w-3xl mx-auto">
         {/* Page Title and Create Button */}
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-semibold">My Tickets</h1>
+        <div className="flex justify-end items-center mb-8">
+          {/* <h1 className="text-3xl font-semibold">My Tickets</h1> */}
           <div
             onClick={handleCreateTicket}
             className="bg-[#4BAF2A] hover:bg-green-600 cursor-pointer text-white px-4 py-2 rounded flex items-center"
@@ -66,7 +73,11 @@ const Ticket = () => {
           </div>
         ) : (
           /* Table Design */
-          <div className="overflow-x-auto">
+          <div className="rounded-3xl overflow-x-auto "
+            style={{
+              border: '2px solid #848484'
+            }}
+          >
             <table className="w-full bg-[#FFFFFF16] text-left rounded-lg">
               {/* Table Headers */}
               <thead className='border-b-2'>
@@ -92,7 +103,7 @@ const Ticket = () => {
                           Resolved
                         </span>
                       ) : (
-                        <span className="flex items-center text-yellow-400">
+                        <span className="flex items-center text-red-400">
                           {/* <FaTimesCircle className="mr-2" />  */}
                           Open
                         </span>

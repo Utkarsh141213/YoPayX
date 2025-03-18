@@ -1,4 +1,4 @@
-import { API_BASE_URL, API_ENDPOINTS } from "../../apiConfig";
+import {API_ENDPOINTS } from "../../apiConfig";
 import axiosInstance from "../axios";
 
 
@@ -22,8 +22,7 @@ export const getAssets = async () => {
 
 
 export const sellAsset = async (sellData) => {
-    console.log(sellData);
-    console.log('IN API');
+
   const response = await axiosInstance.post("/finance/sell/ytp_to_fiat/", sellData, {
     headers: {
         "Content-Type": "application/json"

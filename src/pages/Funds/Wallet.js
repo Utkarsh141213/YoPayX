@@ -2,32 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaRegCopy } from "react-icons/fa";
-import { getAssets } from "../../services/fundsAPI/tradingScreenAPI";
 import { getWalletDetails } from "../../services/fundsAPI/walletAPI";
 
 const Wallet = () => {
   const [wallet, setWallet] = useState(null);
-  const [assets, setAssets] = useState([]);
   const [selectedAsset, setSelectedAsset] = useState("YTP");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const assetData = await getAssets();
-        // If assetData is nested, do setAssets(assetData.data) or similar
-        setAssets(assetData);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     const fetchWallet = async () => {
       try {
         const res = await getWalletDetails(selectedAsset);
-        console.log(res.data);
         if (res?.data) {
           setWallet(res.data);
         } else {
@@ -63,31 +48,39 @@ const Wallet = () => {
             <option value="BTC">BTC</option>
             <option value="BNB">BNB</option>
             <option value="YTP">YTP</option>
+            <option value="USDT">USDT</option>
           </select>
         </div>
 
         {!wallet ? (
-          <div className="text-center text-red-500 text-lg">Create a wallet.</div>
+          <div className="text-center text-red-500 text-lg">
+            Create a wallet.
+          </div>
         ) : (
           <div>
             <div className="space-y-3">
               <p>
-                <span className="font-semibold">Coin:</span>{" "}
-                {wallet.coin.name} ({wallet.coin.ticker})
+                <span className="font-semibold">Coin:</span> {wallet.coin.name}{" "}
+                ({wallet.coin.ticker})
               </p>
               <p>
-                <span className="font-semibold">Balance:</span>{" "}
-                {wallet.balance} {wallet.coin.ticker}
+                <span className="font-semibold">Balance:</span> {wallet.balance}{" "}
+                {wallet.coin.ticker}
               </p>
               {/* Address with line-break fix */}
-              <p className="flex flex-wrap items-center gap-2">
-                <FaRegCopy
-                  onClick={handleCopy}
-                  className="cursor-pointer text-lg"
-                />
-                <span className="font-semibold">Address:</span>
-                <span className="break-all">{wallet.address}</span>
-              </p>
+              <div className="my-4">
+                <div
+                  className="p-2 rounded"
+                  style={{
+                    border: "2px solid",
+                  }}
+                >
+                  <span className="break-all">{wallet.address}</span>
+                </div>
+                <div onClick={handleCopy} className=" w-fit mx-auto cursor-pointer mt-3">
+                  Copy Address <FaRegCopy className="cursor-pointer " />
+                </div>
+              </div>
               <div className="flex justify-center">
                 <img
                   src={`data:image/png;base64,${wallet.qr_code}`}

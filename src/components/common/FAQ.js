@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { getFAQ } from "../../services/generalAPI";
 import { FaAngleUp, FaAngleDown } from "react-icons/fa6";
 
-const FAQ = () => {
+const FAQ = ({code}) => {
   const [FAQList, setFAQList] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
-        const respone = await getFAQ({ code: "staking" });
+        const respone = await getFAQ({ code });
         if (respone && respone.data) {
           setFAQList(respone.data);
         }
@@ -16,7 +16,7 @@ const FAQ = () => {
         console.log(error);
       }
     })();
-  }, []);
+  }, [code]);
 
   if (!FAQList || FAQList.length === 0) {
     return <div>loading FAQs...</div>;
@@ -26,7 +26,7 @@ const FAQ = () => {
     <div className="max-w-3xl mx-auto mt-16">
       <h2 className="text-white text-4xl font-bold text-center mb-8">FAQ</h2>
 
-      <div className="space-y-4">
+      <div className="space-y-4 text-left">
         {FAQList &&
           FAQList.map((faq) => (
             <div className="bg-white text-black rounded-lg p-4 cursor-pointer">

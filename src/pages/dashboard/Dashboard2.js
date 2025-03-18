@@ -22,6 +22,7 @@ import FeatureSection from "../../components/dashboard/FeatureSection";
 import Footer from "../../components/common/Footer";
 
 import TravelCard from "../../components/dashboard/TravelCard";
+import { toast } from "react-toastify";
 
 const Dashboard2 = () => {
   const navigate = useNavigate();
@@ -56,6 +57,10 @@ const Dashboard2 = () => {
     }
   }, [location.state]);
 
+  const handleComminSoon = () => {
+    toast.success('Comming soon')
+  }
+
 
 
   return (
@@ -65,20 +70,23 @@ const Dashboard2 = () => {
           <Logo />
           <div className="flex gap-4 pt-4">
             <div
-              onClick={() => navigate("/profile")}
-              className="dashboard-username hidden md:flex justify-center items-center w-fit px-6  rounded-full "
+              onClick={() => navigate("/category")}
+              className="dashboard-username hidden md:flex justify-center items-center w-fit px-6  rounded-full cursor-pointer"
             >
               {user.name.split(" ")[0]}
             </div>
-            {user.avatar ? (
+            {/* {user.avatar ? ( */}
+            {false ? (
               <img
-                onClick={() => navigate("/profile")}
+                onClick={() => navigate("/category")}
                 src={user.avatar}
                 alt="Profile"
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full cursor-pointer"
               />
             ) : (
-              <div className="profile-placeholder w-10 h-10 rounded-full bg-gray-700" />
+              <div 
+              onClick={() => navigate("/category")}
+              className="profile-placeholder w-10 h-10 rounded-full bg-[#4BAF2A] cursor-pointer" />
             )}
           </div>
         </header>
@@ -289,6 +297,7 @@ const Dashboard2 = () => {
                     text1="Flights"
                     text2="Budget-friendly travel"
                     image={flight}
+                    onClick={handleComminSoon}
                     classNameMain="md:justify-self-end py-20"
                     classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
                     classNameImgDiv="mb-10"
@@ -298,7 +307,7 @@ const Dashboard2 = () => {
                   {/* Staking */}
                   <div
                     onClick={() => {
-                      navigate("/page1");
+                      navigate("/staking");
                     }}
                     className="feature-box h-fit pt-4 pb-2 bg-[#FFFFFF14]  rounded-3xl  w-full relative justify-self-center md:justify-self-start cursor-pointer"
                   >
@@ -318,6 +327,7 @@ const Dashboard2 = () => {
                     text1="Hotel"
                     text2="Book affordable stays"
                     image={hotel}
+                    onClick={handleComminSoon}
                     classNameMain="md:justify-self-end"
                     classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
                     classNameImg="h-[6rem] md:h-[8rem] origin-center"
@@ -355,6 +365,9 @@ const Dashboard2 = () => {
                         text1="Referrals"
                         text2="Invite friends, earn YTP"
                         image={referral}
+                        onClick={() => {
+                          navigate('/referral')
+                        }}
                         classNameMain="md:justify-self-start"
                         classNameTex1="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"
                       />

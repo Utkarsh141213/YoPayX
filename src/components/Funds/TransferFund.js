@@ -21,7 +21,7 @@ const TransferFund = () => {
     (async () => {
       try {
 
-        const walletRes = await getWalletDetails();
+        const walletRes = await getWalletDetails('YTP');
         if (walletRes && walletRes.data) {
           setQR(walletRes.data.qr_code);
           setBalance(walletRes.data.balance)

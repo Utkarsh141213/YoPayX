@@ -242,7 +242,7 @@ const Page1 = () => {
             </>
           )}
           {/* FAQ Section */}
-          <FAQ />
+          <FAQ code={'staking'}/>
         </main>
         <section className="flex ml-[4vw] md:ml-[16vw]">
           <Footer />

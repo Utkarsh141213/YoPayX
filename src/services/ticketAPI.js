@@ -2,7 +2,6 @@ import { API_ENDPOINTS } from "../apiConfig"
 import axiosInstance from "./axios"
 
 export const createTicket = async (data) => {
-    console.log(data);
     const response = await axiosInstance.post(API_ENDPOINTS.TICKET.CREATE_TICKET, data)
     return response.data
 }
