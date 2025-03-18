@@ -136,7 +136,7 @@ const StakingSummary = () => {
           <div className="w-1/2 pl-2">
             <p className="font-semibold mb-2">Subscription Type</p>
             <div className="bg-[#FFFFFF33] flex justify-center items-center rounded-xl py-3 px-3 mb-2">
-              <span className="leading-none">7 DAYS</span>
+              <span className="leading-none">{stackingDetails.return_period} DAYS</span>
             </div>
             <p className="text-white/80 text-sm">
               Max. Stake : {stackingDetails.max_stake} YTP

@@ -8,7 +8,7 @@ import { getWalletDetails } from "../../services/fundsAPI/walletAPI";
 const TravelCard = () => {
   const [showBalance, setShowBalance] = useState(false);
   const [availableBalance, setAvailableBalace] = useState("0");
-  const [cardNumber, setCardNumber] = useState("xxxx xxxx xxxx xxxx");
+  const [cardNumber, setCardNumber] = useState("");
   const [username, setUsername] = useState("name");
   const [copied, setCopied] = useState(false);
 
@@ -46,7 +46,7 @@ const TravelCard = () => {
 
     (async () => {
       try {
-        const res = await getWalletDetails();
+        const res = await getWalletDetails('YTP');
         if (res && res.data) {
           setCardNumber(res.data.address);
         }
