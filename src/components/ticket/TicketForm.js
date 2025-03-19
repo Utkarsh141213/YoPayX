@@ -57,7 +57,7 @@ const TicketForm = () => {
       })
 
       toast.success('Ticket created successfully')
-      navigate('/ticket')
+      navigate('/support')
       
     } catch (error) {
       console.log(error);

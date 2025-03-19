@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import logo from "../assets/yatri-pay-logo-main.png";
 import { getNotifications } from '../services/generalAPI';
+import Loader from '../components/common/Loader';
 
 const NotificationCenter = () => {
   const [taskList, setTaskList] = useState([]);
@@ -30,7 +31,7 @@ const NotificationCenter = () => {
         </div>
       </header>
       {loading ? (
-        <div className="text-center">Loading...</div>
+        <Loader />
       ) : (
         <div className="max-w-2xl mx-auto p-4">
           {taskList.length > 0 ? (

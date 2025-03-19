@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getAllStacking } from "../../services/stacking/stackingAPI";
 import dayjs from "dayjs";
+import Loader from "../common/Loader";
 
 const AllStaking = () => {
   const [stackingList, setStackingList] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   function formatWithDayjs(dateString) {
     const parsed = dayjs(dateString);
@@ -24,22 +26,24 @@ const AllStaking = () => {
   useEffect(() => {
     (async () => {
       try {
+        setIsLoading(true)
         const res = await getAllStacking();
-        console.log(res);
         if (res && res.data) {
           const newData = updateDateFormat(res.data);
-          // console.log(newData);
           setStackingList(newData);
         }
       } catch (error) {
         console.log(error);
+      }finally{
+        setIsLoading(false)
       }
     })();
   }, []);
 
   if (!stackingList) {
-    return <div>loading...</div>;
+    return <Loader />
   }
+
   return (
     <div className="overflow-x-auto mb-12">
       <div className="bg-[#FFFFFF14] rounded-2xl p-6 min-w-[800px] mx-auto">
@@ -58,7 +62,7 @@ const AllStaking = () => {
             <span className="text-white text-lg font-semibold">Status</span>
           </div>
 
-          {stackingList.map((stack, index) => (
+          {stackingList && stackingList.map((stack, index) => (
             <div
               key={index}
               className="col-span-7 grid grid-cols-7 items-center text-gray-300"

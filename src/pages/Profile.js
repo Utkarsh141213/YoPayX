@@ -7,11 +7,13 @@ import {
   kycSvg,
   pinSvg,
   changePassSvg,
+  authSvg,
 } from "../assets/profile_assets";
 import { changePIN } from "../services/kycService";
 import TransactionPin from "../components/KYC/TransactionPin";
 import { toast } from "react-toastify";
-import { cardPerson } from "../assets/stacking/page1";
+import logo from "../assets/yatri-pay-logo-main.png";
+
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -68,9 +70,13 @@ const Profile = () => {
   }
 
   return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6">
-        <h1 className="text-3xl font-bold mb-1">YatriPay</h1>
-        <h2 className="text-xl font-semibold mb-8">Profile</h2>
+      <div className="min-h-screen bg-black text-white flex flex-col items-center  px-6">
+         <header>
+          <div className="flex flex-col justify-center items-center py-6 mt-16">
+            <img src={logo} alt="logo" className="h-8 md:h-12" />
+            <h1 className='text-3xl'>Profile</h1>
+          </div>
+        </header>
 
         <div
           onClick={handleLogout}
@@ -80,7 +86,7 @@ const Profile = () => {
         </div>
 
         <div className="flex flex-col items-center mb-10">
-          <div className="w-24 h-24 rounded-full mb-4 bg-gray-600 overflow-hidden">
+          <div className="w-16 h-16 rounded-full mb-4 bg-gray-600 overflow-hidden">
             {avatarUrl && (
               <img
                 src={avatarUrl}
@@ -172,22 +178,7 @@ const Profile = () => {
           </div>
 
           <div
-            onClick={() =>
-              navigate("/ticket")
-            }
-            className="flex flex-col items-center justify-center"
-          >
-            <div className="w-6 h-6 mb-2">
-              <img
-                src={cardPerson}
-                alt="Change Password Icon"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <span className="text-sm">Support</span>
-          </div>
-          {/* <div
-            onClick={() => navigate("/")}
+            // onClick={() => navigate("/")}
             className="flex flex-col items-center"
           >
             <div className="w-10 h-10 mb-2">
@@ -198,7 +189,7 @@ const Profile = () => {
               />
             </div>
             <span className="text-sm">Disable Authentication</span>
-          </div> */}
+          </div>
         </div>
       </div>
   );

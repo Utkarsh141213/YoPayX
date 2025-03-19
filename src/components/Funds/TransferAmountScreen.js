@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import logo from "../../assets/yatri-pay-logo-main.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getCoinValueInCurrency, sendYTP } from "../../services/fundsAPI/fundsAPI";
 import { toast } from "react-toastify";
 import TransactionPin from "../KYC/TransactionPin";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const TransferAmountScreen = () => {
+
+  const { setIsLoading } = useContext(GlobalContext);
+
   const location = useLocation();
   const { balance = "0.00", selectedAsset = "YTP" } = location.state || {};
   const navigate = useNavigate();
@@ -51,6 +55,7 @@ const TransferAmountScreen = () => {
 
   const handlePinSubmit = async (pin) => {
     try {
+      setIsLoading(true)
       const response = await sendYTP({
         pin,
         amount: ytpAmount,
@@ -68,6 +73,9 @@ const TransferAmountScreen = () => {
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message || err.message);
+    }
+    finally{
+      setIsLoading(false)
     }
   };
 

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { getFAQ } from "../../services/generalAPI";
 import { FaAngleUp, FaAngleDown } from "react-icons/fa6";
+import Loader from "./Loader";
 
 const FAQ = ({code}) => {
   const [FAQList, setFAQList] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     (async () => {
       try {
+        setIsLoading(true)
         const respone = await getFAQ({ code });
         if (respone && respone.data) {
           setFAQList(respone.data);
@@ -15,11 +17,18 @@ const FAQ = ({code}) => {
       } catch (error) {
         console.log(error);
       }
+      finally{
+        setIsLoading(false)
+      }
     })();
   }, [code]);
 
+  if(isLoading){
+    <Loader />
+  }
+
   if (!FAQList || FAQList.length === 0) {
-    return <div>loading FAQs...</div>;
+    return <div></div>;
   }
 
   return (

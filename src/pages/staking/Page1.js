@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../../assets/yatri-pay-logo-main.png";
 import { card1, card2, card3 } from "../../assets/stacking/page1";
 import {
@@ -12,6 +12,7 @@ import StackingReward from "../../components/Staking/StakingReward";
 import FAQ from "../../components/common/FAQ";
 import Footer from "../../components/common/Footer";
 import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const Page1 = () => {
   const [activeTab, setActiveTab] = useState("locked");
@@ -22,6 +23,8 @@ const Page1 = () => {
     "Referral link is not available"
   );
 
+  const { setIsLoading } = useContext(GlobalContext);
+
   const navigate = useNavigate()
 
   const [activeButton, setActiveButton] = useState("allStaking");
@@ -29,6 +32,7 @@ const Page1 = () => {
   useEffect(() => {
     (async () => {
       try {
+        setIsLoading(true)
         const [resOverview, resCards, resReferral] = await Promise.all([
           getStackingOverview(),
           getCardDetails(),
@@ -49,6 +53,8 @@ const Page1 = () => {
         }
       } catch (error) {
         console.log("Error in Promise.all:", error);
+      }finally{
+        setIsLoading(false)
       }
     })();
   }, []);

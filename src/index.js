@@ -5,6 +5,7 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import ScrollToTop from "./components/ScrollToTop";
+import { GlobalProvider } from "./context/GlobalContext";
 
 const rootElement = document.getElementById("root");
 const root = ReactDOM.createRoot(rootElement);
@@ -13,8 +14,9 @@ root.render(
   <HashRouter basename="/">
     {" "}
     {/* ⬅️ Yeh important hai! */}
-    <ScrollToTop />
+    <GlobalProvider>
+      <ScrollToTop />
       <App />
-
+    </GlobalProvider>
   </HashRouter>
 );

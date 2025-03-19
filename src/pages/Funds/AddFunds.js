@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import yatripayLogo from "../../assets/yatripay_logo.svg";
 import { addFundInINR } from "../../services/fundsAPI/fundsAPI";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { getAvailableBalace } from "../../services/fundsAPI/tradingScreenAPI";
+import { GlobalContext } from "../../context/GlobalContext";
+import FAQ from "../../components/common/FAQ";
 
 const Badge = ({ badge }) => (
   <div className="border border-white text-white/60 rounded-xl px-2 py-1 text-[0.6rem] font-extralight">
@@ -16,6 +18,8 @@ const AddFunds = () => {
   const [amount, setAmount] = useState("");
   const [availableBalance, setAvailableBalance] = useState("0.00");
 
+  const { setIsLoading } = useContext(GlobalContext);
+
   const quickAmounts = [500, 1000, 2000];
 
   const handleQuickAmount = (val) => {
@@ -25,6 +29,7 @@ const AddFunds = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true)
       const response = await addFundInINR({
         amount: parseInt(amount),
         fiat: "INR",
@@ -36,6 +41,8 @@ const AddFunds = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || error.message);
+    }finally{
+      setIsLoading(false)
     }
   };
 
@@ -115,6 +122,7 @@ const AddFunds = () => {
           </div>
         </form>
       </div>
+      <FAQ code={'buy'} />
     </div>
   );
 };

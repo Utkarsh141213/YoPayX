@@ -1,17 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import InputField from "../../components/KYC/InputField";
 import { RxCross2 } from "react-icons/rx";
-
-// Import the new service function
 import { confirmAddFundService } from "../../services/fundsAPI/fundsAPI";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const ConfirmAddFund = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
-  // Destructure the data passed via navigate(..., { state: {...} })
+  const { setIsLoading } = useContext(GlobalContext);
+
   const { qr_code, upi_id, amount } = location.state || {};
 
   // If there's no QR or UPI data, redirect
@@ -37,7 +36,6 @@ const ConfirmAddFund = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!transactionId) {
       toast.error("Please provide a Transaction ID");
       return;
@@ -47,24 +45,22 @@ const ConfirmAddFund = () => {
       return;
     }
 
-    // Prepare form data
     const formData = new FormData();
-    formData.append("amount", amount); // from location.state
+    formData.append("amount", amount); 
     formData.append("transaction_id", transactionId);
-    formData.append("fiat", "INR"); // hard-coded or from state
+    formData.append("fiat", "INR"); 
     formData.append("screen_shot", screenshot);
 
     try {
-      // Send data to your API
+      setIsLoading(true)
       await confirmAddFundService(formData);
-
       toast.success("Funds added successfully!");
-      // Navigate somewhere, e.g. dashboard
       navigate("/dashboard");
     } catch (error) {
-      // Handle server errors or validation issues
       toast.error(error.response?.data?.message || error.message);
       console.log(error);
+    }finally{
+      setIsLoading(false)
     }
   };
 

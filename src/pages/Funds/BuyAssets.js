@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import yatripayLogo from "../../assets/yatripay_logo.svg";
 import Button from "../../components/Button";
 import {
   getAssets,
-  getAvailableBalace,
+  getAvailableFunds,
   getCurrencyList,
 } from "../../services/fundsAPI/tradingScreenAPI";
 import { buyAssets } from "../../services/fundsAPI/fundsAPI";
 import { toast } from "react-toastify";
+import { GlobalContext } from "../../context/GlobalContext";
+import FAQ from "../../components/common/FAQ";
 
 const Badge = ({ badge }) => (
   <div className="border border-white text-white/60 rounded-xl px-2 py-1 text-[0.5rem] font-extralight">
@@ -27,32 +29,50 @@ const BuyAssets = () => {
   const [availableBalance, setAvailableBalance] = useState(null);
   // const [paymentMethod, setPaymentMethod] = useState("Express");
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const result = await getAssets();
-        if (result) {
-          const displayOrder = ["BTC", "YTP", "BNB", "USDT"];
+  const { setIsLoading } = useContext(GlobalContext);
 
-          const sortedAssets = result.data.sort(
-            (a, b) =>
-              displayOrder.indexOf(a.symbol) - displayOrder.indexOf(b.symbol)
-          );
-          setAssets(sortedAssets);
-        }
-        const currency = await getCurrencyList();
-        if (currency) {
-          setCurrencyList(currency.data);
-        }
-      } catch (error) {
-        console.log("ERROR", error);
+  const DISPLAY_ORDER = ["BTC", "YTP", "BNB", "USDT"];
+
+function sortAssets(assets) {
+  return assets.sort(
+    (a, b) => DISPLAY_ORDER.indexOf(a.symbol) - DISPLAY_ORDER.indexOf(b.symbol)
+  );
+}
+
+useEffect(() => {
+  (async () => {
+    setIsLoading(true);
+    try {
+      // Fetch assets, currency, and balance in parallel
+      const [assetsRes, currencyRes, balanceRes] = await Promise.all([
+        getAssets(),
+        getCurrencyList(),
+        getAvailableFunds()
+      ]);
+
+      // Process assets
+      if (assetsRes) {
+        const sortedAssets = sortAssets(assetsRes.data);
+        setAssets(sortedAssets);
       }
-      const balance = await getAvailableBalace();
-      if (balance) {
-        setAvailableBalance(balance.data.balance);
+
+      // Process currency
+      if (currencyRes) {
+        setCurrencyList(currencyRes.data);
       }
-    })();
-  }, []);
+
+      // Process balance
+      if (balanceRes) {
+        setAvailableBalance(balanceRes.data.balance);
+      }
+    } catch (error) {
+      console.log("ERROR", error);
+    } finally {
+      setIsLoading(false);
+    }
+  })();
+}, [setIsLoading]);
+
 
   useEffect(() => {
     if (!selectedAsset || assets.length === 0 || currencyList.length === 0) {
@@ -110,6 +130,7 @@ const BuyAssets = () => {
       return;
     }
     try {
+      setIsLoading(true)
       await buyAssets({
         coin_amount: parseInt(amountYTP),
         fiat_currency: "INR",
@@ -117,13 +138,14 @@ const BuyAssets = () => {
       });
       toast.success("Transaction Successful");
 
-      const funds = await getAvailableBalace();
-      console.log(funds);
+      const funds = await getAvailableFunds();
       if (funds) {
         setAvailableBalance(funds.data.balance);
       }
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
+    }finally{
+      setIsLoading(false)
     }
   };
 
@@ -244,6 +266,7 @@ const BuyAssets = () => {
             <Button handleFun={handleBuy} text={`Buy ${selectedAsset}`} />
           </div>
         </div>
+        <FAQ code={'buy'} />
       </div>
   );
 };

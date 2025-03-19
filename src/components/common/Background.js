@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { b, bBG, p, pBG, t, tBG, square, squareBG } from '../../assets/backgroundAssets';
+import { GlobalContext } from '../../context/GlobalContext';
+import Loader from './Loader';
 
 const Background = ({ children }) => {
+
+  const { isLoading } = useContext(GlobalContext);
+
   return (
     <div className="relative min-h-screen bg-black overflow-x-hidden">
       {/* Blurred green gradient backgrounds */}
@@ -73,6 +78,12 @@ const Background = ({ children }) => {
           alt="Square Logo"
         />
       </div>
+
+      {isLoading && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black/30 z-50">
+          <Loader />
+        </div>
+      )}
 
       {/* Content */}
       {children}

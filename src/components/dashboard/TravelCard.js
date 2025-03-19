@@ -118,10 +118,10 @@ const TravelCard = () => {
           {/* Name + Expiry */}
           <div className="absolute bottom-6 left-0 right-0 px-6">
             <div className="flex justify-between">
-              <p className="text-white text-xl md:text-3xl font-semibold md:font-bold max-w-[75%] truncate">
+              <p className="text-white text-xl md:text-2xl font-semibold md:font-bold max-w-[75%] truncate">
                 {username}
               </p>
-              <p className="text-white text-xl md:text-3xl font-semibold md:font-bold">
+              <p className="text-white text-xl md:text-2xl font-semibold md:font-bold">
                 {formattedDate}
               </p>
             </div>

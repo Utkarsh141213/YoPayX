@@ -56,5 +56,9 @@ export const secondRegister = async (password, password2) => {
 };
 
 export const logout = async () => {
-  await axiosInstance.get("users/trigger_logout/");
+  try{
+    await axiosInstance.get("users/trigger_logout/");
+  }catch{
+    return
+  }
 };

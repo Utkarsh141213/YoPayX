@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { LiaAngleDownSolid } from "react-icons/lia";
 import TransactionHistory from "./TransactionHistory";
 import {
@@ -7,6 +7,9 @@ import {
   sellAsset,
 } from "../../../services/fundsAPI/tradingScreenAPI";
 import { toast } from "react-toastify";
+import Loader from "../../common/Loader";
+import { GlobalContext } from "../../../context/GlobalContext";
+import FAQ from "../../common/FAQ";
 
 const Badge = ({ badge }) => (
   <div className="border border-white text-white/60 rounded-xl px-2 py-1 text-xs font-extralight">
@@ -15,11 +18,14 @@ const Badge = ({ badge }) => (
 );
 
 const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
+
+  const { setIsLoading } = useContext(GlobalContext);
+
   const [selectedAsset, setSelectedAsset] = useState('YTP');
   const [amount, setAmount] = useState("");
   const [youWillGet, setYouWillGet] = useState("0.00");
   const [exchangeRate, setExchangeRate] = useState(0);
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState(null);
 
   useEffect(() => {
     if (!selectedAsset || !assets.length || !currencyList.length) {
@@ -88,12 +94,13 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
       return;
     }
     try {
-      const result = await sellAsset({
+      setIsLoading(true)
+       await sellAsset({
         fiat_currency: "INR",
         ytp_amount: parseInt(amount),
         coin_symbol: selectedAsset,
       });
-      console.log("Sell successful:", result);
+
       toast.success("Sell successful");
       setSelectedAsset(null);
       setAmount(null);
@@ -105,6 +112,8 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message || error.message);
+    }finally{
+      setIsLoading(false)
     }
   };
 
@@ -191,7 +200,8 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
       <h2 className="text-white text-lg font-semibold mb-4">
         Transaction History
       </h2>
-      <TransactionHistory transactions={transactions} />
+      {transactions ? <TransactionHistory transactions={transactions} /> : <Loader />}
+      <FAQ code={'sell'} />
     </div>
   );
 };

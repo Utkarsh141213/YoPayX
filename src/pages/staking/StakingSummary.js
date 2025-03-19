@@ -59,11 +59,11 @@ const StakingSummary = () => {
     }
   }, [cardId, referralLink]);
 
-  // Calculate estimated return based on per_annum, return_period, and lockAmount
+
   useEffect(() => {
     if (lockAmount > 0 && stackingDetails) {
-      const perAnnum = stackingDetails.per_annum; // e.g., 30%
-      const returnPeriod = stackingDetails.return_period; // e.g., 7 days
+      const perAnnum = stackingDetails.per_annum; 
+      const returnPeriod = stackingDetails.return_period; 
       const interest = (parseFloat(lockAmount) * (perAnnum / 100) * returnPeriod) / 365;
       setEstReturn((parseFloat(lockAmount) + interest).toFixed(2));
     } else {
@@ -82,7 +82,6 @@ const StakingSummary = () => {
         auto_stake: false,
         apply_voucher: false,
       });
-      console.log(res);
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || error.message);
