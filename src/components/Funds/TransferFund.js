@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Background from "../Background";
 import { toast } from "react-toastify";
 
 // API services
@@ -22,7 +21,7 @@ const TransferFund = () => {
     (async () => {
       try {
 
-        const walletRes = await getWalletDetails();
+        const walletRes = await getWalletDetails('YTP');
         if (walletRes && walletRes.data) {
           setQR(walletRes.data.qr_code);
           setBalance(walletRes.data.balance)
@@ -54,7 +53,6 @@ const TransferFund = () => {
   };
 
   return (
-    <Background>
       <div className="min-h-screen flex items-center justify-center">
         <div className="p-4 sm:min-w-[40vw]">
           {/* Header Section */}
@@ -140,7 +138,6 @@ const TransferFund = () => {
           </div>
         </div>
       </div>
-    </Background>
   );
 };
 

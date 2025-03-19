@@ -1,3 +1,4 @@
+import { API_ENDPOINTS } from "../../apiConfig";
 import axiosInstance from "../axios";
 
 export const addFundInINR = async ({ amount, fiat }) => {
@@ -9,7 +10,7 @@ export const addFundInINR = async ({ amount, fiat }) => {
       "/finance/deposit/fiat/request/",
       { amount, fiat }
     );
-    console.log(response);
+
     return response.data;
   } catch (error) {
     throw error;
@@ -34,7 +35,7 @@ export const confirmAddFundService = async (formData) => {
 };
 
 export const buyAssets = async (data) => {
-  console.log(data);
+
   const response = await axiosInstance.post(
     "/finance/sell/fiat_to_coin/",
     data,
@@ -44,7 +45,7 @@ export const buyAssets = async (data) => {
       },
     }
   );
-  console.log("RESPONSE", response.data);
+
   return response.data;
 };
 
@@ -71,3 +72,9 @@ export const sendYTP = async ({
     address,
   });
 }
+
+
+export const getValueOfCoinByType = async (coin) => {
+  const response = await axiosInstance.get(`${API_ENDPOINTS.FUND.GET_VALUE_OF_COIN_BY_TYPE}${coin}/value/`)
+  return response.data
+} 

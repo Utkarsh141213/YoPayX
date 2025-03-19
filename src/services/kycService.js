@@ -4,7 +4,6 @@ export const createKYC = async (formData) => {
   try {
     const response = await axiosInstance.post("/finance/kyc/create/", formData, {
       headers: {
-        // "Content-Type": "multipart/form-data",
       },
     });
 
@@ -18,7 +17,6 @@ export const getKYC = async () => {
   const res = await axiosInstance.get('/finance/kyc/list')
   return res.data
 }
-
 
 export const createBankDetials = async (data) => {
   try {
@@ -37,7 +35,6 @@ export const getBankDetails = async () => {
   const response =  await axiosInstance.get("/finance/bank-account-details/list/")
   return response.data.data
 };
-
 
 export const generateOPT = async (phoneData) => {
 

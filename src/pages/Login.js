@@ -29,14 +29,13 @@ function Login() {
 
       const data = await response.json();
       if (response.ok) {
-        // alert("Login Successful!");
-        console.log(data.data.token);
+
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("user", JSON.stringify(data.data.user)); 
         navigate("/dashboard");
       } else {
         setError(data.message || "Invalid credentials. Try again.");
-        console.log('error');
+
       }
     } catch (error) {
       setError("Something went wrong. Please try again later.");

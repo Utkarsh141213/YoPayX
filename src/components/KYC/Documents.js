@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import cameraSVG from "../../assets/kyc_icons/kyc_document_camera_icon.svg";
 import { useKycContext } from "../../context/KycContext";
@@ -74,10 +74,6 @@ const Document = () => {
       toast.error(`${error}`);
     }
   };
-
-  useEffect(() => {
-    console.log(localStorage.getItem("token"));
-  }, []);
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4">
