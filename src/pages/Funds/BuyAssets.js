@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
-import Background from "../../components/Background";
+import React, { useState, useEffect, useContext } from "react";
 import yatripayLogo from "../../assets/yatripay_logo.svg";
 import Button from "../../components/Button";
 import {
   getAssets,
-  getAvailableBalace,
+  getAvailableFunds,
   getCurrencyList,
 } from "../../services/fundsAPI/tradingScreenAPI";
 import { buyAssets } from "../../services/fundsAPI/fundsAPI";
 import { toast } from "react-toastify";
+import { GlobalContext } from "../../context/GlobalContext";
+import FAQ from "../../components/common/FAQ";
 
 const Badge = ({ badge }) => (
   <div className="border border-white text-white/60 rounded-xl px-2 py-1 text-[0.5rem] font-extralight">
@@ -19,9 +20,8 @@ const Badge = ({ badge }) => (
 const BuyAssets = () => {
   const [assets, setAssets] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
-  const [selectedAsset, setSelectedAsset] = useState("");
+  const [selectedAsset, setSelectedAsset] = useState("YTP");
   const [exchangeRate, setExchangeRate] = useState(0);
-
 
   const [amountYTP, setAmountYTP] = useState("");
   const [amountINR, setAmountINR] = useState("");
@@ -29,27 +29,50 @@ const BuyAssets = () => {
   const [availableBalance, setAvailableBalance] = useState(null);
   // const [paymentMethod, setPaymentMethod] = useState("Express");
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const result = await getAssets();
-        if (result) {
-          console.log(result.data);
-          setAssets(result.data);
-        }
-        const currency = await getCurrencyList();
-        if (currency) {
-          setCurrencyList(currency.data);
-        }
-      } catch (error) {
-        console.log("ERROR", error);
+  const { setIsLoading } = useContext(GlobalContext);
+
+  const DISPLAY_ORDER = ["BTC", "YTP", "BNB", "USDT"];
+
+function sortAssets(assets) {
+  return assets.sort(
+    (a, b) => DISPLAY_ORDER.indexOf(a.symbol) - DISPLAY_ORDER.indexOf(b.symbol)
+  );
+}
+
+useEffect(() => {
+  (async () => {
+    setIsLoading(true);
+    try {
+      // Fetch assets, currency, and balance in parallel
+      const [assetsRes, currencyRes, balanceRes] = await Promise.all([
+        getAssets(),
+        getCurrencyList(),
+        getAvailableFunds()
+      ]);
+
+      // Process assets
+      if (assetsRes) {
+        const sortedAssets = sortAssets(assetsRes.data);
+        setAssets(sortedAssets);
       }
-      const balance = await getAvailableBalace();
-      if (balance) {
-        setAvailableBalance(balance.data.balance);
+
+      // Process currency
+      if (currencyRes) {
+        setCurrencyList(currencyRes.data);
       }
-    })();
-  }, []);
+
+      // Process balance
+      if (balanceRes) {
+        setAvailableBalance(balanceRes.data.balance);
+      }
+    } catch (error) {
+      console.log("ERROR", error);
+    } finally {
+      setIsLoading(false);
+    }
+  })();
+}, [setIsLoading]);
+
 
   useEffect(() => {
     if (!selectedAsset || assets.length === 0 || currencyList.length === 0) {
@@ -107,32 +130,43 @@ const BuyAssets = () => {
       return;
     }
     try {
+      setIsLoading(true)
       await buyAssets({
-        buy_amount: parseInt(amountYTP),
-        fiat: "INR",
+        coin_amount: parseInt(amountYTP),
+        fiat_currency: "INR",
+        coin_symbol: selectedAsset,
       });
-      toast.success('Transaction Successful')
+      toast.success("Transaction Successful");
+
+      const funds = await getAvailableFunds();
+      if (funds) {
+        setAvailableBalance(funds.data.balance);
+      }
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
+    }finally{
+      setIsLoading(false)
     }
   };
 
   return (
-    <Background>
       <div className="text-white p-6">
-        {/* Responsive Header */}
+
         <header className="flex flex-col sm:flex-row items-center justify-between mb-6 py-2 px-6 gap-2 sm:gap-0">
-          {/* Logo Section */}
+
           <div className="flex items-center justify-center sm:justify-start w-full sm:w-auto">
             <div className="text-yellow-300 text-2xl font-bold">
               <img src={yatripayLogo} alt="yatripay logo" />
             </div>
           </div>
 
-          {/* Balance Section - separate lines on small screens, single line on larger */}
           <div className="text-white text-base sm:text-lg md:text-2xl font-bold flex flex-col sm:flex-row items-center sm:gap-2">
-            <div className="text-white text-xl md:text-xl font-semibold">Available Balance:</div>
-            <div className="text-white/50 md:text-white text-xl ">{availableBalance} INR</div>
+            <div className="text-white text-xl md:text-xl font-semibold">
+              Available Balance:
+            </div>
+            <div className="text-white/50 md:text-white text-xl ">
+              {availableBalance} INR
+            </div>
           </div>
         </header>
 
@@ -146,16 +180,24 @@ const BuyAssets = () => {
             </label>
             <div className="relative">
               <select
-                className="w-full bg-white text-black rounded-lg p-[11px] px-4 appearance-none"
+                className={`w-full bg-white text-black rounded-lg p-[11px] px-4 appearance-none`}
                 value={selectedAsset}
                 onChange={(e) => handleAssetChange(e.target.value)}
               >
-                <option value="">XX</option>
-                {assets.map((asset) => (
-                  <option key={asset.id} value={asset.symbol}>
-                    {asset.symbol}
-                  </option>
-                ))}
+                {assets.map((asset) => {
+                  if (asset.symbol === "YTP") {
+                    return (
+                      <option key={asset.id} value={asset.symbol} selected>
+                        {asset.symbol}
+                      </option>
+                    );
+                  }
+                  return (
+                    <option key={asset.id} value={asset.symbol}>
+                      {asset.symbol}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className="flex flex-wrap gap-2 mb-4 mt-3">
@@ -175,12 +217,12 @@ const BuyAssets = () => {
           <div>
             <div className="flex justify-between items-center mb-1">
               <label className="block mb-1 text-left text-xl font-bold">
-                Amount YTP
+                Amount {selectedAsset || "YTP"}
               </label>
               <span className="text-sm text-gray-400">
                 {selectedAsset
                   ? `${selectedAsset} = ${exchangeRate.toFixed(4)} INR`
-                  : "XXX = XXX INR"}
+                  : "0 = 0.00 INR"}
               </span>
             </div>
             <input
@@ -201,7 +243,7 @@ const BuyAssets = () => {
               <span className="text-sm text-gray-400">
                 {selectedAsset
                   ? `${selectedAsset} = ${exchangeRate.toFixed(4)} INR`
-                  : "XXX = XXX INR"}
+                  : "0 = 0.00 INR"}
               </span>
             </div>
             <input
@@ -221,14 +263,11 @@ const BuyAssets = () => {
 
           {/* Buy Button */}
           <div className="flex justify-center">
-            <Button
-              handleFun={handleBuy}
-              text={`Buy ${selectedAsset || "XXX"}`}
-            />
+            <Button handleFun={handleBuy} text={`Buy ${selectedAsset}`} />
           </div>
         </div>
+        <FAQ code={'buy'} />
       </div>
-    </Background>
   );
 };
 

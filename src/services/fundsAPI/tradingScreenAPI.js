@@ -1,3 +1,4 @@
+import {API_ENDPOINTS } from "../../apiConfig";
 import axiosInstance from "../axios";
 
 
@@ -21,15 +22,14 @@ export const getAssets = async () => {
 
 
 export const sellAsset = async (sellData) => {
-    console.log(sellData);
-    console.log('IN API');
-  const response = await axiosInstance.post("/finance/sell/fiat_to_coin/", sellData, {
+
+  const response = await axiosInstance.post("/finance/sell/ytp_to_fiat/", sellData, {
     headers: {
         "Content-Type": "application/json"
     }
   }
   );
-  console.log('GOT RES', response);
+
   return response.data;
 };
 
@@ -44,6 +44,11 @@ export const getTransactionHistory = async () => {
   const response = await axiosInstance.get("/finance/transactions/list");
   return response.data;
 };
+
+export  const getTransactionHistoryWithFilters = async (trans_type_filter) => {
+  const response = await axiosInstance.get(API_ENDPOINTS.FUND.TRANSACTION_HISTORY_FILTER, {trans_type_filter: ['Staking Reward']})
+  return response.data
+}
 
 
 

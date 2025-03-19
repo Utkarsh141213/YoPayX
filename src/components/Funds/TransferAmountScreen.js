@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
-import Background from "../Background";
+import React, { useState, useEffect, useContext } from "react";
 import logo from "../../assets/yatri-pay-logo-main.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getCoinValueInCurrency, sendYTP } from "../../services/fundsAPI/fundsAPI";
 import { toast } from "react-toastify";
 import TransactionPin from "../KYC/TransactionPin";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const TransferAmountScreen = () => {
+
+  const { setIsLoading } = useContext(GlobalContext);
+
   const location = useLocation();
   const { balance = "0.00", selectedAsset = "YTP" } = location.state || {};
   const navigate = useNavigate();
@@ -52,13 +55,14 @@ const TransferAmountScreen = () => {
 
   const handlePinSubmit = async (pin) => {
     try {
+      setIsLoading(true)
       const response = await sendYTP({
         pin,
         amount: ytpAmount,
         ticker: selectedAsset,
         address: receiverAddress,
       });
-      console.log(response);
+
       if (response.data?.success) {
         toast.success(response.data.message || "Transaction successful!");
         setShowTransactionPin(false);
@@ -70,6 +74,9 @@ const TransferAmountScreen = () => {
       console.error(err);
       toast.error(err.response?.data?.message || err.message);
     }
+    finally{
+      setIsLoading(false)
+    }
   };
 
   // Conditionally render either the transfer form or the TransactionPin screen
@@ -78,12 +85,12 @@ const TransferAmountScreen = () => {
       <TransactionPin 
         onSubmitPin={handlePinSubmit} 
         onCancel={() => setShowTransactionPin(false)}
+        isTransaction={true}
       />
     );
   }
 
   return (
-    <Background>
       <div className="bg-black min-h-screen flex justify-center items-center">
         <div className="container bg-black p-5 w-full max-w-2xl">
           {/* Header Section */}
@@ -154,7 +161,6 @@ const TransferAmountScreen = () => {
           </div>
         </div>
       </div>
-    </Background>
   );
 };
 

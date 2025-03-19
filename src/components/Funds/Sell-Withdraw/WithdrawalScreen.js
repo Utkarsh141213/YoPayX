@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import TransactionHistory from "./TransactionHistory";
 import {
   getTransactionHistory,
@@ -6,14 +6,20 @@ import {
   getAvailableFunds,
 } from "../../../services/fundsAPI/tradingScreenAPI";
 import { toast } from "react-toastify";
+import Loader from "../../common/Loader";
+import { GlobalContext } from "../../../context/GlobalContext";
 
 const WithdrawalScreen = ({ setAvailableBalance }) => {
+
+
+  const { setIsLoading } = useContext(GlobalContext);
+
   const [amount, setAmount] = useState("");
   const [youWillGet, setYouWillGet] = useState("0.00");
   const [platformFee, setPlatformFee] = useState("0.5");
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState(null);
 
-  // Fetch transaction history on mount
+
   useEffect(() => {
     (async () => {
       try {
@@ -49,14 +55,14 @@ const WithdrawalScreen = ({ setAvailableBalance }) => {
     calculateWithdrawalAmount(newValue);
   };
 
-  // Withdraw funds and then refetch available balance and transaction history
+
   const handleWithdraw = async () => {
     if (!amount || isNaN(parseFloat(amount))) {
       toast.error("Please enter a valid amount");
       return;
     }
     try {
-      // Call the withdrawal API
+      setIsLoading(true)
       await withdrawFunds({
         withdraw_request_amount: parseFloat(amount),
         fiat: "INR"
@@ -75,13 +81,16 @@ const WithdrawalScreen = ({ setAvailableBalance }) => {
         setTransactions(transactionList.data);
       }
 
-      // Clear the input fields
+
       setAmount("");
       setYouWillGet("0.00");
       setPlatformFee("0.00");
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
       console.log(error);
+    }
+    finally{
+      setIsLoading(false)
     }
   };
 
@@ -128,7 +137,7 @@ const WithdrawalScreen = ({ setAvailableBalance }) => {
       <h2 className="text-white text-lg font-semibold mb-4">
         Withdrawal Transaction History
       </h2>
-      <TransactionHistory transactions={transactions} />
+      {transactions ? <TransactionHistory transactions={transactions} /> : <Loader />}
     </div>
   );
 };

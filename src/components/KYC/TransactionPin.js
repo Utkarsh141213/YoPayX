@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import Background from "../Background";
 import logo from "../../assets/yatri-pay-logo-main.png";
 
-const TransactionPin = ({ onSubmitPin, onClose }) => {
+const TransactionPin = ({ onSubmitPin, onClose, isTransaction }) => {
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
 
@@ -31,7 +30,6 @@ const TransactionPin = ({ onSubmitPin, onClose }) => {
   };
 
   return (
-    <Background>
       <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-md">
           <img
@@ -40,7 +38,7 @@ const TransactionPin = ({ onSubmitPin, onClose }) => {
             className="max-w-[150px] h-auto mx-auto mb-16"
           />
           <p className="text-white/50 text-sm text-center mb-16">
-            Create your 4-digit Transaction PIN
+            {isTransaction ? 'Enter Your pin' : 'Create your 4-digit Transaction PIN'}
           </p>
 
           <div className="flex flex-col items-center">
@@ -103,7 +101,6 @@ const TransactionPin = ({ onSubmitPin, onClose }) => {
           </div>
         </div>
       </div>
-    </Background>
   );
 };
 

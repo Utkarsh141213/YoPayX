@@ -74,6 +74,7 @@
   font-size: 2rem;
   animation: float 5s infinite ease-in-out;
   opacity: 0.8;
+  display: none;
 }
 
 /* Individual Crypto Icon Styles */
