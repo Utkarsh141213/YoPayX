@@ -1,5 +1,5 @@
-// const API_BASE_URL = "https://app.yatripay.com/api/v1"; // Replace with the actual base URL
-const API_BASE_URL = "https://chiru-stage.yatripay.com/api/v1"; // Replace with the actual base URL
+const API_BASE_URL = "https://app.yatripay.com/api/v1"; // Replace with the actual base URL
+// const API_BASE_URL = "https://chiru-stage.yatripay.com/api/v1"; // Replace with the actual base URL
 
 const API_ENDPOINTS = {
   LOGIN: `${API_BASE_URL}/users/auth/login/`,
