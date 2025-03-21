@@ -13,8 +13,9 @@ import FAQ from "../../components/common/FAQ";
 import Footer from "../../components/common/Footer";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context/GlobalContext";
+import HeaderLogo from "../../components/common/HeaderLogo";
 
-const Page1 = () => {
+const StakingPage = () => {
   const [activeTab, setActiveTab] = useState("locked");
   const [totalSubs, setTotalSubs] = useState("0000");
   const [totalLocked, setTotalLocked] = useState("00.00");
@@ -63,7 +64,7 @@ const Page1 = () => {
       <div className="min-h-screen">
         <header>
           <div className="flex justify-start p-8">
-            <img src={logo} alt="logo" className="h-8 md:h-12" />
+            <HeaderLogo />
           </div>
         </header>
 
@@ -94,7 +95,7 @@ const Page1 = () => {
                 <div
                   className={`py-[0.61rem] px-9 rounded-lg text-xl font-semibold transition-colors ${
                     activeTab === "portfolio"
-                      ? "bg-[#39B54A]"
+                      ? "bg-[#4BAF2A]"
                       : "bg-white text-black"
                   } cursor-pointer`}
                   onClick={() => setActiveTab("portfolio")}
@@ -257,4 +258,4 @@ const Page1 = () => {
   );
 };
 
-export default Page1;
+export default StakingPage;

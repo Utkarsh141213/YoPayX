@@ -3,12 +3,17 @@ import axiosInstance from "../axios";
 
 
 export const getAvailableFunds = async () => {
-  const response = await axiosInstance.get("/finance/retreave_balance_conversion");
+  const response = await axiosInstance.get("/finance/retreave_balance_conversion/");
   return response.data;
 };
 
 export const getAvailableBalace = async () => {
   const response = await axiosInstance.get("/finance/coin/YTP/balance");
+  return response.data;
+};
+
+export const getAvailableBalaceByAssetType = async (asset) => {
+  const response = await axiosInstance.get(`/finance/coin/${asset}/balance`);
   return response.data;
 };
 

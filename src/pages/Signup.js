@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 // import SocialLogin from "../components/SocialLogin";
 import InputField from "../components/InputField";
 import CryptoFloatingIcons from "../components/CryptoFloatingIcons";
@@ -12,42 +12,63 @@ import {
 } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { GlobalContext } from "../context/GlobalContext";
 
 const Signup = () => {
   const [step, setStep] = useState(1); // Steps: 1 -> Email, 2 -> OTP, 3 -> password
   const [email, setEmail] = useState("");
-  const [fullname, setfullName] = useState("");
+  const [first_name, setfirst_name] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otp, setotp] = useState("");
   const [referral_id, setReferral_id] = useState("");
 
   const navigate = useNavigate();
+  const { setIsLoading } = useContext(GlobalContext);
 
   const handleEmailSubmit = async () => {
-    let response;
-    if (referral_id) {
-      response = await registerFirst(email, fullname, referral_id);
-    } else {
-      response = await registerFirst(email, fullname);
-    }
+    setIsLoading(true);
 
-    if (response.success) {
-      setStep(2);
-    } else if (!response.success && response.message === "Reset Email") {
-      alert("User Already Register User");
+    try {
+      let response;
+      if (referral_id) {
+        response = await registerFirst({ email, first_name, referral_id });
+      } else {
+        response = await registerFirst({ email, first_name });
+        console.log(response);
+      }
+
+      if (response.success) {
+        setStep(2);
+      } else if (!response.success && response.message === "Reset Email") {
+        toast("User Already Register User");
+      }
+    } catch (error) {
+      toast(error.response?.data?.message || error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
+
   const handleVerifyEmail = async () => {
-    const response = await verifyEmail(email, otp);
-    if (response) {
-      localStorage.setItem("token", response.data.token);
-      setStep(3);
-    } else alert("Register First API error");
+    try {
+      setIsLoading(true);
+      const response = await verifyEmail(email, otp);
+      if (response && response.data) {
+        localStorage.setItem("token", response.data.token);
+        setStep(3);
+      }
+      throw new Error("Error in registering, please try again");
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handlePassword = async () => {
     try {
+      setIsLoading(true);
       const response = await secondRegister(password, confirmPassword);
       if (response) {
         localStorage.setItem("token", response.data.token);
@@ -56,6 +77,8 @@ const Signup = () => {
       }
     } catch (error) {
       toast.error(error.message || "Something went worng");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -65,14 +88,14 @@ const Signup = () => {
       <h2 className="sign-in-text">Sign up with us!</h2>
 
       {/* Social Login Buttons */}
-      <div className="social-login">
+      {/* <div className="social-login">
         <button className="social-btn facebook-btn">Facebook</button>
         <button className="social-btn google-btn">Google</button>
       </div>
 
       <div className="divider-signup-form">
         <div className="divider">–––––––––––––––––– or ––––––––––––––––––</div>
-      </div>
+      </div> */}
 
       {/* Input Fields */}
 
@@ -93,8 +116,8 @@ const Signup = () => {
               type="text"
               placeholder="Full Name"
               className="form-control email-signin"
-              value={fullname}
-              onChange={(e) => setfullName(e.target.value)}
+              value={first_name}
+              onChange={(e) => setfirst_name(e.target.value)}
             />
             <InputField
               type="text"

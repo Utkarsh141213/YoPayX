@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
   createStacking,
@@ -10,12 +10,18 @@ import { getUserReferralLink } from "../../services/promotion/promotionAPI";
 import { toast } from "react-toastify";
 import Footer from "../../components/common/Footer";
 import { getValueOfCoinByType } from "../../services/fundsAPI/fundsAPI";
+import ReferralLink from "../../components/common/ReferralLink";
+import HeaderLogo from "../../components/common/HeaderLogo";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const StakingSummary = () => {
   const location = useLocation();
+  const { setIsLoading } = useContext(GlobalContext)
 
   const [cardId, setCardId] = useState(location.state?.cardId);
-  const [referralLink, setReferralLink] = useState(location.state?.referralLink);
+  const [referralLink, setReferralLink] = useState(
+    location.state?.referralLink
+  );
   const [availableBalance, setAvailableBalace] = useState("0.00");
   const [stackingDetails, setStackingDetails] = useState(null);
   const [lockAmount, setLockAmount] = useState("");
@@ -25,7 +31,9 @@ const StakingSummary = () => {
 
   const startDate = dayjs(Date.now()).format("YYYY-MM-DD hh:mm");
   const endDate = stackingDetails
-    ? dayjs().add(stackingDetails.return_period, "day").format("YYYY-MM-DD hh:mm")
+    ? dayjs()
+        .add(stackingDetails.return_period, "day")
+        .format("YYYY-MM-DD hh:mm")
     : "";
 
   // Fetch data for stacking details, balance, and coin value
@@ -50,7 +58,8 @@ const StakingSummary = () => {
       const fetchReferral = async () => {
         try {
           const resReferral = await getUserReferralLink();
-          if (resReferral && resReferral.data) setReferralLink(resReferral.data.url);
+          if (resReferral && resReferral.data)
+            setReferralLink(resReferral.data.url);
         } catch (error) {
           console.log(error);
         }
@@ -59,12 +68,12 @@ const StakingSummary = () => {
     }
   }, [cardId, referralLink]);
 
-
   useEffect(() => {
     if (lockAmount > 0 && stackingDetails) {
-      const perAnnum = stackingDetails.per_annum; 
-      const returnPeriod = stackingDetails.return_period; 
-      const interest = (parseFloat(lockAmount) * (perAnnum / 100) * returnPeriod) / 365;
+      const perAnnum = stackingDetails.per_annum;
+      const returnPeriod = stackingDetails.return_period;
+      const interest =
+        (parseFloat(lockAmount) * (perAnnum / 100) * returnPeriod) / 365;
       setEstReturn((parseFloat(lockAmount) + interest).toFixed(2));
     } else {
       setEstReturn("0.00");
@@ -73,18 +82,22 @@ const StakingSummary = () => {
 
   const handleConfirm = async () => {
     try {
+      setIsLoading(true)
       if (!lockAmount) throw new Error("Amount is required");
       if (!isAgreed) throw new Error("Please check the agree box");
-      const res = await createStacking({
+      await createStacking({
         staking_type_id: stackingDetails.id,
         amount: lockAmount,
         agreement: isAgreed,
         auto_stake: false,
         apply_voucher: false,
       });
+      toast.success("Staking created successfully");
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || error.message);
+    }finally{
+      setIsLoading(false)
     }
   };
 
@@ -93,12 +106,20 @@ const StakingSummary = () => {
   }
 
   // Calculate subscription price in YTP and total amount
-  const subscriptionPriceYTP = (stackingDetails.final_price / coinValue.USD).toFixed(2);
-  const totalAmount = (parseFloat(lockAmount || "0") + parseFloat(subscriptionPriceYTP)).toFixed(2);
+  const subscriptionPriceYTP = (
+    stackingDetails.final_price / coinValue.USD
+  ).toFixed(2);
+  const totalAmount = (
+    parseFloat(lockAmount || "0") + parseFloat(subscriptionPriceYTP)
+  ).toFixed(2);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-8 px-4 text-white">
-      <div className="w-full max-w-lg">
+      <div className="absolute top-8 left-10">
+        <HeaderLogo />
+      </div>
+
+      <div className="w-full max-w-lg mt-16 sm:mt-8">
         {/* Header */}
         <h1 className="text-4xl md:text-5xl font-bold text-center md:mt-10 mb-4">
           Staking
@@ -112,8 +133,12 @@ const StakingSummary = () => {
         {/* Stats */}
         <div className="text-left text-white/90 text-sm mb-6">
           <p className="mb-2">Subscribers: {stackingDetails.subscribers}</p>
-          <p className="mb-2">Staked YTP: {stackingDetails.staked_assets.toFixed(2)}</p>
-          <p className="mb-2">Quota left: {stackingDetails.quota_left.toFixed(2)}</p>
+          <p className="mb-2">
+            Staked YTP: {stackingDetails.staked_assets.toFixed(2)}
+          </p>
+          <p className="mb-2">
+            Quota left: {stackingDetails.quota_left.toFixed(2)}
+          </p>
         </div>
 
         {/* Subscription Details */}
@@ -135,7 +160,9 @@ const StakingSummary = () => {
           <div className="w-1/2 pl-2">
             <p className="font-semibold mb-2">Subscription Type</p>
             <div className="bg-[#FFFFFF33] flex justify-center items-center rounded-xl py-3 px-3 mb-2">
-              <span className="leading-none">{stackingDetails.return_period} DAYS</span>
+              <span className="leading-none">
+                {stackingDetails.return_period} DAYS
+              </span>
             </div>
             <p className="text-white/80 text-sm">
               Max. Stake : {stackingDetails.max_stake} YTP
@@ -150,19 +177,26 @@ const StakingSummary = () => {
             <div className="flex justify-between">
               <span>Total Price :</span>
               <span>
-                {stackingDetails.price.toFixed(2)} USD = {(stackingDetails.price / coinValue.USD).toFixed(2)} YTP
+                {stackingDetails.price.toFixed(2)} USD ={" "}
+                {(stackingDetails.price / coinValue.USD).toFixed(2)} YTP
               </span>
             </div>
             <div className="flex justify-between">
               <span>Discount :</span>
               <span>
-                {stackingDetails.price_discount_per}% = {((stackingDetails.price * stackingDetails.price_discount_per) / 100).toFixed(2)} USD
+                {stackingDetails.price_discount_per}% ={" "}
+                {(
+                  (stackingDetails.price * stackingDetails.price_discount_per) /
+                  100
+                ).toFixed(2)}{" "}
+                USD
               </span>
             </div>
             <div className="flex justify-between">
               <span>Final Payable Amount:</span>
               <span>
-                {stackingDetails.final_price.toFixed(2)} USD = {(stackingDetails.final_price / coinValue.USD).toFixed(2)} YTP
+                {stackingDetails.final_price.toFixed(2)} USD ={" "}
+                {(stackingDetails.final_price / coinValue.USD).toFixed(2)} YTP
               </span>
             </div>
           </div>
@@ -183,7 +217,9 @@ const StakingSummary = () => {
         {/* Staking Limitation */}
         <div className="text-left mb-10">
           <p className="font-semibold mb-2">Staking Limitation</p>
-          <p className="">Available Quota : {stackingDetails.quota_left.toFixed(2)} YTP</p>
+          <p className="">
+            Available Quota : {stackingDetails.quota_left.toFixed(2)} YTP
+          </p>
         </div>
 
         {/* Summary */}
@@ -198,7 +234,9 @@ const StakingSummary = () => {
             <div className="text-right">{endDate}</div>
 
             <div>Refund Period</div>
-            <div className="text-right">{stackingDetails.return_period} day</div>
+            <div className="text-right">
+              {stackingDetails.return_period} day
+            </div>
           </div>
 
           <div className="stacking-summary-card grid grid-cols-2 gap-2 pb-3 mb-3">
@@ -212,7 +250,8 @@ const StakingSummary = () => {
           <div className="grid grid-cols-2 gap-2 pb-3 mb-3">
             <div>Subscription Price</div>
             <div className="text-right">
-              {stackingDetails.final_price.toFixed(2)} USD = {subscriptionPriceYTP} YTP
+              {stackingDetails.final_price.toFixed(2)} USD ={" "}
+              {subscriptionPriceYTP} YTP
             </div>
 
             <div>Lock Amount</div>
@@ -234,8 +273,10 @@ const StakingSummary = () => {
                 className="big-checkbox relative -top-1 w-fit bg-r-500 cursor-pointer"
                 onChange={() => setIsAgreed((prev) => !prev)}
               />
-              <label htmlFor="agree-check" className="text-xs md:text-sm"> {/* Corrected "lable" and "htmlfor" */}
-                I have read and I agree to YariPay Staking Service Agreement
+              <label htmlFor="agree-check" className="text-xs md:text-sm">
+                {" "}
+                {/* Corrected "lable" and "htmlfor" */}I have read and I agree
+                to YariPay Staking Service Agreement
               </label>
             </div>
           </div>
@@ -251,13 +292,14 @@ const StakingSummary = () => {
         </div>
 
         {/* Referral Link */}
-        <div className="mb-6 px-10">
+        {/* <div className="mb-6 px-10">
           <p className="text-left text-xl leading-none mb-1">Referral Link</p>
           <p className="text-left mb-4 leading-none">{referralLink}</p>
           <div className="bg-[#4BAF2A] text-white py-2 rounded-md text-center cursor-pointer">
             Invite Friends
           </div>
-        </div>
+        </div> */}
+        <ReferralLink />
       </div>
       <section className="flex mt-16 ml-[4vw]">
         <Footer />

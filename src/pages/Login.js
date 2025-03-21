@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import InputField from "../components/InputField";
 import CryptoFloatingIcons from "../components/CryptoFloatingIcons";
 import "../assets/styles/styles.css";
@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from "../components/logo";
 import { API_ENDPOINTS } from "../apiConfig"; // Import API endpoints
 import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../context/GlobalContext";
 
 
 function Login() {
@@ -15,10 +16,17 @@ function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+const { setIsLoading } = useContext(GlobalContext)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(!email || !password){
+      setError("All fields are required");
+    }
     
     try {
+      setIsLoading(true)
       const response = await fetch(API_ENDPOINTS.LOGIN, {
         method: "POST",
         headers: {
@@ -40,6 +48,9 @@ function Login() {
     } catch (error) {
       setError("Something went wrong. Please try again later.");
     }
+    finally{
+      setIsLoading(false)
+    }
   };
 
   return (
@@ -47,14 +58,14 @@ function Login() {
       <Logo />
       <h2 className="sign-in-text">Sign in</h2>
 
-      <div className="social-login social-login-signin">
+      {/* <div className="social-login social-login-signin">
         <button className="social-btn facebook-btn">Facebook</button>
         <button className="social-btn google-btn">Google</button>
       </div>
 
       <div className="divider-signin-form">
         <div className="divider">–––––––––––––––––– or ––––––––––––––––––</div>
-      </div>
+      </div> */}
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">

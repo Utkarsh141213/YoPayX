@@ -10,6 +10,7 @@ import {
 } from "../../services/fundsAPI/tradingScreenAPI";
 import { useLocation } from "react-router-dom";
 import { GlobalContext } from "../../context/GlobalContext";
+import BackToHomeButton from "../common/BackToHomeButton";
 
 const DISPLAY_ORDER = ["BTC", "YTP", "BNB", "USDT"];
 
@@ -29,13 +30,6 @@ const TradingScreen = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const { tab } = location.state || {};
-    if (tab) {
-      const t = tab.toLowerCase();
-      setActiveTab(
-        t === "sell" ? "Sell" : t === "withdraw" ? "Withdrawal" : "Sell"
-      );
-    }
 
     async function init() {
       setIsLoading(true);
@@ -59,6 +53,15 @@ const TradingScreen = () => {
   }, [location.state, activeTab, setIsLoading]);
 
   useEffect(() => {
+
+    const { tab } = location.state || {};
+    if (tab) {
+      const t = tab.toLowerCase();
+      setActiveTab(
+        t === "sell" ? "Sell" : t === "withdraw" ? "Withdrawal" : "Sell"
+      );
+    }
+
     const init = async () => {
       setIsLoading(true)
       try {
@@ -82,6 +85,9 @@ const TradingScreen = () => {
 
   return (
     <div className="min-h-screen text-white p-4 relative">
+      <div className="absolute top-8 left-10">
+        <BackToHomeButton />
+      </div>
       <div className="w-fit mx-auto">
         <div className="flex mb-4 justify-center">
           <div

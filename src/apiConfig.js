@@ -26,8 +26,12 @@ const API_ENDPOINTS = {
 
   PROMOTION: {
     USER_REFERRAL_LINK: "/promotion/user-referral/",
+  },
+
+  REWARDS: {
     GET_TASK_LIST: "/promotion/user-welcome-task/list/",
     GET_IPHONE_TASK_LIST: "/promotion/user-task/list/",
+    CLAIM_REWARD: '/promotion/offers/claim-offer/',
   },
 
   GENERAL: {

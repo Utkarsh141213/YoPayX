@@ -3,9 +3,10 @@ import yatripayLogo from "../../assets/yatripay_logo.svg";
 import { addFundInINR } from "../../services/fundsAPI/fundsAPI";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { getAvailableBalace } from "../../services/fundsAPI/tradingScreenAPI";
+import { getAvailableBalaceByAssetType } from "../../services/fundsAPI/tradingScreenAPI";
 import { GlobalContext } from "../../context/GlobalContext";
 import FAQ from "../../components/common/FAQ";
+import HeaderLogo from "../../components/common/HeaderLogo";
 
 const Badge = ({ badge }) => (
   <div className="border border-white text-white/60 rounded-xl px-2 py-1 text-[0.6rem] font-extralight">
@@ -25,6 +26,19 @@ const AddFunds = () => {
   const handleQuickAmount = (val) => {
     setAmount(val.toString());
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const balance = await getAvailableBalaceByAssetType('INR');
+        if (balance.data) {
+          setAvailableBalance(balance.data.balance);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,29 +60,12 @@ const AddFunds = () => {
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const balance = await getAvailableBalace();
-        if (balance.data) {
-          setAvailableBalance(balance.data.balance);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
-
   return (
     <div className="text-white p-4 ">
       {/* Responsive Header */}
       <header className="flex flex-col sm:flex-row items-center justify-between mb-6 py-2 px-6 gap-2 sm:gap-0">
         {/* Logo Section */}
-        <div className="flex items-center justify-center sm:justify-start w-full sm:w-auto">
-          <div className="text-yellow-300 text-2xl font-bold">
-            <img src={yatripayLogo} alt="yatripay logo" />
-          </div>
-        </div>
+        <HeaderLogo />
 
         {/* Balance Section - separate lines on small screens, single line on larger */}
         <div className="text-white text-base sm:text-lg md:text-2xl font-bold flex flex-col sm:flex-row items-center sm:gap-2">

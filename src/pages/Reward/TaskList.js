@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { taskListSvg } from "../../assets/stacking";
-import { getTaskList } from "../../services/promotion/promotionAPI";
+import { getTaskList } from "../../services/reward/rewardAPI";
 import Footer from "../../components/common/Footer";
 
 const TaskList = () => {
@@ -11,7 +11,6 @@ const TaskList = () => {
     ;(async () => {
       try {
         const res = await getTaskList()
-        console.log(res);
         if(res){
           setTaskList(res)
         }

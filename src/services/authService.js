@@ -8,7 +8,8 @@ export const login = async (data) => {
 }
 
 export const sendOtp = async (email) => {
-  await axiosInstance.post("/users/auth/resend-email-otp/", { email: email });
+  const resposne = await axiosInstance.post("/users/auth/resend-email-otp/", { email: email });
+  return resposne.data
 };
 
 export const verifyOtp = async (email, email_otp) => {
@@ -22,16 +23,16 @@ export const resetPassword = async (password1, password2) => {
   });
 };
 
-export const registerFirst = async (email, first_name) => {
+export const registerFirst = async (data) => {
   try {
     const response = await fetch(API_ENDPOINTS.REGISTER_FIRST, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, first_name }),
+      body: JSON.stringify(data),
     });
     return await response.json();
   } catch (error) {
-    return { success: false, message: error.message };
+    throw error
   }
 };
 

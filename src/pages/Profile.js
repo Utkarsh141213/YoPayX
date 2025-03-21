@@ -13,6 +13,7 @@ import { changePIN } from "../services/kycService";
 import TransactionPin from "../components/KYC/TransactionPin";
 import { toast } from "react-toastify";
 import logo from "../assets/yatri-pay-logo-main.png";
+import BackToHomeButton from "../components/common/BackToHomeButton";
 
 
 const Profile = () => {
@@ -78,6 +79,11 @@ const Profile = () => {
           </div>
         </header>
 
+        <div
+          className="absolute top-8 left-10 text-lg cursor-pointer"
+        >
+          <BackToHomeButton />
+        </div>
         <div
           onClick={handleLogout}
           className="absolute top-8 right-10 text-lg cursor-pointer"

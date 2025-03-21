@@ -11,8 +11,8 @@ const Referral = () => {
   const [copiedField, setCopiedField] = useState(null); // 'code' or 'link' or null
 
   const referredUsers = [
-    { user: "UserA", joiningDate: "2025-03-10" },
-    { user: "UserB", joiningDate: "2025-03-11" },
+    // { user: "UserA", joiningDate: "2025-03-10" },
+    // { user: "UserB", joiningDate: "2025-03-11" },
   ];
 
   // Copy text to clipboard, then show "Copied!" for 1 second
@@ -104,7 +104,7 @@ const Referral = () => {
           {/* Invite Friends */}
           <div
             onClick={handleInviteFriends}
-            className="bg-[#4BAF2A] hover:bg-green-600 w-full text-center py-2 rounded cursor-pointer"
+            className="bg-[#4BAF2A] hover:bg-[#4BAF2A]/90 w-full text-center py-2 rounded cursor-pointer"
           >
             Invite Friends
           </div>
@@ -112,7 +112,7 @@ const Referral = () => {
           {/* Create custom link */}
           <div
             onClick={() => alert("Create custom link clicked")}
-            className="bg-[#4BAF2A] hover:bg-green-600 w-full text-center py-2 rounded cursor-pointer"
+            className="bg-[#4BAF2A] hover:bg-[#4BAF2A]/90  w-full text-center py-2 rounded cursor-pointer"
           >
             Create custom link
           </div>

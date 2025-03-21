@@ -10,6 +10,7 @@ import { buyAssets } from "../../services/fundsAPI/fundsAPI";
 import { toast } from "react-toastify";
 import { GlobalContext } from "../../context/GlobalContext";
 import FAQ from "../../components/common/FAQ";
+import HeaderLogo from "../../components/common/HeaderLogo";
 
 const Badge = ({ badge }) => (
   <div className="border border-white text-white/60 rounded-xl px-2 py-1 text-[0.5rem] font-extralight">
@@ -63,7 +64,8 @@ useEffect(() => {
 
       // Process balance
       if (balanceRes) {
-        setAvailableBalance(balanceRes.data.balance);
+        console.log(balanceRes);
+        setAvailableBalance(balanceRes.inr_balance);
       }
     } catch (error) {
       console.log("ERROR", error);
@@ -140,7 +142,7 @@ useEffect(() => {
 
       const funds = await getAvailableFunds();
       if (funds) {
-        setAvailableBalance(funds.data.balance);
+        setAvailableBalance(funds.inr_balance);
       }
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
@@ -154,11 +156,7 @@ useEffect(() => {
 
         <header className="flex flex-col sm:flex-row items-center justify-between mb-6 py-2 px-6 gap-2 sm:gap-0">
 
-          <div className="flex items-center justify-center sm:justify-start w-full sm:w-auto">
-            <div className="text-yellow-300 text-2xl font-bold">
-              <img src={yatripayLogo} alt="yatripay logo" />
-            </div>
-          </div>
+          <HeaderLogo />
 
           <div className="text-white text-base sm:text-lg md:text-2xl font-bold flex flex-col sm:flex-row items-center sm:gap-2">
             <div className="text-white text-xl md:text-xl font-semibold">

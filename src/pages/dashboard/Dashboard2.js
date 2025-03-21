@@ -23,6 +23,7 @@ import Footer from "../../components/common/Footer";
 
 import TravelCard from "../../components/dashboard/TravelCard";
 import { toast } from "react-toastify";
+import VideoSection from "../../components/dashboard/VideoSection";
 
 const Dashboard2 = () => {
   const navigate = useNavigate();
@@ -33,7 +34,6 @@ const Dashboard2 = () => {
   });
 
   const [showAll, setShowAll] = useState(false);
-
 
   useEffect(() => {
     if (location.state?.userName || location.state?.userImage) {
@@ -58,10 +58,8 @@ const Dashboard2 = () => {
   }, [location.state]);
 
   const handleComminSoon = () => {
-    toast.success('Comming soon')
-  }
-
-
+    toast.success("Comming soon");
+  };
 
   return (
     <div className="flex min-h-screen relative">
@@ -84,9 +82,10 @@ const Dashboard2 = () => {
                 className="w-10 h-10 rounded-full cursor-pointer"
               />
             ) : (
-              <div 
-              onClick={() => navigate("/category")}
-              className="profile-placeholder w-10 h-10 rounded-full bg-[#4BAF2A] cursor-pointer" />
+              <div
+                onClick={() => navigate("/category")}
+                className="profile-placeholder w-10 h-10 rounded-full bg-[#4BAF2A] cursor-pointer"
+              />
             )}
           </div>
         </header>
@@ -153,7 +152,7 @@ const Dashboard2 = () => {
                   <h2 className="text-white text-lg md:font-semibold text-left ml-[4vw] md:ml-[3vw]">
                     Start your
                   </h2>
-                  <div className=" text-[4rem] md:text-[7.5rem] font-bold leading-none">
+                  <div className=" text-[3.7rem] md:text-[7.5rem] font-bold leading-none">
                     <span className="bg-gradient-to-r from-[#C3D09D] via-[#31B65E] to-[#3381CD] text-transparent bg-clip-text leading-none">
                       Bitcoin
                     </span>
@@ -175,19 +174,21 @@ const Dashboard2 = () => {
           <div className="w-full h-full text-white flex flex-col items-center justify-center p-6">
             {/* Top section */}
             <div className="text-center mb-8">
-              <span className="text-white font-thin text-sm md:leading-none block">
-                Highest return on
-              </span>
-              <span className="text-xl md:text-3xl font-bold leading-none">
-                STAKING
-              </span>
-              <div className="text-6xl mt-3 mb-6 md:mt-0 md:text-[6rem] font-bold ">
-                30% p.a.
+              <div className="bg-[#00FFA01A] px-5 py-4 mb-4 rounded-3xl">
+                <span className="text-white font-thin text-sm md:leading-none block">
+                  Highest return on
+                </span>
+                <span className="text-xl md:text-3xl font-bold leading-none">
+                  STAKING
+                </span>
+                <div className="text-6xl mt-3 mb-6 md:mt-0 md:text-[6rem] font-bold">
+                  30% p.a.
+                </div>
+                <span className="text-sm leading-none">
+                  Annual return with{" "}
+                  <span className="text-yellow-400">yatripay</span>
+                </span>
               </div>
-              <p className="text-sm mb-4 leading-none">
-                Annual return with{" "}
-                <span className="text-yellow-400">yatripay</span>
-              </p>
 
               {/* <span className="border self-center text-green-500 rounded-full px-8 py-2 text-sm bg-green-900/70 transition-colors">
                   Add Funds
@@ -260,7 +261,6 @@ const Dashboard2 = () => {
 
         <section id="page-3">
           <div className="w-full text-white flex flex-col items-center justify-center px-6 py-8">
-
             {/* CARD COMPONENT */}
             {/* Card display with corner glows */}
             <TravelCard />
@@ -339,7 +339,7 @@ const Dashboard2 = () => {
                     text2="Win a foreign trip"
                     image={reward}
                     onClick={() => {
-                      navigate('/reward')
+                      navigate("/reward");
                     }}
                     classNameMain="md:justify-self-start"
                     classNameTex1="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"
@@ -366,7 +366,7 @@ const Dashboard2 = () => {
                         text2="Invite friends, earn YTP"
                         image={referral}
                         onClick={() => {
-                          navigate('/referral')
+                          navigate("/referral");
                         }}
                         classNameMain="md:justify-self-start"
                         classNameTex1="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"
@@ -431,6 +431,10 @@ const Dashboard2 = () => {
               </div>
             </div>
           </div>
+        </section>
+
+        <section>
+          <VideoSection />
         </section>
 
         <section className="flex my-10 ml-[4vw] md:ml-[16vw]">

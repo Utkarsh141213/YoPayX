@@ -13,6 +13,7 @@ import {
 import logo from "../assets/yatri-pay-logo-main.png";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../services/authService";
+import BackToHomeButton from "../components/common/BackToHomeButton";
 
 const Category = () => {
 
@@ -44,6 +45,12 @@ const Category = () => {
             <h1 className=''>Category</h1>
           </div>
         </header>
+
+        <div
+          className="absolute top-8 left-10 text-lg cursor-pointer"
+        >
+          <BackToHomeButton />
+        </div>
 
         <div
           onClick={handleLogout}

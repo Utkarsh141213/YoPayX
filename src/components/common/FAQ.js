@@ -38,7 +38,7 @@ const FAQ = ({code}) => {
       <div className="space-y-4 text-left">
         {FAQList &&
           FAQList.map((faq) => (
-            <div className="bg-white text-black rounded-lg p-4 cursor-pointer">
+            <div key={faq.id} className="bg-white text-black rounded-lg p-4 cursor-pointer">
               <FAQDetails key={faq.id} faq={faq} />
             </div>
           ))}
