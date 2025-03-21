@@ -3,6 +3,7 @@ import { LiaAngleDownSolid } from "react-icons/lia";
 import TransactionHistory from "./TransactionHistory";
 import {
   getAvailableBalace,
+  getAvailableBalaceByAssetType,
   getTransactionHistory,
   sellAsset,
 } from "../../../services/fundsAPI/tradingScreenAPI";
@@ -18,10 +19,9 @@ const Badge = ({ badge }) => (
 );
 
 const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
-
   const { setIsLoading } = useContext(GlobalContext);
 
-  const [selectedAsset, setSelectedAsset] = useState('YTP');
+  const [selectedAsset, setSelectedAsset] = useState("YTP");
   const [amount, setAmount] = useState("");
   const [youWillGet, setYouWillGet] = useState("0.00");
   const [exchangeRate, setExchangeRate] = useState(0);
@@ -53,6 +53,15 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
     const finalRate = usdToInr * assetUsd;
 
     setExchangeRate(finalRate);
+
+    (async () => {
+      try {
+        const fund = await getAvailableBalaceByAssetType(selectedAsset);
+        if (fund && fund.data) {
+          setAvailableBalance(fund.data.balance);
+        }
+      } catch (error) {}
+    })();
   }, [selectedAsset, assets, currencyList]);
 
   // 2) User enters coin amount => we calculate "You will get" in INR (after 1% TDS deduction)
@@ -94,8 +103,8 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
       return;
     }
     try {
-      setIsLoading(true)
-       await sellAsset({
+      setIsLoading(true);
+      await sellAsset({
         fiat_currency: "INR",
         ytp_amount: parseInt(amount),
         coin_symbol: selectedAsset,
@@ -112,10 +121,11 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message || error.message);
-    }finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
   };
+
 
   return (
     <div className="p-4 pb-0 rounded-lg md:w-[600px]">
@@ -145,7 +155,9 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
             );
           })}
         </select>
-        <LiaAngleDownSolid className="absolute right-5 top-14 text-black" />
+        <LiaAngleDownSolid
+        className="absolute right-5 top-14 text-black" />
+
 
         <div className="flex gap-2 mt-2">
           {assets.map((asset) => (
@@ -200,8 +212,12 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
       <h2 className="text-white text-lg font-semibold mb-4">
         Transaction History
       </h2>
-      {transactions ? <TransactionHistory transactions={transactions} /> : <Loader />}
-      <FAQ code={'sell'} />
+      {transactions ? (
+        <TransactionHistory transactions={transactions} />
+      ) : (
+        <Loader />
+      )}
+      <FAQ code={"sell"} />
     </div>
   );
 };

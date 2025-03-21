@@ -52,7 +52,7 @@ const TicketForm = () => {
         ticket_category,
         subject,
         message,
-        status: true,
+        status: false,
         attachment,
       })
 

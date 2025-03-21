@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../assets/styles/forgotPassword.css";
 import { sendOtp, verifyOtp, resetPassword } from "../services/authService";
 import Logo from "../components/logo";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
+import { GlobalContext } from "../context/GlobalContext";
 
 const ForgotPassword = () => {
+
+  const { setIsLoading } = useContext(GlobalContext)
+
   const [step, setStep] = useState(1); // Steps: 1 -> Email, 2 -> OTP, 3 -> Reset Password
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -32,19 +36,29 @@ const ForgotPassword = () => {
     }
 
     try {
-      await sendOtp(email);
+      setIsLoading(true)
+      const res = await sendOtp(email);
+      console.log(res);
       setStep(2);
     } catch (error) {
-      toast.error(error.response.data.message || "Error sending OTP");
+      console.log('ERROR', error);
+      toast.error(error.response?.data?.message || "Error sending OTP");
+    }
+    finally{
+      setIsLoading(false)
     }
   };
 
   const handleOtpSubmit = async () => {
     try {
+      setIsLoading(true)
       await verifyOtp(email, otp);
       setStep(3);
     } catch (error) {
-      toast.error(error.response.data.message || "Invalid OTP");
+      toast.error(error.response?.data?.message || "Invalid OTP");
+    }
+    finally{
+      setIsLoading(false)
     }
   };
 
@@ -55,6 +69,7 @@ const ForgotPassword = () => {
     }
 
     try {
+      setIsLoading(false)
       await resetPassword(password, confirmPassword);
 
       if (requiredStep) {
@@ -65,9 +80,11 @@ const ForgotPassword = () => {
       }
     } catch (error) {
       toast.error(
-        error.response.data.message ||
+        error.response?.data?.message ||
           "Error in changing password, please try again"
-      );
+      )
+    }    finally{
+      setIsLoading(false)
     }
   };
 

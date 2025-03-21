@@ -23,7 +23,7 @@ import BuyAssets from "./pages/Funds/BuyAssets";
 import TransferAmountScreen from "./components/Funds/TransferAmountScreen";
 import Transaction from "./pages/Funds/Transaction";
 import Wallet from "./pages/Funds/Wallet";
-import Page1 from "./pages/staking/Page1";
+import StakingPage from "./pages/staking/StakingPage";
 import StakingSummary from "./pages/staking/StakingSummary";
 import RewardPage from "./pages/Reward/RewardPage";
 import TaskList from "./pages/Reward/TaskList";
@@ -72,7 +72,7 @@ function App() {
         <Route path="/wallet" element={<ProtectedRoute children={<Wallet />} />}/>
 
         {/* STAKING */}
-        <Route path="/staking" element={<ProtectedRoute children={<Page1 />} />}/>
+        <Route path="/staking" element={<ProtectedRoute children={<StakingPage />} />}/>
         <Route path="/staking-summary" element={<ProtectedRoute children={<StakingSummary />} />}/>
 
         {/* PROMOTION */}

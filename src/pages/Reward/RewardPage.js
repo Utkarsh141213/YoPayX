@@ -1,14 +1,50 @@
-import React from "react";
+import React, { useContext } from "react";
 import { phoneSvg } from "../../assets/stacking";
 import { useNavigate } from "react-router-dom";
 import { bigGift, taskListSmallGift } from "../../assets/reward";
 import Footer from "../../components/common/Footer";
+import yatripayLogo from "../../assets/yatripay_logo.svg";
+import { claimReward } from "../../services/reward/rewardAPI";
+import { toast } from "react-toastify";
+import { GlobalContext } from "../../context/GlobalContext";
 
-const RewardPage = ({ mobileSvg }) => {
+const RewardPage = () => {
   const navigate = useNavigate();
+
+  const { setIsLoading } = useContext(GlobalContext)
+
+  const handleCliamNow = async (id) => {
+    try {
+      setIsLoading(true)
+      const res = await claimReward({ id });
+      if (res) {
+        toast.success(res.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || error.message);
+    } finally {
+      setIsLoading(false)
+      if (id === "1") {
+        navigate("/task-list");
+      } else {
+        navigate("/phone-giveaway");
+      }
+    }
+  };
 
   return (
     <div className="relative min-h-screen w-full  overflow-hidden mb-10">
+      <div
+      onClick={() => navigate('/dashboard')}
+      className="absolute top-4 md:top-8 left-6 md:left-10 cursor-pointer z-30">
+          <img
+            src={yatripayLogo}
+            alt="yatripay logo"
+            className="h-8 md:h-fit"
+          />
+      </div>
+
       {/* Background image - you'll provide this */}
       {/* <div className="absolute inset-0 z-0">
         <img 
@@ -19,15 +55,15 @@ const RewardPage = ({ mobileSvg }) => {
       </div> */}
 
       {/* Content container */}
-      <div className="relative z-10 flex flex-col items-center justify-start pt-24 px-4 min-h-screen">
+      <div className="relative z-10 flex flex-col items-center justify-start pt-16 md:pt-24 px-4 min-h-screen">
         {/* Header */}
         <h1 className="text-4xl font-bold text-white mb-8">Offers</h1>
 
         {/* Gift icon - you'll provide this */}
         <div className="mb-6">
-          <img 
-            src={bigGift || "/api/placeholder/100/100"} 
-            alt="Gift box" 
+          <img
+            src={bigGift || "/api/placeholder/100/100"}
+            alt="Gift box"
             className="w-40 h-40 object-contain"
           />
         </div>
@@ -68,9 +104,7 @@ const RewardPage = ({ mobileSvg }) => {
 
           {/* Claim button */}
           <div
-            onClick={() => {
-              navigate("/phone-giveaway");
-            }}
+            onClick={() => handleCliamNow("2")}
             className="bg-[#4BAF2A] hover:bg-green-600 cursor-pointer text-white font-medium py-2 px-6 rounded-lg text-sm"
           >
             Claim Now
@@ -110,9 +144,14 @@ const RewardPage = ({ mobileSvg }) => {
 
           <ul className="text-gray-100  text-left mb-8 leading-5">
             <li className="mb-2 list-none">Download Yatripay App.</li>
-            <li className="mb-2 list-none">Perform the given social media activities:</li>
+            <li className="mb-2 list-none">
+              Perform the given social media activities:
+            </li>
             <ul className="ml-4">
-              <li className="mb-1 list-disc"> Follow, like, share and retweet</li>
+              <li className="mb-1 list-disc">
+                {" "}
+                Follow, like, share and retweet
+              </li>
               <li className="mb-1 list-disc"> Tag two friends</li>
             </ul>
             <li className="list-none">One running staking</li>
@@ -120,7 +159,7 @@ const RewardPage = ({ mobileSvg }) => {
 
           {/* Claim button */}
           <div
-            onClick={() => navigate("/task-list")}
+            onClick={() => handleCliamNow("1")}
             className="bg-[#4BAF2A] cursor-pointer hover:bg-green-600 text-white font-medium py-2 px-6 rounded-lg text-sm"
           >
             Claim Now

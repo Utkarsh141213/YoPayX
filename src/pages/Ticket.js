@@ -18,7 +18,6 @@ const Ticket = () => {
         if (response && response.data) {
           setTickets(response.data);
         }
-        console.log(response.data);
       } catch (error) {
         console.error('Error fetching tickets:', error);
       } finally {
