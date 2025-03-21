@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaRegCopy } from "react-icons/fa";
 import { getWalletDetails } from "../../services/fundsAPI/walletAPI";
+import BackToHomeButton from "../../components/common/BackToHomeButton";
 
 const Wallet = () => {
   const [wallet, setWallet] = useState(null);
@@ -34,6 +35,9 @@ const Wallet = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center text-white p-6">
+      <div className="absolute top-4 left-4 md:top-8 md:left-10">
+        <BackToHomeButton />
+      </div>
       <div className="border shadow-lg p-6 rounded-lg w-full max-w-md sm:max-w-lg">
         <h2 className="text-2xl font-bold mb-4 text-center">Wallet Details</h2>
 
@@ -77,7 +81,10 @@ const Wallet = () => {
                 >
                   <span className="break-all">{wallet.address}</span>
                 </div>
-                <div onClick={handleCopy} className=" w-fit mx-auto cursor-pointer mt-3">
+                <div
+                  onClick={handleCopy}
+                  className=" w-fit mx-auto cursor-pointer mt-3"
+                >
                   Copy Address <FaRegCopy className="cursor-pointer " />
                 </div>
               </div>
