@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { fire, road } from '../../assets/home_page_assets'; // Ensure these paths are correct
+import { fire, road } from "../../assets/home_page_assets"; // Ensure these paths are correct
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const FeatureSection = () => {
@@ -19,12 +19,14 @@ const FeatureSection = () => {
     {
       text1: "Transparent Ledger",
       img: fire,
-      className: "bg-gradient-to-r min-h-[4.9vh] sm:py-[20px] from-[#C5882D] to-[#B72346]",
+      className:
+        "bg-gradient-to-r min-h-[4.9vh] px-2 sm:py-[20px] from-[#C5882D] to-[#B72346]",
     },
     {
       text1: "Cashback Reward",
       img: road,
-      className: "bg-gradient-to-r min-h-[4.9vh] sm:py-[20px] from-[#979DD8] to-[#4431BA]",
+      className:
+        "bg-gradient-to-r min-h-[4.9vh] sm:py-[20px] from-[#979DD8] to-[#4431BA]",
     },
   ];
 
@@ -58,7 +60,8 @@ const FeatureSection = () => {
       }
     };
     track.addEventListener("transitionend", handleTransitionEnd);
-    return () => track.removeEventListener("transitionend", handleTransitionEnd);
+    return () =>
+      track.removeEventListener("transitionend", handleTransitionEnd);
   }, [currentIndex]);
 
   useEffect(() => {
@@ -83,8 +86,14 @@ const FeatureSection = () => {
       <div className="w-[85vw] md:w-[70vw] overflow-hidden py-3">
         <div
           ref={trackRef}
-          className={`flex gap-6 md:gap-20 ${applyTransition ? "transition-transform duration-300" : ""}`}
-          style={{ transform: `translateX(-${currentIndex * 75}%)` }}
+          className={`flex gap-6 md:gap-14 ${
+            applyTransition ? "transition-transform duration-300" : ""
+          }`}
+          style={{
+            transform: `translateX(-${
+              window.innerWidth < 768 ? currentIndex * 75 : currentIndex * 70
+            }%)`,
+          }}
         >
           {displayedCards.map((card, index) => (
             <div key={index} className="w-[75%] md:w-[65%] flex-shrink-0">
@@ -111,7 +120,12 @@ const FeatureSection = () => {
 };
 
 // FeatureCard component (unchanged)
-const FeatureCard = ({ text1 = "XX", text2 = null, className = "", img = "" }) => {
+const FeatureCard = ({
+  text1 = "XX",
+  text2 = null,
+  className = "",
+  img = "",
+}) => {
   return (
     <div className="feature-box md:min-h-48 min-w-[40vw] flex items-center justify-center bg-[#FFFFFF14] rounded-3xl pb-12 pt-16 w-full relative">
       <div className="absolute -top-3 -right-3 rounded-full flex items-center justify-center backdrop-blur-sm">

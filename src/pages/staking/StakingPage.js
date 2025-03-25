@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import logo from "../../assets/yatri-pay-logo-main.png";
 import { card1, card2, card3 } from "../../assets/stacking/page1";
 import {
   getCardDetails,
@@ -14,6 +13,8 @@ import Footer from "../../components/common/Footer";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context/GlobalContext";
 import HeaderLogo from "../../components/common/HeaderLogo";
+import StakingBackground from "../../components/Staking/StakingBackground";
+import { toast } from "react-toastify";
 
 const StakingPage = () => {
   const [activeTab, setActiveTab] = useState("locked");
@@ -26,14 +27,14 @@ const StakingPage = () => {
 
   const { setIsLoading } = useContext(GlobalContext);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [activeButton, setActiveButton] = useState("allStaking");
 
   useEffect(() => {
     (async () => {
       try {
-        setIsLoading(true)
+        setIsLoading(true);
         const [resOverview, resCards, resReferral] = await Promise.all([
           getStackingOverview(),
           getCardDetails(),
@@ -53,14 +54,16 @@ const StakingPage = () => {
           setReferralLink(resReferral.data.url);
         }
       } catch (error) {
+        toast.error(error.response?.data?.message || error.message || 'Something went wrong')
         console.log("Error in Promise.all:", error);
-      }finally{
-        setIsLoading(false)
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, []);
 
   return (
+    <StakingBackground>
       <div className="min-h-screen">
         <header>
           <div className="flex justify-start p-8">
@@ -68,12 +71,10 @@ const StakingPage = () => {
           </div>
         </header>
 
-        <main className="px-12 md:px-12 lg:px-16 xl:px-40 pb-16">
-          <h1 className="text-white text-4xl md:text-5xl font-bold text-center mb-12">
-            Staking
-          </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-items-center">
-            {/* LOCKED (Mobile: 1st, Desktop: 1st) */}
+        <main className="px-8 md:px-12 lg:px-16 xl:px-40 pb-16 ">
+          {/* Header */}
+          {/* DESKTOP UI */}
+          <div className="hidden md:grid grid-cols-2 gap-6 justify-items-center mt-5">
             <div className="order-1 md:order-1 w-full flex flex-col items-center gap-6">
               <div className="rounded-lg flex justify-center md:justify-end gap-10 w-full">
                 <div
@@ -84,12 +85,12 @@ const StakingPage = () => {
                   } cursor-pointer`}
                   onClick={() => setActiveTab("locked")}
                 >
-                  LOCKED
+                  STAKING
                 </div>
               </div>
             </div>
 
-            {/* PORTFOLIO (Mobile: 2nd, Desktop: 3rd) */}
+            {/* PORTFOLIO  */}
             <div className="order-2 md:order-3 w-full flex flex-col items-center gap-6">
               <div className="rounded-lg flex justify-center md:justify-start gap-10 w-full">
                 <div
@@ -105,7 +106,7 @@ const StakingPage = () => {
               </div>
             </div>
 
-            {/* TOTAL SUBSCRIBERS (Mobile: 3rd, Desktop: 2nd) */}
+            {/* TOTAL SUBSCRIBERS  */}
             <div className="order-3 md:order-2 w-full flex flex-col items-center gap-6">
               <div className="feature-box bg-[#FFFFFF20] rounded-3xl md:rounded-[2rem] p-[14px] md:p-6 text-center w-full">
                 <div className="text-white text-xl md:text-2xl mb-2 font-semibold">
@@ -117,14 +118,69 @@ const StakingPage = () => {
               </div>
             </div>
 
-            {/* TOTAL LOCKED YTP (Mobile: 4th, Desktop: 4th) */}
+            {/* TOTAL LOCKED YTP  */}
             <div className="order-4 md:order-4 w-full flex flex-col items-center gap-6">
               <div className="feature-box bg-[#FFFFFF20] rounded-3xl md:rounded-[2rem] p-[16px] md:p-6 text-center w-full">
                 <div className="text-white text-xl md:text-2xl mb-2 font-semibold">
                   Total Locked YTP
                 </div>
                 <div className="text-gray-400/70 md:text-xl font-semibold leading-none">
-                  {totalLocked}
+                {parseFloat(totalLocked).toFixed(2)}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* MOBILE UI */}
+          <div className="md:hidden w-full">
+            <div className="feature-box flex ml-1 mb-3 justify-between w-full bg-[#FFFFFF20] rounded-xl px-4 py-3">
+              {/* TOTAL SUBSCRIBERS  */}
+              <div className="">
+                <div className="text-white text-sm   font-semibold whitespace-nowrap">
+                  Total Subscribers
+                </div>
+                <div className="text-gray-400/70 text-sm  font-semibold leading-none">
+                  {totalSubs}
+                </div>
+              </div>
+
+              {/* TOTAL LOCKED YTP */}
+              <div className="">
+                <div className="text-white text-sm  font-semibold whitespace-nowrap">
+                  Total Locked YTP
+                </div>
+                <div className="text-gray-400/70 text-sm  font-semibold leading-none">
+                  {parseFloat(totalLocked).toFixed(2)}
+                </div>
+              </div>
+            </div>
+
+            <div className="md:hidden grid grid-cols-2 gap-3 md:gap-6 justify-items-center ">
+              {/* LOCKED*/}
+              <div className=" w-full flex flex-col items-end ">
+                <div
+                  className={`py-[0.65rem] md:py-[0.6rem] px-8 md:px-12 rounded-lg text-xl font-semibold transition-colors ${
+                    activeTab === "locked"
+                      ? "bg-[#39B54A]"
+                      : "bg-white text-black"
+                  } cursor-pointer`}
+                  onClick={() => setActiveTab("locked")}
+                >
+                  STAKING
+                </div>
+              </div>
+
+              {/* PORTFOLIO */}
+              <div className=" w-full flex flex-col items-start">
+                <div
+                  className={`py-[0.61rem] px-4 md:px-9 rounded-lg text-xl font-semibold transition-colors ${
+                    activeTab === "portfolio"
+                      ? "bg-[#4BAF2A]"
+                      : "bg-white text-black"
+                  } cursor-pointer`}
+                  onClick={() => setActiveTab("portfolio")}
+                >
+                  PORTFOLIO
                 </div>
               </div>
             </div>
@@ -140,7 +196,9 @@ const StakingPage = () => {
                     background={card1}
                     btnClass="stacting-pag1-card1-btn hover:bg-blue-900/30"
                     handleFn={() => {
-                      navigate('/staking-summary', { state: { cardId: 1, referralLink }})
+                      navigate("/staking-summary", {
+                        state: { cardId: 1, referralLink },
+                      });
                     }}
                   />
                 )}
@@ -152,7 +210,9 @@ const StakingPage = () => {
                     background={card2}
                     btnClass="stacting-pag1-card2-btn hover:bg-green-900/30"
                     handleFn={() => {
-                      navigate('/staking-summary', { state: { cardId: 2, referralLink }})
+                      navigate("/staking-summary", {
+                        state: { cardId: 2, referralLink },
+                      });
                     }}
                   />
                 )}
@@ -164,7 +224,9 @@ const StakingPage = () => {
                     background={card3}
                     btnClass="stacting-pag1-card3-btn hover:bg-orange-900/30"
                     handleFn={() => {
-                      navigate('/staking-summary', { state: { cardId: 3, referralLink }})
+                      navigate("/staking-summary", {
+                        state: { cardId: 3, referralLink },
+                      });
                     }}
                   />
                 )}
@@ -185,8 +247,8 @@ const StakingPage = () => {
                       <span className="">Assured 30,000 TP in Rewards!</span>
                       <ul className="list-disc text-left">
                         <li>
-                          €100 Referral Reward - upon your referral's Welcome
-                          Bonus claim
+                          &#8377;100 Referral Reward - upon your referral's
+                          Welcome Bonus claim
                         </li>
                         <li>
                           Staking Hike - when your referral matches your staking
@@ -249,12 +311,13 @@ const StakingPage = () => {
             </>
           )}
           {/* FAQ Section */}
-          <FAQ code={'staking'}/>
+          <FAQ code={"staking"} />
         </main>
         <section className="flex ml-[4vw] md:ml-[16vw]">
           <Footer />
         </section>
       </div>
+    </StakingBackground>
   );
 };
 

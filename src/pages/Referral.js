@@ -1,19 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaRegCopy } from "react-icons/fa";
 import logo from "../assets/yatri-pay-logo-main.png";
-import { getUserReferralLink } from "../services/promotion/promotionAPI";
+import { createCustomReferralLink, getUserReferralLink } from "../services/promotion/promotionAPI";
 import FAQ from "../components/common/FAQ";
 import Footer from "../components/common/Footer";
+import { toast } from "react-toastify";
+import { GlobalContext } from "../context/GlobalContext";
 
 const Referral = () => {
   const [referralCode, setReferralCode] = useState();
   const [referralLink, setReferralLink] = useState();
-  const [copiedField, setCopiedField] = useState(null); // 'code' or 'link' or null
-
+  const [copiedField, setCopiedField] = useState(null);
+  const [showCustomLinkModal, setShowCustomLinkModal] = useState(false);
+  const [customLink, setCustomLink] = useState("");
+  const [referralId, setReferralId] = useState()
   const referredUsers = [
     // { user: "UserA", joiningDate: "2025-03-10" },
     // { user: "UserB", joiningDate: "2025-03-11" },
   ];
+
+  const { setIsLoading } = useContext(GlobalContext)
 
   // Copy text to clipboard, then show "Copied!" for 1 second
   const handleCopy = (field, text) => {
@@ -42,17 +48,47 @@ const Referral = () => {
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true)
       try {
         const res = await getUserReferralLink();
         if (res && res.data) {
+          setReferralId(res.data.id)
           setReferralCode(res.data.code);
           setReferralLink(res.data.url);
         }
       } catch (error) {
         console.log(error);
       }
+      finally{
+        setIsLoading(false)
+      }
     })();
   }, []);
+
+  const handleCreateCustomLink = async () => {
+    try {
+      setIsLoading(true)
+      const res = await createCustomReferralLink({
+        referral_link_id: referralId,
+        new_referral_code: customLink,
+      });
+      if (res && res.data) {
+        toast.success("Custom referral link created successfully!");
+        setShowCustomLinkModal(false);
+        setCustomLink("");
+      }
+      const newData = await getUserReferralLink();
+        if (newData && newData.data) {
+          setReferralId(newData.data.id)
+          setReferralCode(newData.data.code);
+          setReferralLink(newData.data.url);
+        }
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
+    }finally{
+      setIsLoading(false)
+    }
+  };
 
   return (
     <>
@@ -111,7 +147,7 @@ const Referral = () => {
 
           {/* Create custom link */}
           <div
-            onClick={() => alert("Create custom link clicked")}
+            onClick={() => setShowCustomLinkModal(true)}
             className="bg-[#4BAF2A] hover:bg-[#4BAF2A]/90  w-full text-center py-2 rounded cursor-pointer"
           >
             Create custom link
@@ -135,6 +171,36 @@ const Referral = () => {
           ))}
         </div>
       </div>
+
+      {/* Custom Link Modal */}
+      {showCustomLinkModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-80 max-w-md">
+            <h2 className="text-xl font-bold mb-4 text-black">Create Custom Link</h2>
+            <input 
+              type="text" 
+              value={customLink}
+              onChange={(e) => setCustomLink(e.target.value)}
+              placeholder="Enter custom link"
+              className="w-full p-2 border rounded mb-4 text-black"
+            />
+            <div className="flex justify-between">
+              <button 
+                onClick={() => setShowCustomLinkModal(false)}
+                className="bg-gray-300 text-black px-4 py-2 rounded mr-2"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleCreateCustomLink}
+                className="bg-[#4BAF2A] text-white px-4 py-2 rounded"
+              >
+                Create Link
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="px-3 mb-10">
         <FAQ code={"referral"} />

@@ -21,9 +21,9 @@ const StackingReward = () => {
   return (
     <div className="feature-box text-white rounded-2xl shadow-lg max-w-4xl mx-auto w-full overflow-x-auto">
     {/* Table Header */}
-    <div className="bg-neutral-900 grid grid-cols-4 gap-4 p-4 text-center">
-      <div className="font-medium">Staking ID</div>
-      <div className="font-medium">Staking Type</div>
+    <div className="bg-neutral-900 grid md:grid-cols-4 grid-cols-6 md:gap-4 py-4 md:p-4 text-center text-sm md:text-base">
+      <div className="font-medium text-left ml-2 md:ml-0 md:text-center col-span-2 md:col-span-1">Staking ID</div>
+      <div className="font-medium col-span-2 md:col-span-1">Staking Type</div>
       <div className="font-medium">Amount</div>
       <div className="font-medium">Coin</div>
     </div>
@@ -33,14 +33,14 @@ const StackingReward = () => {
       {stackingData && stackingData.map((item) => (
         <div
           key={item.id}
-          className="grid grid-cols-4 gap-4 p-4 text-center border-t border-gray-700"
+          className="grid md:grid-cols-4 grid-cols-6 md:gap-4 py-3 md:p-4 text-center text-xs md:text-base border-t border-gray-700"
         >
-          <div className="text-green-400 font-medium">
+          <div className="text-green-400  font-medium col-span-2 md:col-span-1">
             {item.staking_number}
           </div>
-          <div className="text-gray-200">{item.staking_type}</div>
-          <div className="text-gray-200">{item.amount.toPrecision(3)}</div>
-          <div className="text-gray-200">{item.coin}</div>
+          <div className="text-gray-200  col-span-2 md:col-span-1">{item.staking_type}</div>
+          <div className="text-gray-200 ">{item.amount.toPrecision(3)}</div>
+          <div className="text-gray-200 ">{item.coin}</div>
         </div>
       ))}
     </div>

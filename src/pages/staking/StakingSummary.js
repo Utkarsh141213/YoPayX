@@ -40,16 +40,21 @@ const StakingSummary = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true)
         const [stackingRes, balanceRes, coinRes] = await Promise.all([
           getStackingCardDetailsById(cardId),
           getAvailableBalace(cardId),
           getValueOfCoinByType("YTP"),
         ]);
+        console.log(stackingRes.data);
         if (stackingRes) setStackingDetails(stackingRes.data);
         if (balanceRes) setAvailableBalace(balanceRes.data.balance);
         if (coinRes) setCoinValue(coinRes.data);
       } catch (error) {
         console.log(error);
+      }
+      finally{
+        setIsLoading(false)
       }
     };
     fetchData();
@@ -57,11 +62,14 @@ const StakingSummary = () => {
     if (!referralLink) {
       const fetchReferral = async () => {
         try {
+          setIsLoading(true)
           const resReferral = await getUserReferralLink();
           if (resReferral && resReferral.data)
             setReferralLink(resReferral.data.url);
         } catch (error) {
           console.log(error);
+        }finally{
+          setIsLoading(false)
         }
       };
       fetchReferral();
@@ -102,7 +110,7 @@ const StakingSummary = () => {
   };
 
   if (!stackingDetails || !coinValue) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   // Calculate subscription price in YTP and total amount
@@ -146,10 +154,11 @@ const StakingSummary = () => {
           <div className="w-1/2 pr-2">
             <p className="font-semibold mb-2">Subscription Type</p>
             <select
+              value={cardId}
               onChange={(e) => setCardId(e.target.value)}
               className="stacking-summary-select leading-none bg-[#FFFFFF33] text-white rounded-xl py-3 px-8 mb-2 appearance-none"
             >
-              <option value="1">LEARNER</option> {/* Corrected typo "LARNER" */}
+              <option value="1">LEARNER</option> 
               <option value="2">EARNER</option>
               <option value="3">TRAVELER</option>
             </select>

@@ -73,7 +73,7 @@ const Signup = () => {
       if (response) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        navigate("/dashboard2");
+        navigate("/onboarding");
       }
     } catch (error) {
       toast.error(error.message || "Something went worng");

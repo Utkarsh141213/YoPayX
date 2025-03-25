@@ -35,17 +35,7 @@ export const confirmAddFundService = async (formData) => {
 };
 
 export const buyAssets = async (data) => {
-
-  const response = await axiosInstance.post(
-    "/finance/sell/fiat_to_coin/",
-    data,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
+  const response = await axiosInstance.post(API_ENDPOINTS.FUND.BUY_ASSETS, data );
   return response.data;
 };
 
@@ -58,23 +48,18 @@ export const getCoinValueInCurrency = async (currency = null) => {
   return res.data;
 };
 
-export const sendYTP = async ({
-  pin,
-  amount,
-  ticker,
-  address,
-}) => {
-
+export const sendYTP = async ({ pin, amount, ticker, address }) => {
   return axiosInstance.post("/finance/send/amount/", {
     transaction_pin: pin,
     amount,
     ticker,
     address,
   });
-}
-
+};
 
 export const getValueOfCoinByType = async (coin) => {
-  const response = await axiosInstance.get(`${API_ENDPOINTS.FUND.GET_VALUE_OF_COIN_BY_TYPE}${coin}/value/`)
-  return response.data
-} 
+  const response = await axiosInstance.get(
+    `${API_ENDPOINTS.FUND.GET_VALUE_OF_COIN_BY_TYPE}${coin}/value/`
+  );
+  return response.data;
+};

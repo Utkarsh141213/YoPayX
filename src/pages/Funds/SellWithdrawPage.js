@@ -1,16 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-
-import SellScreen from "./Sell-Withdraw/SellScreen";
-import WithdrawalScreen from "./Sell-Withdraw/WithdrawalScreen";
-import {
-  getAssets,
-  getAvailableBalace,
-  getAvailableFunds,
-  getCurrencyList,
-} from "../../services/fundsAPI/tradingScreenAPI";
-import { useLocation } from "react-router-dom";
 import { GlobalContext } from "../../context/GlobalContext";
-import BackToHomeButton from "../common/BackToHomeButton";
+import { useLocation } from "react-router-dom";
+import { getAssets, getAvailableBalace, getAvailableFunds, getCurrencyList } from "../../services/fundsAPI/tradingScreenAPI";
+import BackToHomeButton from "../../components/common/BackToHomeButton";
+import SellScreen from "../../components/Funds/Sell-Withdraw/SellScreen";
+import WithdrawalScreen from "../../components/Funds/Sell-Withdraw/WithdrawalScreen";
+
 
 const DISPLAY_ORDER = ["BTC", "YTP", "BNB", "USDT"];
 
@@ -20,7 +15,7 @@ function sortAssets(assets) {
   );
 }
 
-const TradingScreen = () => {
+const SellWithdrawPage = () => {
   const { setIsLoading } = useContext(GlobalContext);
 
   const [activeTab, setActiveTab] = useState("Sell");
@@ -30,11 +25,38 @@ const TradingScreen = () => {
   const location = useLocation();
 
   useEffect(() => {
+    const { tab } = location.state || {};
+    if (tab) {
+      const t = tab.toLowerCase();
+      setActiveTab(
+        t === "sell" ? "Sell" : t === "withdraw" ? "Withdrawal" : "Sell"
+      );
+    }
 
+    const init = async () => {
+      setIsLoading(true);
+      try {
+        const [assetsData, currency] = await Promise.all([
+          getAssets(),
+          getCurrencyList(),
+        ]);
+
+        const sortedAssets = sortAssets(assetsData.data);
+        setAssets(sortedAssets);
+        setCurrencyList(currency.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    init();
+  }, []);
+
+  useEffect(() => {
     async function init() {
       setIsLoading(true);
       try {
-
         let funds;
         if (activeTab.toLowerCase() === "sell") {
           funds = await getAvailableBalace();
@@ -51,37 +73,6 @@ const TradingScreen = () => {
     }
     init();
   }, [location.state, activeTab, setIsLoading]);
-
-  useEffect(() => {
-
-    const { tab } = location.state || {};
-    if (tab) {
-      const t = tab.toLowerCase();
-      setActiveTab(
-        t === "sell" ? "Sell" : t === "withdraw" ? "Withdrawal" : "Sell"
-      );
-    }
-
-    const init = async () => {
-      setIsLoading(true)
-      try {
-        const [assetsData, currency] = await Promise.all([
-          getAssets(),
-          getCurrencyList(),
-        ]);
-
-        const sortedAssets = sortAssets(assetsData.data);
-        setAssets(sortedAssets);
-        setCurrencyList(currency.data);
-      } catch (error) {
-        console.log(error);
-      }
-      finally{
-        setIsLoading(false)
-      }
-    };
-    init()
-  }, []);
 
   return (
     <div className="min-h-screen text-white p-4 relative">
@@ -148,4 +139,4 @@ const TradingScreen = () => {
   );
 };
 
-export default TradingScreen;
+export default SellWithdrawPage;

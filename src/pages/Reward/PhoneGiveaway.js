@@ -4,7 +4,7 @@ import { cardLock } from "../../assets/stacking/page1";
 import { getIphoneTaskList } from "../../services/reward/rewardAPI";
 import Footer from "../../components/common/Footer";
 
-// Filter out task with 0 reward amount
+// Helper function: find the first nonzero reward in either the task or its sub_tasks
 function getTaskReward(task) {
   if (task.reward_amount > 0) {
     return task.reward_amount;
@@ -56,7 +56,7 @@ const PhoneGiveaway = () => {
             </p>
             <p className="mb-6">
               Users like you who complete all 7 Tasks will stand a chance to WIN an iPhone
-              or Foreign Trip. Don't forget to verifiy this your rewards which you earned
+              or Foreign Trip. Don't forget to verify the rewards you earned
             </p>
           </div>
         </div>
@@ -65,35 +65,34 @@ const PhoneGiveaway = () => {
         <div className="xl:px-[16rem]">
           {taskList &&
             taskList.map((task) => {
-              // Determine the reward to display
+              // Get the first nonzero reward, if any
               const effectiveReward = getTaskReward(task);
-
-              // If no valid reward, skip rendering
-              if (!effectiveReward) {
-                return null;
-              }
 
               return (
                 <div key={task.id} className="bg-[#FFFFFF1F] rounded-xl mb-4 p-8 px-10">
-                  <h2 className="font-semibold text-xl md:text-2xl mb-8">{task.name}</h2>
+                  <h2 className="font-semibold text-xl md:text-2xl mb-8">
+                    {task.name}
+                  </h2>
 
                   <div className="md:flex w-full items-center">
                     <div className="md:px-16 flex-1 mb-4">
-                      <div className="flex items-center justify-between flex-1">
-                        <div className="flex items-center gap-1">
-                          <img src={cardLock} alt="Lock" className="h-4 w-4" />
-                          <span className="text-xs md:text-sm">Max Reward</span>
+                      {/* Only show "Max Reward" row if we have a nonzero reward */}
+                      {effectiveReward && (
+                        <div className="flex items-center justify-between flex-1">
+                          <div className="flex items-center gap-1">
+                            <img src={cardLock} alt="Lock" className="h-4 w-4" />
+                            <span className="text-xs md:text-sm">Max Reward</span>
+                          </div>
+                          <div>
+                            <span className="font-medium">{effectiveReward}</span>
+                            {task.additionalReward && (
+                              <span className="md:ml-3 font-medium">
+                                + {task.additionalReward}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                        <div>
-                          <span className="font-medium">{effectiveReward}</span>
-                          {/* If the task has "additionalReward", display it */}
-                          {task.additionalReward && (
-                            <span className="md:ml-3 font-medium">
-                              + {task.additionalReward}
-                            </span>
-                          )}
-                        </div>
-                      </div>
+                      )}
 
                       {/* If there's a stackingReferral field, show it */}
                       {task.stackingReferral && (

@@ -1,3 +1,4 @@
+import { API_ENDPOINTS } from "../apiConfig";
 import axiosInstance from "./axios";
 
 export const createKYC = async (formData) => {
@@ -38,7 +39,7 @@ export const getBankDetails = async () => {
 
 export const generateOPT = async (phoneData) => {
 
-  await axiosInstance.post('/users/auth/resend-mobile-otp/', phoneData, {
+  await axiosInstance.post(`${API_ENDPOINTS.GENERATE_MOBILE_OTP}`, phoneData, {
         headers: {
       "Content-Type": "application/json"
     }

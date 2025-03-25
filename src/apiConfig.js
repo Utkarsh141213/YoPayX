@@ -7,12 +7,13 @@ const API_ENDPOINTS = {
   REGISTER_SECOND: `${API_BASE_URL}/users/auth/second-register/`,
   VERIFY_EMAIL: `${API_BASE_URL}/users/auth/verify-email/`,
   USER_AUTH_STATUS: `${API_BASE_URL}/users/auth/user-auth/`,
-  GENERATE_MOBILE_OTP: `${API_BASE_URL}/auth/genrate_mobile_otp/`,
+  GENERATE_MOBILE_OTP: `${API_BASE_URL}/users/auth/genrate_mobile_otp/`,
 
   FUND: {
     TRANSACTION_HISTORY_FILTER: "/finance/transaction/list/by_trans_type/",
     GET_VALUE_OF_COIN_BY_TYPE: '/finance/coin/',
     GET_WALLET_DETAILS: '/finance/wallet/', 
+    BUY_ASSETS: '/finance/sell/fiat_to_ytp/'
   },
 
   STACKING: {
@@ -26,6 +27,9 @@ const API_ENDPOINTS = {
 
   PROMOTION: {
     USER_REFERRAL_LINK: "/promotion/user-referral/",
+    CREATE_CUSTOM_REFERRAL_LINK: "/promotion/referral/link/customize/",
+    VIDEO_LIST: '/core/fast_video/',
+    BANNER_LIST: '/core/banners/list/'
   },
 
   REWARDS: {

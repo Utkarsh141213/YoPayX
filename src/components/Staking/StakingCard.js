@@ -20,7 +20,7 @@ const StakingCard = ({ data, background, btnClass, handleFn }) => {
       <div className="py-6 pt-12 px-8 h-full flex flex-col">
         <div className="text-center">
           <div className="text-white text-4xl font-bold">{data.name}</div>
-          <div className="text-xs font-semibold" style={{ color: data.color || "#29ABE2" }}>
+          <div className="text-sm font-semibold" style={{ color: data.color || "#29ABE2" }}>
             {data.description}
           </div>
 
@@ -35,16 +35,16 @@ const StakingCard = ({ data, background, btnClass, handleFn }) => {
         <div className="mt-5">
           <div className="flex justify-between text-sm mb-3">
             <div className="flex gap-2 items-center">
-              <img src={cardLock} alt="lock" className="h-[0.65rem]" />
-              <div className="text-white font-semibold text-[0.65rem]">Referral</div>
+              <img src={cardLock} alt="lock" className="h-[0.8rem]" />
+              <div className="text-white font-semibold text-[0.8rem]">Referral</div>
             </div>
             <div className="text-white font-semibold">{data.per_annum}% P.A.</div>
           </div>
 
           <div className="flex justify-between text-sm mb-3">
             <div className="flex gap-2 items-center">
-              <img src={cardSetting} alt="lock" className="h-[0.65rem]" />
-              <div className="text-white font-semibold text-[0.65rem]">
+              <img src={cardSetting} alt="lock" className="h-[0.8rem]" />
+              <div className="text-white font-semibold text-[0.8rem]">
                 Locking Period
               </div>
             </div>
@@ -53,8 +53,8 @@ const StakingCard = ({ data, background, btnClass, handleFn }) => {
 
           <div className="flex justify-between text-sm mb-8">
             <div className="flex gap-2 items-center">
-              <img src={cardPerson} alt="lock" className="h-[0.65rem]" />
-              <div className="text-white font-semibold text-[0.65rem]">
+              <img src={cardPerson} alt="lock" className="h-[0.8rem]" />
+              <div className="text-white font-semibold text-[0.8rem]">
                 Subscription Cost
               </div>
             </div>

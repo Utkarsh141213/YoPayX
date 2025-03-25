@@ -50,8 +50,8 @@ export const getTransactionHistory = async () => {
   return response.data;
 };
 
-export  const getTransactionHistoryWithFilters = async (trans_type_filter) => {
-  const response = await axiosInstance.get(API_ENDPOINTS.FUND.TRANSACTION_HISTORY_FILTER, {trans_type_filter: ['Staking Reward']})
+export  const getTransactionHistoryWithFilters = async (data) => {
+  const response = await axiosInstance.post(API_ENDPOINTS.FUND.TRANSACTION_HISTORY_FILTER, data)
   return response.data
 }
 
