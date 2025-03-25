@@ -64,7 +64,6 @@ useEffect(() => {
 
       // Process balance
       if (balanceRes) {
-        console.log(balanceRes);
         setAvailableBalance(balanceRes.inr_balance);
       }
     } catch (error) {

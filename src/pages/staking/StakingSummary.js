@@ -46,7 +46,6 @@ const StakingSummary = () => {
           getAvailableBalace(cardId),
           getValueOfCoinByType("YTP"),
         ]);
-        console.log(stackingRes.data);
         if (stackingRes) setStackingDetails(stackingRes.data);
         if (balanceRes) setAvailableBalace(balanceRes.data.balance);
         if (coinRes) setCoinValue(coinRes.data);

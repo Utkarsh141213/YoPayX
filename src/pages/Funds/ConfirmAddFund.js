@@ -12,7 +12,6 @@ const ConfirmAddFund = () => {
   const { setIsLoading } = useContext(GlobalContext);
 
   const { qr_code, upi_id, amount } = location.state || {};
- console.log(qr_code);
   // If there's no QR or UPI data, redirect
   if (!qr_code || !upi_id) {
     navigate("/");

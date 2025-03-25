@@ -35,7 +35,6 @@ const Signup = () => {
         response = await registerFirst({ email, first_name, referral_id });
       } else {
         response = await registerFirst({ email, first_name });
-        console.log(response);
       }
 
       if (response.success) {

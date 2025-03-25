@@ -179,7 +179,6 @@ const VideoCard = ({
           <div
             onClick={(e) => {
               e.stopPropagation();
-              console.log("clicked");
               setShowVideoOnMobile(true);
               setCurrVideo(video);
             }}
@@ -192,7 +191,6 @@ const VideoCard = ({
           <div
             onClick={(e) => {
               e.stopPropagation();
-              console.log("clicked");
               setShowVideoOnMobile(true);
               setCurrVideo(video);
             }}
@@ -318,7 +316,6 @@ const VideoSection = () => {
   const [showVideoOnMobile, setShowVideoOnMobile] = useState(false);
   const [currVideo, setCurrVideo] = useState(null);
 
-  console.log(showVideoOnMobile);
   useEffect(() => {
     (async () => {
       try {
@@ -333,7 +330,6 @@ const VideoSection = () => {
         }
 
         if (videoRes && videoRes.data) {
-          console.log(videoRes.data);
           videoRes.data.forEach((vdo) => {
             vdo.url = convertVideoURLtoEmbedLink(vdo.url);
           });
