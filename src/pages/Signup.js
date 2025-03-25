@@ -35,7 +35,6 @@ const Signup = () => {
         response = await registerFirst({ email, first_name, referral_id });
       } else {
         response = await registerFirst({ email, first_name });
-        console.log(response);
       }
 
       if (response.success) {
@@ -73,7 +72,7 @@ const Signup = () => {
       if (response) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        navigate("/dashboard2");
+        navigate("/onboarding");
       }
     } catch (error) {
       toast.error(error.message || "Something went worng");

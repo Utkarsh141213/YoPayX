@@ -8,7 +8,7 @@ function ProtectedRoute({ children }) {
   const user = localStorage.getItem("user");
 
   if (!user) {
-    toast(`Please login to access ${children.type.name} page`)
+    toast(`Please login to access the page`)
     return <Navigate to="/login" replace />;
   }
   

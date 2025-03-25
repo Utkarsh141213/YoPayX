@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { b, bBG, p, pBG, t, tBG, square, squareBG } from '../../assets/backgroundAssets';
 import { GlobalContext } from '../../context/GlobalContext';
-import Loader from './Loader';
+import Loader from '../common/Loader';
 
-const Background = ({ children }) => {
+
+const StakingBackground = ({ children }) => {
 
   const { isLoading } = useContext(GlobalContext);
 
@@ -15,7 +16,7 @@ const Background = ({ children }) => {
 
       {/* Top-Left Coin: Bitcoin */}
       <div
-        className="hidden md:block absolute top-52 left-40 w-12 h-12 lg:w-16 lg:h-16 rounded-full animate-float"
+        className="hidden md:block absolute top-40 left-32 w-12 h-12 lg:w-16 lg:h-16 rounded-full animate-float"
         style={{
           backgroundImage: `url(${bBG})`,
           backgroundSize: 'cover',
@@ -31,7 +32,7 @@ const Background = ({ children }) => {
 
       {/* Top-Right Coin: Custom Logo */}
       <div
-        className="hidden md:block absolute top-52 right-32 w-12 h-12 lg:w-16 lg:h-16 rounded-full"
+        className="hidden md:block absolute top-40 right-32 w-12 h-12 lg:w-16 lg:h-16 rounded-full"
         style={{
           backgroundImage: `url(${pBG})`,
           backgroundSize: 'cover',
@@ -47,9 +48,8 @@ const Background = ({ children }) => {
 
       {/* Bottom-Left Coin: Tether */}
       <div
-        className="hidden md:block absolute left-44 w-11 h-11 lg:w-12 lg:h-12 rounded-full"
+        className="hidden md:block absolute top-96 left-44 w-11 h-11 lg:w-12 lg:h-12 rounded-full"
         style={{
-          top: 'calc(100vh - 215px - 44px)', // Positions initially near bottom, scrolls with container
           backgroundImage: `url(${tBG})`,
           backgroundSize: 'cover',
           animation: 'float 4s ease-in-out infinite',
@@ -64,9 +64,8 @@ const Background = ({ children }) => {
 
       {/* Bottom-Right Coin: Square/Binance */}
       <div
-        className="hidden md:block absolute right-48 w-11 h-11 lg:w-12 lg:h-12 rounded-full"
+        className="hidden md:block absolute top-[24.5rem] right-48 w-11 h-11 lg:w-12 lg:h-12 rounded-full"
         style={{
-          top: 'calc(100vh - 190px - 44px)', // Positions initially near bottom, scrolls with container
           backgroundImage: `url(${squareBG})`,
           backgroundSize: 'cover',
           animation: 'float 3.2s ease-in-out infinite',
@@ -106,5 +105,4 @@ const Background = ({ children }) => {
   );
 };
 
-
-export default Background
+export default StakingBackground

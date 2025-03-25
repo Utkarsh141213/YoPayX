@@ -165,6 +165,18 @@ const Dashboard2 = () => {
                     with just ₹500
                   </div>
                 </div>
+                <div className="mt-4">
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation()  
+                      navigate("/add-fund")
+                    }}
+                    className=" add-fund-home rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
+                  >
+                    Add Funds
+                  </span>
+                </div>
+
               </div>
             </div>
           </div>
@@ -174,7 +186,9 @@ const Dashboard2 = () => {
           <div className="w-full h-full text-white flex flex-col items-center justify-center p-6">
             {/* Top section */}
             <div className="text-center mb-8">
-              <div className="bg-[#00FFA01A] px-5 py-4 mb-4 rounded-3xl">
+              <div
+                onClick={() => navigate('/staking')}
+              className="bg-[#00FFA01A] px-5 py-4 mb-4 rounded-3xl cursor-pointer">
                 <span className="text-white font-thin text-sm md:leading-none block">
                   Highest return on
                 </span>
@@ -182,30 +196,34 @@ const Dashboard2 = () => {
                   STAKING
                 </span>
                 <div className="text-6xl mt-3 mb-6 md:mt-0 md:text-[6rem] font-bold">
-                  30% p.a.
+                  30%
                 </div>
                 <span className="text-sm leading-none">
                   Annual return with{" "}
                   <span className="text-yellow-400">yatripay</span>
                 </span>
-              </div>
 
-              {/* <span className="border self-center text-green-500 rounded-full px-8 py-2 text-sm bg-green-900/70 transition-colors">
+                {/* <span className="border self-center text-green-500 rounded-full px-8 py-2 text-sm bg-green-900/70 transition-colors">
                   Add Funds
                 </span> */}
+                <div className="mt-4">
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation()  
+                      navigate("/add-fund")
+                    }}
+                    className=" add-fund-home rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
+                  >
+                    Add Funds
+                  </span>
+                </div>
 
-              <span
-                onClick={() => navigate("/add-fund")}
-                className="add-fund-home rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
-              >
-                Add Funds
-              </span>
-
-              <div className="flex flex-col md:flex-row justify-center gap-1 text-sm mt-4 text-green-600">
-                {/* <span className="text-green-500">*</span> */}
-                <span className="">*Minimum 7 days locking period</span>
-                {/* <span className="text-green-500 ml-8">*</span> */}
-                <span className="md:ml-9">*Start with minimum 500 Rs.</span>
+                <div className="flex flex-col md:flex-row justify-center gap-1 text-sm mt-4 text-green-600">
+                  {/* <span className="text-green-500">*</span> */}
+                  <span className="">*Minimum 7 days locking period</span>
+                  {/* <span className="text-green-500 ml-8">*</span> */}
+                  <span className="md:ml-9">*Start with minimum 500 Rs.</span>
+                </div>
               </div>
             </div>
 
@@ -269,7 +287,7 @@ const Dashboard2 = () => {
             <div className="flex gap-4 mb-8">
               <div
                 onClick={() =>
-                  navigate("/fund", { state: { tab: "withdraw" } })
+                  navigate("/sell-withdraw", { state: { tab: "withdraw" } })
                 }
                 className="act-btn bg-[#0B2A00] text-white px-10 py-2 rounded-full hover:bg-green-900/60 transition-colors "
               >
@@ -279,13 +297,13 @@ const Dashboard2 = () => {
                 onClick={() => navigate("/buy-assets")}
                 className="act-btn bg-[#0B2A00] text-white px-12 py-2 rounded-full hover:bg-green-900/60 transition-colors"
               >
-                Buy YTP
+                Buy Assets
               </div>
             </div>
 
             {/* Explore section */}
-            <div className="w-full mb-4">
-              <h2 className="text-center text-white text-lg mb-4">
+            <div className="w-full my-2">
+              <h2 className="text-left md:ml-[14vw] text-white text-2xl font-semibold mb-8">
                 Explore YatriPay
               </h2>
 
@@ -350,7 +368,7 @@ const Dashboard2 = () => {
                     <>
                       {/* Buy YTP */}
                       <ExploreYatripayCards
-                        text1="Buy YTP"
+                        text1="Buy Assets"
                         text2="Purchase YTP coins"
                         image={buyYTP}
                         onClick={() => {
@@ -378,7 +396,7 @@ const Dashboard2 = () => {
                         text2="Convert YTP to fiat"
                         image={sellYTP}
                         onClick={() => {
-                          navigate("/fund");
+                          navigate("/sell-withdraw");
                         }}
                         classNameMain="md:justify-self-end"
                         classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
@@ -423,7 +441,7 @@ const Dashboard2 = () => {
                 <div className="flex justify-center">
                   <div
                     onClick={() => setShowAll(!showAll)}
-                    className="dashboard-show-more-btn mt-4 text-sm text-center text-white rounded-2xl py-1 px-6 cursor-pointer w-fit"
+                    className="dashboard-show-more-btn mt-8 text-sm text-center text-white rounded-2xl py-1 px-6 cursor-pointer w-fit"
                   >
                     {showAll ? "Show Less" : "Show More"}
                   </div>
@@ -437,7 +455,7 @@ const Dashboard2 = () => {
           <VideoSection />
         </section>
 
-        <section className="flex my-10 ml-[4vw] md:ml-[16vw]">
+        <section className="flex md:my-10 ml-[4vw] md:ml-[16vw]">
           <Footer />
         </section>
       </div>

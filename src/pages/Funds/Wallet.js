@@ -49,7 +49,7 @@ const Wallet = () => {
             onChange={(e) => setSelectedAsset(e.target.value)}
             className="text-black px-2 py-1 rounded w-full sm:w-auto "
           >
-            <option value="BTC">BTC</option>
+            {/* <option value="BTC">BTC</option> */}
             <option value="BNB">BNB</option>
             <option value="YTP">YTP</option>
             <option value="USDT">USDT</option>

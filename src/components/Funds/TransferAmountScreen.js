@@ -5,6 +5,7 @@ import { getCoinValueInCurrency, sendYTP } from "../../services/fundsAPI/fundsAP
 import { toast } from "react-toastify";
 import TransactionPin from "../KYC/TransactionPin";
 import { GlobalContext } from "../../context/GlobalContext";
+import FAQ from "../common/FAQ";
 
 const TransferAmountScreen = () => {
 
@@ -103,7 +104,7 @@ const TransferAmountScreen = () => {
               />
             </div>
             <div className="text-white text-2xl font-semibold">
-              Available Balance : {balance} INR
+              Available Balance : {balance} 
             </div>
           </div>
 
@@ -159,6 +160,7 @@ const TransferAmountScreen = () => {
               Transfer
             </div>
           </div>
+        <FAQ code={'send'}/>
         </div>
       </div>
   );

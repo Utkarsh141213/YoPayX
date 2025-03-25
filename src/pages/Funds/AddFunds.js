@@ -3,7 +3,7 @@ import yatripayLogo from "../../assets/yatripay_logo.svg";
 import { addFundInINR } from "../../services/fundsAPI/fundsAPI";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { getAvailableBalaceByAssetType } from "../../services/fundsAPI/tradingScreenAPI";
+import { getAvailableBalaceByAssetType, getAvailableFunds } from "../../services/fundsAPI/tradingScreenAPI";
 import { GlobalContext } from "../../context/GlobalContext";
 import FAQ from "../../components/common/FAQ";
 import HeaderLogo from "../../components/common/HeaderLogo";
@@ -30,9 +30,9 @@ const AddFunds = () => {
   useEffect(() => {
     (async () => {
       try {
-        const balance = await getAvailableBalaceByAssetType('INR');
-        if (balance.data) {
-          setAvailableBalance(balance.data.balance);
+        const balance = await getAvailableFunds();
+        if (balance) {
+          setAvailableBalance(balance.inr_balance);
         }
       } catch (error) {
         console.log(error);

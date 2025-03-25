@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import InputField from "../components/InputField";
-import CryptoFloatingIcons from "../components/CryptoFloatingIcons";
 import "../assets/styles/styles.css";
 import "../assets/styles/login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -8,25 +7,26 @@ import Logo from "../components/logo";
 import { API_ENDPOINTS } from "../apiConfig"; // Import API endpoints
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalContext";
-
+import { IoMdEye, IoMdEyeOff  } from "react-icons/io";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-const { setIsLoading } = useContext(GlobalContext)
+  const { setIsLoading } = useContext(GlobalContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(!email || !password){
+    if (!email || !password) {
       setError("All fields are required");
     }
-    
+
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const response = await fetch(API_ENDPOINTS.LOGIN, {
         method: "POST",
         headers: {
@@ -37,19 +37,16 @@ const { setIsLoading } = useContext(GlobalContext)
 
       const data = await response.json();
       if (response.ok) {
-
         localStorage.setItem("token", data.data.token);
-        localStorage.setItem("user", JSON.stringify(data.data.user)); 
+        localStorage.setItem("user", JSON.stringify(data.data.user));
         navigate("/dashboard");
       } else {
         setError(data.message || "Invalid credentials. Try again.");
-
       }
     } catch (error) {
       setError("Something went wrong. Please try again later.");
-    }
-    finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -69,33 +66,43 @@ const { setIsLoading } = useContext(GlobalContext)
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-        <InputField
-          type="text"
-          placeholder="Email"
-          value={email} // Controlled state
-          onChange={(e) => setEmail(e.target.value)} // Update email state
-        />
+          <InputField
+            type="text"
+            placeholder="Email"
+            value={email} // Controlled state
+            onChange={(e) => setEmail(e.target.value)} // Update email state
+          />
 
-        <InputField
-          type="password"
-          placeholder="Password"
-          value={password} // Controlled state
-          onChange={(e) => setPassword(e.target.value)} // Update password state
-        />
-        {/* <a href="/forgotPassword"
+          <div className="w-full h-fit relative">
+            <InputField
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              value={password} // Controlled state
+              onChange={(e) => setPassword(e.target.value)} // Update password state
+            />
+            <span
+            onClick={() => setShowPassword(prev => !prev)}
+             className=" absolute right-4 top-0 bottom-0 flex items-center text-black cursor-pointer">
+              {showPassword ? <IoMdEye /> : <IoMdEyeOff />}
+              </span>
+          </div>
+          {/* <a href="/forgotPassword"
          className="text-right no-underline text-white hover:underline cursor-pointer ">Forgot ?</a> */}
         </div>
 
-        <CryptoFloatingIcons />
+        {/* <CryptoFloatingIcons /> */}
 
         {error && <p className="error-message">{error}</p>}
 
-        <button type="submit" className="submit-btn">SUBMIT</button>
+        <button type="submit" className="submit-btn">
+          SUBMIT
+        </button>
       </form>
 
-      <p className="forgotpassword d-non">
-        <a href="/YoPayX#/forgotPassword"
-        className="text-white">Forgot Password</a>
+      <p className="forgotpassword d-non mt-2">
+        <a href="/YoPayX#/forgotPassword" className="text-white">
+          Forgot Password
+        </a>
       </p>
       <p className="signup-link mt-2 login-link">
         Not signed in yet? <a href="/YoPayX#/signup">Sign up</a>

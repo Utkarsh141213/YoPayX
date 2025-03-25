@@ -64,7 +64,6 @@ useEffect(() => {
 
       // Process balance
       if (balanceRes) {
-        console.log(balanceRes);
         setAvailableBalance(balanceRes.inr_balance);
       }
     } catch (error) {
@@ -134,7 +133,7 @@ useEffect(() => {
     try {
       setIsLoading(true)
       await buyAssets({
-        coin_amount: parseInt(amountYTP),
+        ytp_amount: parseInt(amountYTP),
         fiat_currency: "INR",
         coin_symbol: selectedAsset,
       });
@@ -145,6 +144,7 @@ useEffect(() => {
         setAvailableBalance(funds.inr_balance);
       }
     } catch (error) {
+      console.log(error);
       toast.error(error.response?.data?.message || error.message);
     }finally{
       setIsLoading(false)
