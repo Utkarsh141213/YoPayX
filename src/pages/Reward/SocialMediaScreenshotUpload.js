@@ -3,7 +3,7 @@ import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import { GlobalContext } from "../../context/GlobalContext";
-import { createSubTask } from "../../services/reward/rewardAPI";
+import { createSubTask, createTask } from "../../services/reward/rewardAPI";
 import { toast } from "react-toastify";
 
 const SocialMediaScreenshotUpload = ({ taskId, setShowSocialMediaProof }) => {
@@ -30,21 +30,30 @@ const SocialMediaScreenshotUpload = ({ taskId, setShowSocialMediaProof }) => {
     const formData = new FormData();
     formData.append("task_id", taskId);
     formData.append("activity_link", "https://www.yatripay.com");
-    
+
     screenshots.forEach((item, index) => {
       if (item && item.file) {
-        formData.append("activity_images", item.file, `activity_image_${index + 1}.jpg`);
+        formData.append(
+          "activity_images",
+          item.file,
+          `activity_image_${index + 1}.jpg`
+        );
       }
     });
 
     try {
       setIsLoading(true);
-      await createSubTask(formData);
+      if (taskId === 14) {
+        await createTask(formData);
+      } else {
+        await createSubTask(formData);
+      }
       toast.success("Data Submitted successfully");
-      setShowSocialMediaProof(false)
+      setShowSocialMediaProof(false);
     } catch (error) {
       toast.error(
-        error.response?.data?.message || "Something went wrong, please try again"
+        error.response?.data?.message ||
+          "Something went wrong, please try again"
       );
       console.log(error);
     } finally {
@@ -63,7 +72,8 @@ const SocialMediaScreenshotUpload = ({ taskId, setShowSocialMediaProof }) => {
       {/* Step 1 */}
       <div className="mb-6">
         <h2 className="text-gray-700 text-xl font-medium mb-6">
-          Step 1: Give a 5 Star rating along with a good review on Google PlayStore
+          Step 1: Give a 5 Star rating along with a good review on Google
+          PlayStore
         </h2>
 
         <div className="flex justify-center space-x-8 mt-6">

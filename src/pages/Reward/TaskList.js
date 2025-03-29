@@ -27,7 +27,7 @@ const TaskList = () => {
   const handleCardClick = (taskId) => {
     console.log(taskId);
     if (taskId === 12) {
-      navigate("/staking");
+      navigate("/staking-summary");
     } else if (taskId === 14) {
       setShowSocialMediaProof(true);
     }

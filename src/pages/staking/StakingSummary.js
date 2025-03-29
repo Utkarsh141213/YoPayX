@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
   createStacking,
+  getCardDetails,
   getStackingCardDetailsById,
 } from "../../services/stacking/stackingAPI";
 import { getAvailableBalace } from "../../services/fundsAPI/tradingScreenAPI";
@@ -18,17 +19,17 @@ const StakingSummary = () => {
   const location = useLocation();
   const { setIsLoading } = useContext(GlobalContext);
 
-  const [cardId, setCardId] = useState(location.state?.cardId);
+  const [cardId, setCardId] = useState(location.state?.cardId || 2);
   const [referralLink, setReferralLink] = useState(
     location.state?.referralLink
   );
-  const [availableBalance, setAvailableBalace] = useState("0.00");
+  const [availableBalance, setAvailableBalace] = useState(0.0);
   const [stackingDetails, setStackingDetails] = useState(null);
   const [lockAmount, setLockAmount] = useState("");
   const [estReturn, setEstReturn] = useState("0.00");
   const [isAgreed, setIsAgreed] = useState(false);
   const [coinValue, setCoinValue] = useState(null);
-  const { stackingCardItems } = location.state
+  const [stackingCardItems, setStackingCardItems] = useState();
 
   const startDate = dayjs(Date.now()).format("YYYY-MM-DD hh:mm");
   const endDate = stackingDetails
@@ -49,13 +50,13 @@ const StakingSummary = () => {
         if (stackingRes) setStackingDetails(stackingRes.data);
         if (coinRes) setCoinValue(coinRes.data);
 
-      try {
-        const balanceRes = await getAvailableBalace();
-        if (balanceRes && balanceRes.data) setAvailableBalace(balanceRes.data?.balance); 
-      } catch (error) {
-        console.log(error);
-      }
-
+        try {
+          const balanceRes = await getAvailableBalace();
+          if (balanceRes && balanceRes.data)
+            setAvailableBalace(balanceRes.data?.balance);
+        } catch (error) {
+          console.log(error);
+        }
       } catch (error) {
         console.log(error);
       } finally {
@@ -79,7 +80,20 @@ const StakingSummary = () => {
       };
       fetchReferral();
     }
-  }, [cardId, referralLink]);
+
+    (async () => {
+      if (location.state?.stackingCardItems) {
+ 
+        setStackingCardItems(location.state.stackingCardItems);
+      } else {
+        console.log("object");
+        const res = await getCardDetails();
+        if (res && res.data) {
+          setStackingCardItems(res.data);
+        }
+      }
+    })();
+  }, [cardId]);
 
   useEffect(() => {
     if (lockAmount > 0 && stackingDetails) {
@@ -163,9 +177,13 @@ const StakingSummary = () => {
               onChange={(e) => setCardId(e.target.value)}
               className="stacking-summary-select leading-none bg-[#FFFFFF33] text-white rounded-xl py-3 px-8 mb-2 appearance-none"
             >
-              {stackingCardItems && stackingCardItems.length > 0 && stackingCardItems.map((card) => (
-                <option key={card.id} value={card.id}>{card.name}</option>
-              ))}
+              {stackingCardItems &&
+                stackingCardItems.length > 0 &&
+                stackingCardItems.map((card) => (
+                  <option key={card.id} value={card.id}>
+                    {card.name}
+                  </option>
+                ))}
             </select>
             <p className="text-white/80 text-sm">
               Min. Stake : {stackingDetails.min_stake} YTP
@@ -186,7 +204,9 @@ const StakingSummary = () => {
 
         {/* Lock Amount Section */}
         <div className="mb-6">
-          <p className="text-lg font-semibold mb-2 text-left">Subscription price</p>
+          <p className="text-lg font-semibold mb-2 text-left">
+            Subscription price
+          </p>
           <div className="mb-2">
             <div className="flex justify-between">
               <span>Total Price :</span>

@@ -5,6 +5,8 @@ import { getIphoneTaskList } from "../../services/reward/rewardAPI";
 import Footer from "../../components/common/Footer";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/common/Loader";
+import { FaArrowLeft } from "react-icons/fa";
+
 
 // Helper function: find the first nonzero reward in either the task or its sub_tasks
 function getTaskReward(task) {
@@ -118,8 +120,14 @@ const PhoneGiveaway = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-8 px-4 text-white">
-      <div className="w-full space-y-10">
+    <div className="reletive flex flex-col items-center justify-center min-h-screen py-8 px-4 text-white">
+            <div
+        onClick={() => window.history.back()}
+        className="feature-box absolute top-4 left-4 md:top-8 md:left-8 bg-[#FFFFFF14] px-3 py-2 rounded-lg cursor-pointer"
+      >
+        <FaArrowLeft />
+      </div>
+      <div className="w-full space-y-10 mt-10 md:mt-auto">
         {/* Header */}
         <div className="text-center mb-6 space-y-10 md:mt-12">
           <h1 className="text-4xl md:text-7xl font-bold mb-4">
