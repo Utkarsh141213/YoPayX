@@ -35,9 +35,20 @@ const FeatureSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [applyTransition, setApplyTransition] = useState(true);
   const trackRef = useRef(null);
+  const timeoutRef = useRef(null);
 
   const handleNext = () => {
-    setCurrentIndex((prev) => prev + 1);
+    setCurrentIndex((prev) => {
+      const next = prev + 1;
+      if (next === displayedCards.length - 1) {
+        // When reaching the duplicate card (index 4)
+        timeoutRef.current = setTimeout(() => {
+          setApplyTransition(false);
+          setCurrentIndex(0);
+        }, 300); // Match transition duration
+      }
+      return next;
+    });
   };
 
   // const handlePrev = () => {
@@ -55,13 +66,16 @@ const FeatureSection = () => {
     const track = trackRef.current;
     const handleTransitionEnd = () => {
       if (currentIndex === displayedCards.length - 1) {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
         setApplyTransition(false);
         setCurrentIndex(0);
       }
     };
     track.addEventListener("transitionend", handleTransitionEnd);
-    return () =>
-      track.removeEventListener("transitionend", handleTransitionEnd);
+    return () => track.removeEventListener("transitionend", handleTransitionEnd);
   }, [currentIndex]);
 
   useEffect(() => {
@@ -71,6 +85,15 @@ const FeatureSection = () => {
       });
     }
   }, [currentIndex, applyTransition]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="w-[85vw] md:w-[60vw] mx-auto flex items-center justify-center gap-4 md:gap-8 mb-8 py-[8vh]">
@@ -119,13 +142,7 @@ const FeatureSection = () => {
   );
 };
 
-// FeatureCard component (unchanged)
-const FeatureCard = ({
-  text1 = "XX",
-  text2 = null,
-  className = "",
-  img = "",
-}) => {
+const FeatureCard = ({ text1 = "XX", text2 = null, className = "", img = "" }) => {
   return (
     <div className="feature-box md:min-h-48 min-w-[40vw] flex items-center justify-center bg-[#FFFFFF14] rounded-3xl pb-12 pt-16 w-full relative">
       <div className="absolute -top-3 -right-3 rounded-full flex items-center justify-center backdrop-blur-sm">

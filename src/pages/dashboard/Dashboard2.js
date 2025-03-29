@@ -289,13 +289,13 @@ const Dashboard2 = () => {
                 onClick={() =>
                   navigate("/sell-withdraw", { state: { tab: "withdraw" } })
                 }
-                className="act-btn bg-[#0B2A00] text-white px-10 py-2 rounded-full hover:bg-green-900/60 transition-colors "
+                className="act-btn bg-[#0B2A00] text-white px-8 md:px-10 py-2 rounded-full hover:bg-green-900/60 transition-colors "
               >
                 Withdraw
               </div>
               <div
                 onClick={() => navigate("/buy-assets")}
-                className="act-btn bg-[#0B2A00] text-white px-12 py-2 rounded-full hover:bg-green-900/60 transition-colors"
+                className="act-btn bg-[#0B2A00] text-white px-8 md:px-10 py-2 rounded-full whitespace-nowrap hover:bg-green-900/60 transition-colors"
               >
                 Buy Assets
               </div>

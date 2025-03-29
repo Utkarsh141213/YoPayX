@@ -14,6 +14,7 @@ import TransactionPin from "../components/KYC/TransactionPin";
 import { toast } from "react-toastify";
 import logo from "../assets/yatri-pay-logo-main.png";
 import BackToHomeButton from "../components/common/BackToHomeButton";
+import dayjs from "dayjs";
 
 
 const Profile = () => {
@@ -25,6 +26,10 @@ const Profile = () => {
   const [referredBy, setReferredBy] = useState("");
   const [showTransactionPin, setShowTransactionPin] = useState(false);
 
+  const formatDate = (date) => {
+    return dayjs(date).format('DD-MM-YYYY')
+  }
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
@@ -32,10 +37,12 @@ const Profile = () => {
       return;
     }
 
+
+
     setAvatarUrl(user.avatar);
     setName(user.first_name);
     setEmail(user.email);
-    setRegisteredOn(user.email_verified_at);
+    setRegisteredOn(formatDate(user.email_verified_at));
     setReferredBy(user.referral_id);
   }, [navigate]);
 

@@ -35,18 +35,25 @@ const StakingPage = () => {
     (async () => {
       try {
         setIsLoading(true);
-        const [resOverview, resCards, resReferral] = await Promise.all([
-          getStackingOverview(),
+        const [resCards, resReferral] = await Promise.all([
           getCardDetails(),
           getUserReferralLink(),
         ]);
 
-        if (resOverview && resOverview.data) {
-          setTotalSubs(resOverview.data.subscribers);
-          setTotalLocked(resOverview.data.total_value_locked);
-        }
 
         if (resCards && resCards.data) {
+          const totalSubscribers1 = resCards.data.reduce(
+            (acc, item) => acc + item.subscribers,
+            0,
+          );
+          const totalStakedAssets1 = resCards.data.reduce(
+            (acc, item) => acc + item.staked_assets,
+            0,
+          );
+          
+          setTotalSubs(totalSubscribers1);
+          setTotalLocked(totalStakedAssets1);
+
           setCardDetails(resCards.data);
         }
 
@@ -197,7 +204,7 @@ const StakingPage = () => {
                     btnClass="stacting-pag1-card1-btn hover:bg-blue-900/30"
                     handleFn={() => {
                       navigate("/staking-summary", {
-                        state: { cardId: 1, referralLink },
+                        state: { cardId: cardDetails[0].id, referralLink, stackingCardItems: cardDetails },
                       });
                     }}
                   />
@@ -211,7 +218,7 @@ const StakingPage = () => {
                     btnClass="stacting-pag1-card2-btn hover:bg-green-900/30"
                     handleFn={() => {
                       navigate("/staking-summary", {
-                        state: { cardId: 2, referralLink },
+                        state: { cardId: cardDetails[1].id, referralLink },
                       });
                     }}
                   />
@@ -225,7 +232,7 @@ const StakingPage = () => {
                     btnClass="stacting-pag1-card3-btn hover:bg-orange-900/30"
                     handleFn={() => {
                       navigate("/staking-summary", {
-                        state: { cardId: 3, referralLink },
+                        state: { cardId: cardDetails[2].id, referralLink },
                       });
                     }}
                   />

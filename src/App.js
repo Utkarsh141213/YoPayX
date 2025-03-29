@@ -35,6 +35,7 @@ import Referral from "./pages/Referral";
 import { ToastContainer } from "react-toastify";
 import SellWithdrawPage from "./pages/Funds/SellWithdrawPage";
 import OnboardingPages from "./pages/OnboardingPages";
+import IphoneSubTask from "./pages/Reward/IphoneSubTask";
 
 function App() {
   return (
@@ -120,6 +121,7 @@ function App() {
         <Route path="/reward" element={<ProtectedRoute children={<RewardPage />} />}/>
         <Route path="/task-list" element={<ProtectedRoute children={<TaskList />} />}/>
         <Route path="/phone-giveaway" element={<ProtectedRoute children={<PhoneGiveaway />} />}/>
+        <Route path="iphone-sub-task" element={<IphoneSubTask />} />
 
         {/* Notifications & Tickets */}
         <Route

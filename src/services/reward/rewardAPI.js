@@ -15,3 +15,8 @@ export const claimReward = async (data) => {
     const respone = await axiosInstance.post(API_ENDPOINTS.REWARDS.CLAIM_REWARD, data)
     return respone.data
 }
+
+export const createSubTask = async (data) => {
+    const respone = await axiosInstance.post(API_ENDPOINTS.PROMOTION.CREATE_SUB_TASK, data)
+    return respone.data
+}

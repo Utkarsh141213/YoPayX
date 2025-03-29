@@ -16,7 +16,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 
 const StakingSummary = () => {
   const location = useLocation();
-  const { setIsLoading } = useContext(GlobalContext)
+  const { setIsLoading } = useContext(GlobalContext);
 
   const [cardId, setCardId] = useState(location.state?.cardId);
   const [referralLink, setReferralLink] = useState(
@@ -28,6 +28,7 @@ const StakingSummary = () => {
   const [estReturn, setEstReturn] = useState("0.00");
   const [isAgreed, setIsAgreed] = useState(false);
   const [coinValue, setCoinValue] = useState(null);
+  const { stackingCardItems } = location.state
 
   const startDate = dayjs(Date.now()).format("YYYY-MM-DD hh:mm");
   const endDate = stackingDetails
@@ -40,20 +41,25 @@ const StakingSummary = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setIsLoading(true)
-        const [stackingRes, balanceRes, coinRes] = await Promise.all([
+        setIsLoading(true);
+        const [stackingRes, coinRes] = await Promise.all([
           getStackingCardDetailsById(cardId),
-          getAvailableBalace(cardId),
           getValueOfCoinByType("YTP"),
         ]);
         if (stackingRes) setStackingDetails(stackingRes.data);
-        if (balanceRes) setAvailableBalace(balanceRes.data.balance);
         if (coinRes) setCoinValue(coinRes.data);
+
+      try {
+        const balanceRes = await getAvailableBalace();
+        if (balanceRes && balanceRes.data) setAvailableBalace(balanceRes.data?.balance); 
       } catch (error) {
         console.log(error);
       }
-      finally{
-        setIsLoading(false)
+
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -61,14 +67,14 @@ const StakingSummary = () => {
     if (!referralLink) {
       const fetchReferral = async () => {
         try {
-          setIsLoading(true)
+          setIsLoading(true);
           const resReferral = await getUserReferralLink();
           if (resReferral && resReferral.data)
             setReferralLink(resReferral.data.url);
         } catch (error) {
           console.log(error);
-        }finally{
-          setIsLoading(false)
+        } finally {
+          setIsLoading(false);
         }
       };
       fetchReferral();
@@ -89,7 +95,7 @@ const StakingSummary = () => {
 
   const handleConfirm = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       if (!lockAmount) throw new Error("Amount is required");
       if (!isAgreed) throw new Error("Please check the agree box");
       await createStacking({
@@ -103,8 +109,8 @@ const StakingSummary = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || error.message);
-    }finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -134,7 +140,7 @@ const StakingSummary = () => {
 
         {/* Available Balance */}
         <p className="text-center mb-4">
-          Available Balance : {availableBalance} YTP
+          Available Balance : {availableBalance.toFixed(2)} YTP
         </p>
 
         {/* Stats */}
@@ -157,9 +163,9 @@ const StakingSummary = () => {
               onChange={(e) => setCardId(e.target.value)}
               className="stacking-summary-select leading-none bg-[#FFFFFF33] text-white rounded-xl py-3 px-8 mb-2 appearance-none"
             >
-              <option value="1">LEARNER</option> 
-              <option value="2">EARNER</option>
-              <option value="3">TRAVELER</option>
+              {stackingCardItems && stackingCardItems.length > 0 && stackingCardItems.map((card) => (
+                <option key={card.id} value={card.id}>{card.name}</option>
+              ))}
             </select>
             <p className="text-white/80 text-sm">
               Min. Stake : {stackingDetails.min_stake} YTP
@@ -180,7 +186,7 @@ const StakingSummary = () => {
 
         {/* Lock Amount Section */}
         <div className="mb-6">
-          <p className="text-lg font-semibold mb-2 text-left">Lock Amount</p>
+          <p className="text-lg font-semibold mb-2 text-left">Subscription price</p>
           <div className="mb-2">
             <div className="flex justify-between">
               <span>Total Price :</span>
