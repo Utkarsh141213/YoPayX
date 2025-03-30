@@ -15,6 +15,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 import HeaderLogo from "../../components/common/HeaderLogo";
 import StakingBackground from "../../components/Staking/StakingBackground";
 import { toast } from "react-toastify";
+import { CopyableText, WEB_REFERRAL_LINK } from "../Referral";
 
 const StakingPage = () => {
   const [activeTab, setActiveTab] = useState("locked");
@@ -58,7 +59,7 @@ const StakingPage = () => {
         }
 
         if (resReferral && resReferral.data) {
-          setReferralLink(resReferral.data.url);
+          setReferralLink(`${WEB_REFERRAL_LINK}${resReferral.data.code}`);
         }
       } catch (error) {
         toast.error(error.response?.data?.message || error.message || 'Something went wrong')
@@ -196,7 +197,7 @@ const StakingPage = () => {
           {activeTab === "locked" ? (
             <>
               {/* Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-20 w-fit mx-auto justify-items-center my-24">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-20 w-fit mx-auto justify-items-center my-10 md:my-24">
                 {cardDetails.length > 0 && (
                   <StakingCard
                     data={cardDetails[0]}
@@ -266,18 +267,15 @@ const StakingPage = () => {
                     </div>
 
                     {/* Referral Link */}
-                    <div className="mt-8 text-left">
-                      <span className="text-lg block leading-none">
-                        Referral Link
-                      </span>
-                      <span className="text-gray-300 text-sm leading-none">
-                        {referralLink}
-                      </span>
+                    <div className="mt-8 text-left text-xs">
+                      <CopyableText label={'Referral link'} text={referralLink}/>
                     </div>
 
                     {/* Invite Button */}
                     <div className="mt-6">
-                      <div className="bg-[#4BAF2A] text-sm text-white font-bold py-3 px-8 rounded-lg hover:bg-green-600 transition w-full cursor-pointer">
+                      <div 
+                        onClick={() => navigate('/referral')}
+                      className="bg-[#4BAF2A] text-sm text-white font-bold py-3 px-8 rounded-lg hover:bg-green-600 transition w-full cursor-pointer">
                         Invite Friends
                       </div>
                     </div>

@@ -16,14 +16,16 @@ const TravelCard = () => {
   const formatCardNumber = (fullNumber) => {
     if (!fullNumber) return "xxxx xxxx xxxx xxxx";
 
-    let i = 0;
-    const chunks = [];
-    while (i < fullNumber.length && i<20) {
-      const group = fullNumber.slice(i, i + 4);
-      chunks.push(group);
-      i += 5;
-    }
-    return chunks.join(" ");
+    return fullNumber.slice(0, 10)
+
+    // let i = 0;
+    // const chunks = [];
+    // while (i < fullNumber.length && i<20) {
+    //   const group = fullNumber.slice(i, i + 4);
+    //   chunks.push(group);
+    //   i += 5;
+    // }
+    // return chunks.join(" ");
   };
 
   const handleCopy = () => {

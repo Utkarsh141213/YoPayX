@@ -5,6 +5,8 @@ import { FaArrowLeft } from "react-icons/fa";
 import Footer from "../../components/common/Footer";
 import { useLocation, useNavigate } from "react-router-dom";
 import SocialMediaScreenshotUpload from "./SocialMediaScreenshotUpload";
+import { quitTask } from "../../services/reward/rewardAPI";
+import { toast } from "react-toastify";
 
 // Helper function: find the first nonzero reward in either the task or its sub_tasks
 function getTaskReward(task) {
@@ -24,11 +26,11 @@ function getTaskReward(task) {
 const TaskCard = ({ task, setSelectedTaskId, setShowSocialMediaProof }) => {
   const effectiveReward = getTaskReward(task);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleCardClick = () => {
     if (task.id === 5) {
-      navigate('/welcome-bonus')
+      navigate("/welcome-bonus");
     } else if (task.is_social_media && task.status.toLowerCase() !== "start") {
       setSelectedTaskId(task.id);
       setShowSocialMediaProof(true);
@@ -116,11 +118,21 @@ const SpecialTaskCard = ({
     }
   };
 
+  const handleQuitTask = async (id) => {
+    try {
+      await quitTask({ task_id: id, is_exit: 1 });
+      toast.success("Requested Quit successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || error.message)
+    }
+  };
+
   return (
     <div
       key={task.id}
       onClick={handleCardClick}
-      className={`feature-box bg-[#FFFFFF26] rounded-xl mb-4 p-8 px-10 ${
+      className={`feature-box bg-[#FFFFFF26] rounded-xl mb-4 p-4 md:py-8 md:px-10 ${
         task.status.toLowerCase() !== "start" && task.is_social_media
           ? "cursor-pointer"
           : ""
@@ -162,11 +174,15 @@ const SpecialTaskCard = ({
       </div>
       <div
         className={`flex ${
-          task.id === 9 ? "justify-between px-10" : "justify-end"
+          task.id === 9 ? "justify-between  md:px-10" : "justify-end"
         }  items-center`}
       >
         {task.id === 9 && (
-          <div className=" bg-red-500 py-[0.35rem] px-10 rounded-lg">Quit</div>
+          <div 
+          onClick={(e) => {
+            e.stopPropagation()
+            handleQuitTask(task.id)}}
+          className=" bg-red-500 py-[0.35rem] px-10 rounded-lg">Quit</div>
         )}
         {task.status.toLowerCase() === "pending" && (
           <div className="bg-[#e1bf26eb] text-white font-medium px-8 py-[0.35rem] rounded-lg cursor-pointer">

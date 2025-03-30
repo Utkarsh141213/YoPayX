@@ -25,3 +25,8 @@ export const createTask = async (data) => {
     const respone = await axiosInstance.post(API_ENDPOINTS.PROMOTION.CREATE_TASK, data)
     return respone.data
 }
+
+export const quitTask = async (data) => {
+    const respone = await axiosInstance.post(API_ENDPOINTS.PROMOTION.QUIT_TASK, data)
+    return respone.data
+}

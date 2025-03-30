@@ -41,7 +41,7 @@ const TaskCard = ({ task }) => {
         task.status.toLowerCase() !== "start" ? "cursor-pointer" : ""
       }`}
     >
-      <h2 className="font-semibold text-xl md:text-2xl mb-8">{task.name}</h2>
+      <h2 className="font-semibold text-xl md:text-2xl mb-8">{`Task ${task.id}: ${task.name}`}</h2>
 
       <div className="md:flex w-full items-center">
         <div className="md:px-16 flex-1 mb-4">
@@ -96,7 +96,7 @@ const TaskCard = ({ task }) => {
           </div>
         )}
         {task.status.toLowerCase() === "missed" && (
-          <div className="bg-red-500 text-white font-medium px-3 py-[0.35rem] rounded-lg cursor-pointer">
+          <div className="bg-red-500 min-w-32 text-white font-medium px-3 py-[0.35rem] rounded-lg cursor-pointer">
             {task.status}
           </div>
         )}

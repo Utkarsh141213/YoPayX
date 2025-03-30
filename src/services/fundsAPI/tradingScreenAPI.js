@@ -21,7 +21,7 @@ export const getAvailableBalaceByAssetType = async (asset) => {
 
 
 export const getAssets = async () => {
-  const response = await axiosInstance.get("/finance/currency/crypto/list");
+  const response = await axiosInstance.get(API_ENDPOINTS.FUND.GET_ASSET_LIST);
   return response.data;
 };
 
