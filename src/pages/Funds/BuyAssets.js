@@ -53,6 +53,7 @@ useEffect(() => {
 
       // Process assets
       if (assetsRes) {
+        console.log(assetsRes);
         const sortedAssets = sortAssets(assetsRes.data);
         setAssets(sortedAssets);
       }

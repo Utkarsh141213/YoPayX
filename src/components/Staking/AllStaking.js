@@ -70,7 +70,7 @@ const AllStaking = () => {
               <span className="text-sm text-green-500">
                 {stack.staking_number}
               </span>
-              <span>{stack.lock_amount}</span>
+              <span>{stack.lock_amount.toFixed(2)}</span>
               <span className="text-sm">{stack.created_at}</span>
               <span className="text-sm">{stack.updated_at}</span>
               <span className="text-sm">{stack.end_at}</span>

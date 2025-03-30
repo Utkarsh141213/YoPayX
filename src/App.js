@@ -26,7 +26,7 @@ import Wallet from "./pages/Funds/Wallet";
 import StakingPage from "./pages/staking/StakingPage";
 import StakingSummary from "./pages/staking/StakingSummary";
 import RewardPage from "./pages/Reward/RewardPage";
-import TaskList from "./pages/Reward/TaskList";
+import WelcomeBonus from "./pages/Reward/WelcomeBonus";
 import PhoneGiveaway from "./pages/Reward/PhoneGiveaway";
 import NotificationCenter from "./pages/NotificationCenter";
 import Ticket from "./pages/Ticket";
@@ -35,6 +35,7 @@ import Referral from "./pages/Referral";
 import { ToastContainer } from "react-toastify";
 import SellWithdrawPage from "./pages/Funds/SellWithdrawPage";
 import OnboardingPages from "./pages/OnboardingPages";
+import IphoneSubTask from "./pages/Reward/IphoneSubTask";
 
 function App() {
   return (
@@ -118,8 +119,9 @@ function App() {
 
         {/* PROMOTION */}
         <Route path="/reward" element={<ProtectedRoute children={<RewardPage />} />}/>
-        <Route path="/task-list" element={<ProtectedRoute children={<TaskList />} />}/>
+        <Route path="/welcome-bonus" element={<ProtectedRoute children={<WelcomeBonus />} />}/>
         <Route path="/phone-giveaway" element={<ProtectedRoute children={<PhoneGiveaway />} />}/>
+        <Route path="iphone-sub-task" element={<IphoneSubTask />} />
 
         {/* Notifications & Tickets */}
         <Route

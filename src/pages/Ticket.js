@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import { getTickets } from '../services/ticketAPI';
+import React, { useEffect, useState } from "react";
+import { FaPlus } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { getTickets } from "../services/ticketAPI";
 import logo from "../assets/yatri-pay-logo-main.png";
+import BackToHomeButton from "../components/common/BackToHomeButton";
 
 const Ticket = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Ticket = () => {
           setTickets(response.data);
         }
       } catch (error) {
-        console.error('Error fetching tickets:', error);
+        console.error("Error fetching tickets:", error);
       } finally {
         setLoading(false);
       }
@@ -29,23 +30,26 @@ const Ticket = () => {
 
   // Navigate to the create ticket page
   const handleCreateTicket = () => {
-    navigate('/create-ticket');
+    navigate("/create-ticket");
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
+    if (!dateString) return "N/A";
     const date = new Date(dateString);
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+    return date.toLocaleDateString() + " " + date.toLocaleTimeString();
   };
 
   return (
     <div className="min-h-screen text-white p-6">
-       <header>
-          <div className="flex flex-col justify-center items-center py-6">
-            <img src={logo} alt="logo" className="h-8 md:h-12" />
-            <h1 className=''>Support Center</h1>
-          </div>
-        </header>
+      <div className="absolute md:top-10 md:left-8">
+        <BackToHomeButton />
+      </div>
+      <header>
+        <div className="flex flex-col justify-center items-center py-6">
+          <img src={logo} alt="logo" className="h-8 md:h-12" />
+          <h1 className="">Support Center</h1>
+        </div>
+      </header>
       <div className="max-w-3xl mx-auto">
         {/* Page Title and Create Button */}
         <div className="flex justify-end items-center mb-8">
@@ -68,18 +72,21 @@ const Ticket = () => {
           /* Empty State */
           <div className="text-center py-12 bg-gray-900 rounded-lg">
             <p className="text-xl">No Tickets Available</p>
-            <p className="text-gray-400 mt-2">Click "New Ticket" to create one.</p>
+            <p className="text-gray-400 mt-2">
+              Click "New Ticket" to create one.
+            </p>
           </div>
         ) : (
           /* Table Design */
-          <div className="rounded-3xl overflow-x-auto "
+          <div
+            className="rounded-3xl overflow-x-auto "
             style={{
-              border: '2px solid #848484'
+              border: "2px solid #848484",
             }}
           >
             <table className="w-full bg-[#FFFFFF16] text-left rounded-lg">
               {/* Table Headers */}
-              <thead className='border-b-2'>
+              <thead className="border-b-2">
                 <tr className="bg-neutral-800 text-gray-300 uppercase text-sm">
                   <th className="px-6 py-4">Create Date</th>
                   <th className="px-6 py-4">Ticket Number</th>
@@ -92,9 +99,13 @@ const Ticket = () => {
               <tbody className="divide-y divide-gray-600 text-center">
                 {tickets.map((ticket) => (
                   <tr key={ticket.id} className="hover:bg-neutral-800">
-                    <td className="px-6 py-4">{formatDate(ticket.ticket_category.created_at)}</td>
+                    <td className="px-6 py-4">
+                      {formatDate(ticket.ticket_category.created_at)}
+                    </td>
                     <td className="px-6 py-4">{ticket.number}</td>
-                    <td className="px-6 py-4">{ticket.ticket_category?.name}</td>
+                    <td className="px-6 py-4">
+                      {ticket.ticket_category?.name}
+                    </td>
                     <td className="px-6 py-4">
                       {ticket.status ? (
                         <span className="flex items-center text-green-400">
@@ -108,7 +119,9 @@ const Ticket = () => {
                         </span>
                       )}
                     </td>
-                    <td className="px-6 py-4">{formatDate(ticket.ticket_category.updated_at)}</td>
+                    <td className="px-6 py-4">
+                      {formatDate(ticket.ticket_category.updated_at)}
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -1,49 +1,56 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { FaRegCopy } from "react-icons/fa";
 import { getUserReferralLink } from '../../services/promotion/promotionAPI';
+import { useNavigate } from 'react-router-dom';
+import { WEB_REFERRAL_LINK } from '../../pages/Referral';
 
 const ReferralLink = () => {
+  const [referralLink, setReferralLink] = useState('');
+  const [copied, setCopied] = useState(false);
 
-    const [referralLink, setReferralLink] = useState('');
+  const navigate = useNavigate()
 
-    
+  const handleCopy = () => {
+    if (!referralLink) return;
+    navigator.clipboard.writeText(referralLink);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1000);
+  };
 
-    const handleInviteFriends = () => {
-        if (navigator.share) {
-          navigator
-            .share({
-              title: "Join YatriPay",
-              text: `Download the APP and Get $7. Get a chance to win an iPhone! ${referralLink}`,
-              url: referralLink,
-            })
-            .catch((err) => console.log("Share canceled or failed: ", err));
-        } else {
-          alert("Sharing is not supported in this browser.");
-        }
-      };
-
-    useEffect(() => {
-        const fetchReferral = async () => {
-            try {
-              const resReferral = await getUserReferralLink();
-              if (resReferral && resReferral.data) setReferralLink(resReferral.data.url);
-            } catch (error) {
-              console.log(error);
-            }
-          };
-          fetchReferral();
-    },[])
+  useEffect(() => {
+    const fetchReferral = async () => {
+      try {
+        const resReferral = await getUserReferralLink();
+        if (resReferral && resReferral.data)
+          setReferralLink(`${WEB_REFERRAL_LINK}${resReferral.data.code}`);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchReferral();
+  }, []);
 
   return (
     <div className="mb-6 px-10">
-          <p className="text-left text-xl leading-none mb-1">Referral Link</p>
-          <p className="text-left mb-4 leading-none">{referralLink}</p>
-          <div
-          onClick={handleInviteFriends}
-          className="bg-[#4BAF2A] text-white py-2 rounded-md text-center cursor-pointer">
-            Invite Friends
-          </div>
+      <div className="flex gap-3 items-center mb-2">
+        <span className="text-xl">Referral link</span>
+        <div
+          onClick={handleCopy}
+          className="text-sm rounded-3xl cursor-pointer flex items-center gap-1"
+        >
+          <FaRegCopy />
+          {copied && <span className="text-green-400">Copied!</span>}
         </div>
-  )
-}
+      </div>
+      <p className="text-left mb-4 leading-none break-all">{referralLink}</p>
+      <div
+        onClick={() => navigate('/referral')}
+        className="bg-[#4BAF2A] hover:bg-green-600 text-white py-2 rounded-md text-center cursor-pointer mt-4"
+      >
+        Invite Friends
+      </div>
+    </div>
+  );
+};
 
-export default ReferralLink
+export default ReferralLink;

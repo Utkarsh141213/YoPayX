@@ -15,6 +15,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 import HeaderLogo from "../../components/common/HeaderLogo";
 import StakingBackground from "../../components/Staking/StakingBackground";
 import { toast } from "react-toastify";
+import { CopyableText, WEB_REFERRAL_LINK } from "../Referral";
 
 const StakingPage = () => {
   const [activeTab, setActiveTab] = useState("locked");
@@ -35,23 +36,30 @@ const StakingPage = () => {
     (async () => {
       try {
         setIsLoading(true);
-        const [resOverview, resCards, resReferral] = await Promise.all([
-          getStackingOverview(),
+        const [resCards, resReferral] = await Promise.all([
           getCardDetails(),
           getUserReferralLink(),
         ]);
 
-        if (resOverview && resOverview.data) {
-          setTotalSubs(resOverview.data.subscribers);
-          setTotalLocked(resOverview.data.total_value_locked);
-        }
 
         if (resCards && resCards.data) {
+          const totalSubscribers1 = resCards.data.reduce(
+            (acc, item) => acc + item.subscribers,
+            0,
+          );
+          const totalStakedAssets1 = resCards.data.reduce(
+            (acc, item) => acc + item.staked_assets,
+            0,
+          );
+          
+          setTotalSubs(totalSubscribers1);
+          setTotalLocked(totalStakedAssets1);
+
           setCardDetails(resCards.data);
         }
 
         if (resReferral && resReferral.data) {
-          setReferralLink(resReferral.data.url);
+          setReferralLink(`${WEB_REFERRAL_LINK}${resReferral.data.code}`);
         }
       } catch (error) {
         toast.error(error.response?.data?.message || error.message || 'Something went wrong')
@@ -189,7 +197,7 @@ const StakingPage = () => {
           {activeTab === "locked" ? (
             <>
               {/* Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-20 w-fit mx-auto justify-items-center my-24">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-20 w-fit mx-auto justify-items-center my-10 md:my-24">
                 {cardDetails.length > 0 && (
                   <StakingCard
                     data={cardDetails[0]}
@@ -197,7 +205,7 @@ const StakingPage = () => {
                     btnClass="stacting-pag1-card1-btn hover:bg-blue-900/30"
                     handleFn={() => {
                       navigate("/staking-summary", {
-                        state: { cardId: 1, referralLink },
+                        state: { cardId: cardDetails[0].id, referralLink, stackingCardItems: cardDetails },
                       });
                     }}
                   />
@@ -211,7 +219,7 @@ const StakingPage = () => {
                     btnClass="stacting-pag1-card2-btn hover:bg-green-900/30"
                     handleFn={() => {
                       navigate("/staking-summary", {
-                        state: { cardId: 2, referralLink },
+                        state: { cardId: cardDetails[1].id, referralLink },
                       });
                     }}
                   />
@@ -225,7 +233,7 @@ const StakingPage = () => {
                     btnClass="stacting-pag1-card3-btn hover:bg-orange-900/30"
                     handleFn={() => {
                       navigate("/staking-summary", {
-                        state: { cardId: 3, referralLink },
+                        state: { cardId: cardDetails[2].id, referralLink },
                       });
                     }}
                   />
@@ -259,18 +267,15 @@ const StakingPage = () => {
                     </div>
 
                     {/* Referral Link */}
-                    <div className="mt-8 text-left">
-                      <span className="text-lg block leading-none">
-                        Referral Link
-                      </span>
-                      <span className="text-gray-300 text-sm leading-none">
-                        {referralLink}
-                      </span>
+                    <div className="mt-8 text-left text-xs">
+                      <CopyableText label={'Referral link'} text={referralLink}/>
                     </div>
 
                     {/* Invite Button */}
                     <div className="mt-6">
-                      <div className="bg-[#4BAF2A] text-sm text-white font-bold py-3 px-8 rounded-lg hover:bg-green-600 transition w-full cursor-pointer">
+                      <div 
+                        onClick={() => navigate('/referral')}
+                      className="bg-[#4BAF2A] text-sm text-white font-bold py-3 px-8 rounded-lg hover:bg-green-600 transition w-full cursor-pointer">
                         Invite Friends
                       </div>
                     </div>

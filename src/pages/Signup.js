@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // import SocialLogin from "../components/SocialLogin";
 import InputField from "../components/InputField";
 import CryptoFloatingIcons from "../components/CryptoFloatingIcons";
@@ -10,7 +10,7 @@ import {
   verifyEmail,
   secondRegister,
 } from "../services/authService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GlobalContext } from "../context/GlobalContext";
 
@@ -22,6 +22,14 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otp, setotp] = useState("");
   const [referral_id, setReferral_id] = useState("");
+
+  const [query] = useSearchParams()
+
+  useEffect(() => {
+    if(query.get('ref')){
+     setReferral_id(query.get('ref'))
+    }
+  }, [query])
 
   const navigate = useNavigate();
   const { setIsLoading } = useContext(GlobalContext);

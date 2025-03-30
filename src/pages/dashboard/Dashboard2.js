@@ -165,13 +165,13 @@ const Dashboard2 = () => {
                     with just ₹500
                   </div>
                 </div>
-                <div className="mt-4">
+                <div className="mt-8 ">
                   <span
                     onClick={(e) => {
                       e.stopPropagation()  
                       navigate("/add-fund")
                     }}
-                    className=" add-fund-home rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
+                    className=" add-fund-home text-xl md:text-2xl rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
                   >
                     Add Funds
                   </span>
@@ -183,9 +183,9 @@ const Dashboard2 = () => {
         </section>
 
         <section id="page-2">
-          <div className="w-full h-full text-white flex flex-col items-center justify-center p-6">
+          <div className="w-full h-full text-white flex flex-col items-center justify-center p-6 pb-0">
             {/* Top section */}
-            <div className="text-center mb-8">
+            <div className="text-center">
               <div
                 onClick={() => navigate('/staking')}
               className="bg-[#00FFA01A] px-5 py-4 mb-4 rounded-3xl cursor-pointer">
@@ -206,13 +206,13 @@ const Dashboard2 = () => {
                 {/* <span className="border self-center text-green-500 rounded-full px-8 py-2 text-sm bg-green-900/70 transition-colors">
                   Add Funds
                 </span> */}
-                <div className="mt-4">
+               <div className="mt-8 mb-8">
                   <span
                     onClick={(e) => {
                       e.stopPropagation()  
                       navigate("/add-fund")
                     }}
-                    className=" add-fund-home rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
+                    className=" add-fund-home text-xl md:text-2xl rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
                   >
                     Add Funds
                   </span>
@@ -277,8 +277,8 @@ const Dashboard2 = () => {
           </div>
         </section>
 
-        <section id="page-3">
-          <div className="w-full text-white flex flex-col items-center justify-center px-6 py-8">
+        <section id="page-3" >
+          <div className="w-full text-white flex flex-col items-center justify-center px-6 pb-8">
             {/* CARD COMPONENT */}
             {/* Card display with corner glows */}
             <TravelCard />
@@ -289,13 +289,13 @@ const Dashboard2 = () => {
                 onClick={() =>
                   navigate("/sell-withdraw", { state: { tab: "withdraw" } })
                 }
-                className="act-btn bg-[#0B2A00] text-white px-10 py-2 rounded-full hover:bg-green-900/60 transition-colors "
+                className="act-btn bg-[#0B2A00] text-white px-8 md:px-10 py-2 rounded-full hover:bg-green-900/60 transition-colors "
               >
                 Withdraw
               </div>
               <div
                 onClick={() => navigate("/buy-assets")}
-                className="act-btn bg-[#0B2A00] text-white px-12 py-2 rounded-full hover:bg-green-900/60 transition-colors"
+                className="act-btn bg-[#0B2A00] text-white px-8 md:px-10 py-2 rounded-full whitespace-nowrap hover:bg-green-900/60 transition-colors"
               >
                 Buy Assets
               </div>

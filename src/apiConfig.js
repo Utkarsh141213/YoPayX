@@ -13,7 +13,8 @@ const API_ENDPOINTS = {
     TRANSACTION_HISTORY_FILTER: "/finance/transaction/list/by_trans_type/",
     GET_VALUE_OF_COIN_BY_TYPE: '/finance/coin/',
     GET_WALLET_DETAILS: '/finance/wallet/', 
-    BUY_ASSETS: '/finance/sell/fiat_to_ytp/'
+    BUY_ASSETS: '/finance/sell/fiat_to_ytp/',
+    GET_ASSET_LIST: '/finance/currency/crypto/list',
   },
 
   STACKING: {
@@ -28,8 +29,12 @@ const API_ENDPOINTS = {
   PROMOTION: {
     USER_REFERRAL_LINK: "/promotion/user-referral/",
     CREATE_CUSTOM_REFERRAL_LINK: "/promotion/referral/link/customize/",
+    GET_REFERRED_USER_LIST: "/promotion/referral/relationships/list/",
     VIDEO_LIST: '/core/fast_video/',
-    BANNER_LIST: '/core/banners/list/'
+    BANNER_LIST: '/core/banners/list/',
+    CREATE_TASK: '/promotion/task/social_media/create/',
+    CREATE_SUB_TASK: '/promotion/sub_task/social_media/create/',
+    QUIT_TASK: '/promotion/exit_task/',
   },
 
   REWARDS: {
@@ -46,7 +51,7 @@ const API_ENDPOINTS = {
   TICKET: {
     CREATE_TICKET: '/support/create-ticket/',
     GET_TICKETS: '/support/user-tickets/',
-  }
+  },
 };
 
 export { API_BASE_URL, API_ENDPOINTS };

@@ -51,7 +51,13 @@ const Banner = ({ banners }) => {
   const extendedBanners = [...banners, banners[0]];
 
   const handleNext = () => {
-    setCurrentIndex((prev) => prev + 1);
+    setCurrentIndex((prev) => {
+      // Reset to 0 when reaching the duplicate banner
+      if (prev === extendedBanners.length - 1) {
+        return 0;
+      }
+      return prev + 1;
+    });
   };
 
   // Automatic sliding every 5 seconds
@@ -62,25 +68,24 @@ const Banner = ({ banners }) => {
     return () => clearInterval(intervalId);
   }, []);
 
-  // Handle seamless looping
+  // Handle seamless looping with transitionend
   useEffect(() => {
     const track = trackRef.current;
     const handleTransitionEnd = () => {
       if (currentIndex === extendedBanners.length - 1) {
-        setApplyTransition(false);
+        setApplyTransition(false); // Disable transition for instant reset
         setCurrentIndex(0);
       }
     };
     track.addEventListener("transitionend", handleTransitionEnd);
-    return () =>
-      track.removeEventListener("transitionend", handleTransitionEnd);
+    return () => track.removeEventListener("transitionend", handleTransitionEnd);
   }, [currentIndex]);
 
-  // // Re-enable transition after instant reset
+  // Re-enable transition after reset
   useEffect(() => {
     if (currentIndex === 0 && !applyTransition) {
       requestAnimationFrame(() => {
-        // setApplyTransition(true);
+        setApplyTransition(true); // Re-enable transition for next slide
       });
     }
   }, [currentIndex, applyTransition]);
@@ -97,8 +102,7 @@ const Banner = ({ banners }) => {
         >
           {extendedBanners.map((banner, index) => (
             <div key={index} className="w-full flex-shrink-0">
-              <div className=" flex items-center justify-center ">
-                {/* Display banner image or title */}
+              <div className="flex items-center justify-center">
                 <img
                   src={banner.link}
                   alt={banner.slider}
@@ -117,7 +121,7 @@ const Banner = ({ banners }) => {
             key={index}
             onClick={() => setCurrentIndex(index)}
             className={`w-6 h-2 bg-green-500 rounded-full ${
-              index === currentIndex ? "" : "opacity-60"
+              index === currentIndex % banners.length ? "" : "opacity-60"
             } cursor-pointer`}
           ></div>
         ))}
@@ -125,7 +129,6 @@ const Banner = ({ banners }) => {
     </>
   );
 };
-
 // Invite Section Component
 const InviteSection = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -211,25 +214,22 @@ const VideoCard = ({
   );
 };
 
-// Video Grid Component
 const VideoGrid = ({ videos, setShowVideoOnMobile, setCurrVideo }) => {
   const [page, setPage] = useState(0);
   const [applyTransition, setApplyTransition] = useState(true);
-  const [isPaused, setIsPaused] = useState(false); // New state to pause/resume transitions
+  const [isPaused, setIsPaused] = useState(false);
   const trackRef = useRef(null);
 
-  const M = 2; // Number of videos per page
+  const M = 2;
   const N = videos.length;
-  const totalPages = Math.ceil(N / M); // Number of pages in original video set
+  const totalPages = Math.ceil(N / M);
 
-  // Duplicate videos for seamless looping
   const extendedVideos = [...videos, ...videos];
 
   const handleNext = () => {
     setPage((prev) => prev + 1);
   };
 
-  // Auto-advance every 3 seconds, unless paused
   useEffect(() => {
     if (!isPaused) {
       const intervalId = setInterval(() => {
@@ -237,13 +237,12 @@ const VideoGrid = ({ videos, setShowVideoOnMobile, setCurrVideo }) => {
       }, 3000);
       return () => clearInterval(intervalId);
     }
-  }, [isPaused]); // Depend on isPaused to pause/resume
+  }, [isPaused]);
 
-  // Handle seamless loop reset
   useEffect(() => {
     const track = trackRef.current;
-    const handleTransitionEnd = () => {
-      if (page === totalPages) {
+    const handleTransitionEnd = (event) => {
+      if (event.propertyName === "transform" && page === totalPages) {
         setApplyTransition(false);
         setPage(0);
       }
@@ -251,9 +250,18 @@ const VideoGrid = ({ videos, setShowVideoOnMobile, setCurrVideo }) => {
     track.addEventListener("transitionend", handleTransitionEnd);
     return () =>
       track.removeEventListener("transitionend", handleTransitionEnd);
-  }, [page]);
+  }, [page, totalPages]);
 
-  // Re-enable transition after instant reset
+  useEffect(() => {
+    if (page === totalPages) {
+      const timeoutId = setTimeout(() => {
+        setApplyTransition(false);
+        setPage(0);
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [page, totalPages]);
+
   useEffect(() => {
     if (page === 0 && !applyTransition) {
       requestAnimationFrame(() => {
@@ -262,15 +270,8 @@ const VideoGrid = ({ videos, setShowVideoOnMobile, setCurrVideo }) => {
     }
   }, [page, applyTransition]);
 
-  // Pause transitions on hover
-  const handleHover = () => {
-    setIsPaused(true);
-  };
-
-  // Resume transitions on leave
-  const handleLeave = () => {
-    setIsPaused(false);
-  };
+  const handleHover = () => setIsPaused(true);
+  const handleLeave = () => setIsPaused(false);
 
   return (
     <div className="relative w-full max-w-xl overflow-hidden">
