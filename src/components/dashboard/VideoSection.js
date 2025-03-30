@@ -214,25 +214,22 @@ const VideoCard = ({
   );
 };
 
-// Video Grid Component
 const VideoGrid = ({ videos, setShowVideoOnMobile, setCurrVideo }) => {
   const [page, setPage] = useState(0);
   const [applyTransition, setApplyTransition] = useState(true);
-  const [isPaused, setIsPaused] = useState(false); // New state to pause/resume transitions
+  const [isPaused, setIsPaused] = useState(false);
   const trackRef = useRef(null);
 
-  const M = 2; // Number of videos per page
+  const M = 2;
   const N = videos.length;
-  const totalPages = Math.ceil(N / M); // Number of pages in original video set
+  const totalPages = Math.ceil(N / M);
 
-  // Duplicate videos for seamless looping
   const extendedVideos = [...videos, ...videos];
 
   const handleNext = () => {
     setPage((prev) => prev + 1);
   };
 
-  // Auto-advance every 3 seconds, unless paused
   useEffect(() => {
     if (!isPaused) {
       const intervalId = setInterval(() => {
@@ -240,13 +237,12 @@ const VideoGrid = ({ videos, setShowVideoOnMobile, setCurrVideo }) => {
       }, 3000);
       return () => clearInterval(intervalId);
     }
-  }, [isPaused]); // Depend on isPaused to pause/resume
+  }, [isPaused]);
 
-  // Handle seamless loop reset
   useEffect(() => {
     const track = trackRef.current;
-    const handleTransitionEnd = () => {
-      if (page === totalPages) {
+    const handleTransitionEnd = (event) => {
+      if (event.propertyName === "transform" && page === totalPages) {
         setApplyTransition(false);
         setPage(0);
       }
@@ -254,9 +250,18 @@ const VideoGrid = ({ videos, setShowVideoOnMobile, setCurrVideo }) => {
     track.addEventListener("transitionend", handleTransitionEnd);
     return () =>
       track.removeEventListener("transitionend", handleTransitionEnd);
-  }, [page]);
+  }, [page, totalPages]);
 
-  // Re-enable transition after instant reset
+  useEffect(() => {
+    if (page === totalPages) {
+      const timeoutId = setTimeout(() => {
+        setApplyTransition(false);
+        setPage(0);
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [page, totalPages]);
+
   useEffect(() => {
     if (page === 0 && !applyTransition) {
       requestAnimationFrame(() => {
@@ -265,15 +270,8 @@ const VideoGrid = ({ videos, setShowVideoOnMobile, setCurrVideo }) => {
     }
   }, [page, applyTransition]);
 
-  // Pause transitions on hover
-  const handleHover = () => {
-    setIsPaused(true);
-  };
-
-  // Resume transitions on leave
-  const handleLeave = () => {
-    setIsPaused(false);
-  };
+  const handleHover = () => setIsPaused(true);
+  const handleLeave = () => setIsPaused(false);
 
   return (
     <div className="relative w-full max-w-xl overflow-hidden">
