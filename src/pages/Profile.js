@@ -37,8 +37,6 @@ const Profile = () => {
       return;
     }
 
-
-
     setAvatarUrl(user.avatar);
     setName(user.first_name);
     setEmail(user.email);
@@ -102,7 +100,7 @@ const Profile = () => {
           <div className="w-16 h-16 rounded-full mb-4 bg-gray-600 overflow-hidden">
             {avatarUrl && (
               <img
-                src={avatarUrl}
+                src={`https://app.yatripay.com/${avatarUrl}`}
                 alt="Avatar"
                 className="w-full h-full object-cover"
               />

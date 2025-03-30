@@ -25,14 +25,21 @@ function getTaskReward(task) {
 
 const TaskCard = ({ task }) => {
   const effectiveReward = getTaskReward(task);
-
   const navigate = useNavigate();
+  
+  const handleClick = () => {
+    if (task.status.toLowerCase() !== "start") {
+      navigate("/iphone-sub-task", { state: { task } });
+    }
+  };
 
   return (
     <div
-      onClick={() => navigate("/iphone-sub-task", { state: { task } })}
+      onClick={handleClick}
       key={task.id}
-      className="feature-box bg-[#FFFFFF26] rounded-xl mb-4 p-8 px-10 cursor-pointer"
+      className={`feature-box bg-[#FFFFFF26] rounded-xl mb-4 p-8 px-10 ${
+        task.status.toLowerCase() !== "start" ? "cursor-pointer" : ""
+      }`}
     >
       <h2 className="font-semibold text-xl md:text-2xl mb-8">{task.name}</h2>
 

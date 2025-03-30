@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaRegCopy } from "react-icons/fa";
 import logo from "../assets/yatri-pay-logo-main.png";
-import { createCustomReferralLink, getUserReferralLink } from "../services/promotion/promotionAPI";
+import { createCustomReferralLink, getReferredUserList, getUserReferralLink } from "../services/promotion/promotionAPI";
 import FAQ from "../components/common/FAQ";
 import Footer from "../components/common/Footer";
 import { toast } from "react-toastify";
@@ -13,13 +13,9 @@ const Referral = () => {
   const [copiedField, setCopiedField] = useState(null);
   const [showCustomLinkModal, setShowCustomLinkModal] = useState(false);
   const [customLink, setCustomLink] = useState("");
-  const [referralId, setReferralId] = useState()
-  const referredUsers = [
-    // { user: "UserA", joiningDate: "2025-03-10" },
-    // { user: "UserB", joiningDate: "2025-03-11" },
-  ];
-
-  const { setIsLoading } = useContext(GlobalContext)
+  const [referralId, setReferralId] = useState();
+  const [referredUsers, setReferredUsers] = useState([]);
+  const { setIsLoading } = useContext(GlobalContext);
 
   // Copy text to clipboard, then show "Copied!" for 1 second
   const handleCopy = (field, text) => {
@@ -48,26 +44,47 @@ const Referral = () => {
 
   useEffect(() => {
     (async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       try {
-        const res = await getUserReferralLink();
-        if (res && res.data) {
-          setReferralId(res.data.id)
-          setReferralCode(res.data.code);
-          setReferralLink(res.data.url);
+        // Fetch referral data and referred users concurrently
+        const [referralResponse, referredUsersResponse] = await Promise.all([
+          getUserReferralLink(),
+          getReferredUserList()
+        ]);
+
+        if (referralResponse && referralResponse.data) {
+          setReferralId(referralResponse.data.id);
+          setReferralCode(referralResponse.data.code);
+          setReferralLink(referralResponse.data.url);
+        }
+
+        if (referredUsersResponse) {
+          const formattedUsers = referredUsersResponse.map(user => {
+            console.log(user);
+            if (user.referred_to.created_at) {
+              return {
+                ...user,
+                referred_to: {
+                  ...user.referred_to,
+                  created_at: new Date(user.referred_to.created_at).toLocaleDateString()
+                }
+              };
+            }
+            return user;
+          });
+          setReferredUsers(formattedUsers);
         }
       } catch (error) {
         console.log(error);
-      }
-      finally{
-        setIsLoading(false)
+      } finally {
+        setIsLoading(false);
       }
     })();
-  }, []);
+  }, [setIsLoading]);
 
   const handleCreateCustomLink = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const res = await createCustomReferralLink({
         referral_link_id: referralId,
         new_referral_code: customLink,
@@ -78,15 +95,15 @@ const Referral = () => {
         setCustomLink("");
       }
       const newData = await getUserReferralLink();
-        if (newData && newData.data) {
-          setReferralId(newData.data.id)
-          setReferralCode(newData.data.code);
-          setReferralLink(newData.data.url);
-        }
+      if (newData && newData.data) {
+        setReferralId(newData.data.id);
+        setReferralCode(newData.data.code);
+        setReferralLink(newData.data.url);
+      }
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
-    }finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -165,8 +182,8 @@ const Referral = () => {
           {/* Table Rows */}
           {referredUsers.map((item, index) => (
             <div key={index} className="flex justify-between px-2">
-              <span>{item.user}</span>
-              <span>{item.joiningDate}</span>
+              <span>{item.referred_to?.first_name}</span>
+              <span>{item.referred_to?.created_at}</span>
             </div>
           ))}
         </div>

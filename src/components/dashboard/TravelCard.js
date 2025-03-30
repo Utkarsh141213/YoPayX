@@ -77,13 +77,13 @@ const TravelCard = () => {
         />
 
         <div className="absolute inset-0 p-6 ">
-          <h1 className="absolute left-8 top-2 md:top-3 text-white text-xl font-bold">
+          <h1 className="absolute left-8 top-1 md:top-3 text-white text-xl font-bold">
             Yatripay Travel Card
           </h1>
 
           {/* Balance + Eye */}
-          <div className="absolute top-20 right-6 flex items-center">
-            <span className="text-white text-xl mr-2">
+          <div className="absolute top-16 md:top-20 right-6 flex items-center">
+            <span className="text-white md:text-xl mr-2">
               {showBalance
                 ? `${Number(availableBalance).toPrecision(6)} YTP`
                 : "***** YTP"}
@@ -103,7 +103,7 @@ const TravelCard = () => {
 
           {/* Card number + Copy */}
           <div className="absolute top-[62%] left-6 transform -translate-y-1/2 flex items-center gap-3">
-            <span className="text-white md:text-xl font-semibold tracking-wider ">
+            <span className="text-white md:text-xl md:font-semibold tracking-wider ">
               {formatCardNumber(cardNumber)}
             </span>
             <FaRegCopy
@@ -116,12 +116,12 @@ const TravelCard = () => {
           </div>
 
           {/* Name + Expiry */}
-          <div className="absolute bottom-6 left-0 right-0 px-6">
+          <div className="absolute bottom-2 md:bottom-6 left-0 right-0 px-6">
             <div className="flex justify-between">
-              <p className="text-white text-xl md:text-2xl font-semibold md:font-bold max-w-[75%] truncate">
+              <p className="text-white text-lg md:text-2xl font-medium md:font-bold max-w-[75%] truncate">
                 {username}
               </p>
-              <p className="text-white text-xl md:text-2xl font-semibold md:font-bold">
+              <p className="text-white text-lg md:text-2xl font-medium md:font-bold">
                 {formattedDate}
               </p>
             </div>

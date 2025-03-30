@@ -3,7 +3,7 @@ import { phoneSvg } from "../../assets/stacking";
 import { cardLock } from "../../assets/stacking/page1";
 import { FaArrowLeft } from "react-icons/fa";
 import Footer from "../../components/common/Footer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SocialMediaScreenshotUpload from "./SocialMediaScreenshotUpload";
 
 // Helper function: find the first nonzero reward in either the task or its sub_tasks
@@ -24,9 +24,13 @@ function getTaskReward(task) {
 const TaskCard = ({ task, setSelectedTaskId, setShowSocialMediaProof }) => {
   const effectiveReward = getTaskReward(task);
 
+  const navigate = useNavigate()
+
   const handleCardClick = () => {
-    if (task.is_social_media) {
-        setSelectedTaskId(setSelectedTaskId)
+    if (task.id === 5) {
+      navigate('/welcome-bonus')
+    } else if (task.is_social_media && task.status.toLowerCase() !== "start") {
+      setSelectedTaskId(task.id);
       setShowSocialMediaProof(true);
     }
   };
@@ -35,7 +39,9 @@ const TaskCard = ({ task, setSelectedTaskId, setShowSocialMediaProof }) => {
     <div
       key={task.id}
       onClick={handleCardClick}
-      className="feature-box bg-[#FFFFFF26] rounded-xl mb-4 p-8 px-10"
+      className={`feature-box bg-[#FFFFFF26] rounded-xl mb-4 p-8 px-10 ${
+        task.status.toLowerCase() !== "start" ? "cursor-pointer" : ""
+      }`}
     >
       <h2 className="font-semibold text-lg md:text-xl mb-8">{task.name}</h2>
 
@@ -86,7 +92,7 @@ const TaskCard = ({ task, setSelectedTaskId, setShowSocialMediaProof }) => {
             {task.status}
           </div>
         )}
-        {task.status.toLowerCase() === "missed" && (
+        {task.status.toLowerCase() === "submitted" && (
           <div className="bg-[#df3434] text-white font-medium px-3 py-[0.35rem] rounded-lg cursor-pointer">
             {task.status}
           </div>
@@ -96,12 +102,16 @@ const TaskCard = ({ task, setSelectedTaskId, setShowSocialMediaProof }) => {
   );
 };
 
-const SpecialTaskCard = ({ task, setSelectedTaskId, setShowSocialMediaProof }) => {
+const SpecialTaskCard = ({
+  task,
+  setSelectedTaskId,
+  setShowSocialMediaProof,
+}) => {
   const effectiveReward = getTaskReward(task);
 
   const handleCardClick = () => {
-    if (task.is_social_media) {
-        setSelectedTaskId(task.id)
+    if (task.is_social_media && task.status.toLowerCase() !== "start") {
+      setSelectedTaskId(task.id);
       setShowSocialMediaProof(true);
     }
   };
@@ -110,7 +120,11 @@ const SpecialTaskCard = ({ task, setSelectedTaskId, setShowSocialMediaProof }) =
     <div
       key={task.id}
       onClick={handleCardClick}
-      className="feature-box bg-[#FFFFFF26] rounded-xl mb-4 p-8 px-10"
+      className={`feature-box bg-[#FFFFFF26] rounded-xl mb-4 p-8 px-10 ${
+        task.status.toLowerCase() !== "start" && task.is_social_media
+          ? "cursor-pointer"
+          : ""
+      }`}
     >
       <h2 className="font-semibold text-lg md:text-xl mb-8">{task.name}</h2>
 
@@ -181,7 +195,7 @@ const SpecialTaskCard = ({ task, setSelectedTaskId, setShowSocialMediaProof }) =
 
 const IphoneSubTask = () => {
   const [task, setTask] = useState([]);
-  const [selectedTaskId, setSelectedTaskId] = useState()
+  const [selectedTaskId, setSelectedTaskId] = useState();
   const [showSocialMediaProof, setShowSocialMediaProof] = useState(false);
 
   const location = useLocation();

@@ -5,7 +5,7 @@ import Footer from "../../components/common/Footer";
 import { useNavigate } from "react-router-dom";
 import SocialMediaScreenshotUpload from "./SocialMediaScreenshotUpload";
 
-const TaskList = () => {
+const WelcomeBonus = () => {
   const [taskList, setTaskList] = useState([]);
   const [showSocialMediaProof, setShowSocialMediaProof] = useState(false);
 
@@ -108,4 +108,4 @@ const TaskList = () => {
   );
 };
 
-export default TaskList;
+export default WelcomeBonus;

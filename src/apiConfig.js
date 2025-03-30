@@ -28,6 +28,7 @@ const API_ENDPOINTS = {
   PROMOTION: {
     USER_REFERRAL_LINK: "/promotion/user-referral/",
     CREATE_CUSTOM_REFERRAL_LINK: "/promotion/referral/link/customize/",
+    GET_REFERRED_USER_LIST: "/promotion/referral/relationships/list/",
     VIDEO_LIST: '/core/fast_video/',
     BANNER_LIST: '/core/banners/list/',
     CREATE_TASK: '/promotion/task/social_media/create/',

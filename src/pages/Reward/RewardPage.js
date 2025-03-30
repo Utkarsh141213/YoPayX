@@ -26,7 +26,7 @@ const RewardPage = () => {
     } finally {
       setIsLoading(false)
       if (id === "1") {
-        navigate("/task-list");
+        navigate("/welcome-bonus");
       } else {
         navigate("/phone-giveaway");
       }
