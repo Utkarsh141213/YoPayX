@@ -64,16 +64,7 @@ const App=()=> {
     <Background>
       <ToastContainer />
       <div style={{ position: "relative" }}>
-          {" "}
-          {/* Container for positioning */}
-          <BackButton
-            style={{
-              position: "absolute",
-              top: "15vh",
-              left: "2vh",
-              zIndex: "10",
-            }}
-          />{" "}
+         
         <Routes>
         {/* Public (Unauthenticated) Routes */}
         <Route path="/" element={<Home />} />
