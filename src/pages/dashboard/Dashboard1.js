@@ -1,4 +1,4 @@
-import React, { useState, useEffect,createContext, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   circle1Svg,
   BTCRectangle,
@@ -20,24 +20,13 @@ import Logo from "../../components/logo";
 import { useLocation, useNavigate } from "react-router-dom";
 import FeatureSection from "../../components/dashboard/FeatureSection";
 import Footer from "../../components/common/Footer";
-import { GlobalContext } from "../../context/GlobalContext";
 
 import TravelCard from "../../components/dashboard/TravelCard";
 import { toast } from "react-toastify";
 import VideoSection from "../../components/dashboard/VideoSection";
-import { getAvailableBalaceByAssetType, getAvailableFunds } from "../../services/fundsAPI/tradingScreenAPI";
 
 const Dashboard2 = () => {
-  const [amount, setAmount] = useState("");
-    const [availableBalance, setAvailableBalance] = useState("0.00");
-  
-    const { setIsLoading } = useContext(GlobalContext);
-  
-    const quickAmounts = [500, 1000, 2000];
-  
-    const handleQuickAmount = (val) => {
-      setAmount(val.toString());
-    };
+  const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState({
     name: "Profile",
@@ -45,7 +34,6 @@ const Dashboard2 = () => {
   });
 
   const [showAll, setShowAll] = useState(false);
-  const [carouselIndex, setCarouselIndex] = useState(0); // State to manage carousel index
 
   useEffect(() => {
     if (location.state?.userName || location.state?.userImage) {
@@ -68,173 +56,16 @@ const Dashboard2 = () => {
       }
     }
   }, [location.state]);
-  useEffect(() => {
-    (async () => {
-      try {
-        const balance = await getAvailableFunds();
-        if (balance) {
-          setAvailableBalance(balance.inr_balance);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+
   const handleComminSoon = () => {
     toast.success("Comming soon");
   };
-  const carouselItems = [
-    (
-      <div
-        className="relative rounded-3xl py-10 px-[10vw] shadow-lg"
-        style={{
-          backgroundImage: `url(${BTCRectangle})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* STARS */}
-        <img
-          src={star1}
-          alt="star"
-          className=" absolute -left-[1.8rem] h-14 bottom-10"
-        />
-        <img
-          src={star1}
-          alt="star"
-          className=" absolute -right-[1.8rem] h-14 top-10"
-        />
-        <img
-          src={star2}
-          alt="star"
-          className="hidden md:block absolute left-[3rem] h-7 top-[11rem]"
-        />
-
-        <div className="text-center">
-          <div>
-            <h2 className="text-white text-lg md:font-semibold text-left ml-[4vw] md:ml-[3vw]">
-              Start your
-            </h2>
-            <div className=" text-[3.7rem] md:text-[7.5rem] font-bold leading-none">
-              <span className="bg-gradient-to-r from-[#C3D09D] via-[#31B65E] to-[#3381CD] text-transparent bg-clip-text leading-none">
-                Bitcoin
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-[#C3D09D] via-[#31B65E] to-[#3381CD] text-transparent bg-clip-text leading-none">
-                Journey
-              </span>
-            </div>
-            <div className="text-white text-lg md:font-semibold text-right mr-[8vw] md:mr-[6vw]">
-              with just ₹100
-            </div>
-          </div>
-          <div className="mt-8 ">
-            <span
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate("/add-fund");
-              }}
-              className=" add-fund-home text-xl md:text-2xl rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
-            >
-              Add Funds
-            </span>
-          </div>
-        </div>
-      </div>
-    ),
-    (
-      <div
-        onClick={() => navigate("/staking")}
-        className="bg-[#00FFA01A] py-10 px-[12vw] pb-2 mb-4 rounded-3xl cursor-pointer"
-        style={{backgroundSize: "cover",
-        backgroundPosition: "center"}}
-      >
-        {/* STARS */}
-        <img
-          src={star1}
-          alt="star"
-          className=" absolute -left-[1.8rem] h-14 bottom-10"
-        />
-        <img
-          src={star1}
-          alt="star"
-          className=" absolute -right-[1.8rem] h-14 top-10"
-        />
-        <img
-          src={star2}
-          alt="star"
-          className="hidden md:block absolute left-[3rem] h-7 top-[11rem]"
-        />
-        <span className="text-white font-thin text-sm md:leading-none block">
-          Highest return on
-        </span>
-        <span className="text-xl md:text-3xl font-bold leading-none">
-          STAKING
-        </span>
-        <div className="text-6xl mt-3 mb-6 md:mt-0 md:text-[6rem] font-bold">
-          30%
-        </div>
-        <span className="text-sm leading-none">
-          Annual return with{" "}
-          <span className="text-yellow-400">yatripay</span>
-        </span>
-
-        <div className="mt-8 mb-8">
-          <span
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate("/add-fund");
-            }}
-            className=" add-fund-home text-xl md:text-2xl rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
-          >
-            Add Funds
-          </span>
-        </div>
-
-        <div className="flex flex-col md:flex-row justify-center gap-1 text-sm mt-4 text-green-600">
-          <span className="">*Minimum 7 days locking period</span>
-          <span className="md:ml-9">*Start with minimum 100 Rs.</span>
-        </div>
-      </div>
-    ),
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCarouselIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
-    }, 3000); // Change slide every 3 seconds (adjust as needed)
-
-    return () => clearInterval(interval); // Clear interval on component unmount
-  }, [carouselItems.length]);
-  const navigate = useNavigate();
-
-  const goBack = () => {
-    navigate(-1);
-  };
-  
-const BackButtonContext = createContext();
-
-// Custom Hook to use the BackButton Context
-const useBackButton = () => {
-  return useContext(BackButtonContext);
-};
-
-// BackButton Component
-const BackButton = () => {
-  const { goBack } = useBackButton();
-
-  return <button onClick={goBack}>&larr; Back</button>;
-};
 
   return (
-    <BackButtonContext.Provider value={{goBack}}>
-
     <div className="flex min-h-screen relative">
       <div className="w-full ">
-         
         <header className="flex justify-between items-center py-2 px-4 md:px-12">
           <Logo />
-          {/* <BackButton/> */}
           <div className="flex gap-4 pt-4">
             <div
               onClick={() => navigate("/category")}
@@ -286,23 +117,67 @@ const BackButton = () => {
         {/* Content container */}
         <section id="page-1" className="mb-5">
           <div className="w-fit px-8 py-6 mx-auto ">
-            {/* <div className="text-white text-sm text-center mb-6">
+            <div className="text-white text-sm text-center mb-6">
               Hi User! Let's start earning.
-            </div> */}
-<div 
-  className="text-white text-sm text-center text-base sm:text-lg md:text-2xl mb-6 font-bold flex flex-col sm:flex-row items-center sm:gap-2"
-  style={{ position: 'relative', left: '35vh' }}>
-     <div className="text-white text-xl md:text-xl font-semibold">
-            Available Balance:
-          </div>
-          <div className="text-white/50 md:text-white text-xl ">
-            {availableBalance} INR
-          </div>
-        </div>
+            </div>
 
             {/* Main card with BTCRectangle as background */}
-            <div className="relative">
-              {carouselItems[carouselIndex]}
+            <div
+              className="relative rounded-3xl py-10 px-[10vw] shadow-lg"
+              style={{
+                backgroundImage: `url(${BTCRectangle})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              {/* STARS */}
+              <img
+                src={star1}
+                alt="star"
+                className=" absolute -left-[1.8rem] h-14 bottom-10"
+              />
+              <img
+                src={star1}
+                alt="star"
+                className=" absolute -right-[1.8rem] h-14 top-10"
+              />
+              <img
+                src={star2}
+                alt="star"
+                className="hidden md:block absolute left-[3rem] h-7 top-[11rem]"
+              />
+
+              <div className="text-center">
+                <div>
+                  <h2 className="text-white text-lg md:font-semibold text-left ml-[4vw] md:ml-[3vw]">
+                    Start your
+                  </h2>
+                  <div className=" text-[3.7rem] md:text-[7.5rem] font-bold leading-none">
+                    <span className="bg-gradient-to-r from-[#C3D09D] via-[#31B65E] to-[#3381CD] text-transparent bg-clip-text leading-none">
+                      Bitcoin
+                    </span>
+                    <br />
+                    <span className="bg-gradient-to-r from-[#C3D09D] via-[#31B65E] to-[#3381CD] text-transparent bg-clip-text leading-none">
+                      Journey
+                    </span>
+                  </div>
+                  <div className="text-white text-lg md:font-semibold text-right mr-[8vw] md:mr-[6vw]">
+                    with just ₹100
+                  </div>
+                </div>
+                <div className="mt-8 ">
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation()  
+                      navigate("/add-fund")
+                    }}
+                    className=" add-fund-home text-xl md:text-2xl rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
+                  >
+                    Add Funds
+                  </span>
+                </div>
+
+              </div>
             </div>
           </div>
         </section>
@@ -310,7 +185,47 @@ const BackButton = () => {
         <section id="page-2">
           <div className="w-full h-full text-white flex flex-col items-center justify-center p-6 pb-0">
             {/* Top section */}
-            
+            <div className="text-center">
+              <div
+                onClick={() => navigate('/staking')}
+              className="bg-[#00FFA01A] py-10 px-[10vw] mb-4 rounded-3xl cursor-pointer">
+                <span className="text-white font-thin text-sm md:leading-none block">
+                  Highest return on
+                </span>
+                <span className="text-xl md:text-3xl font-bold leading-none">
+                  STAKING
+                </span>
+                <div className="text-6xl mt-3 mb-6 md:mt-0 md:text-[6rem] font-bold">
+                  30%
+                </div>
+                <span className="text-sm leading-none">
+                  Annual return with{" "}
+                  <span className="text-yellow-400">yatripay</span>
+                </span>
+
+                {/* <span className="border self-center text-green-500 rounded-full px-8 py-2 text-sm bg-green-900/70 transition-colors">
+                  Add Funds
+                </span> */}
+               <div className="mt-8 mb-8">
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation()  
+                      navigate("/add-fund")
+                    }}
+                    className=" add-fund-home text-xl md:text-2xl rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
+                  >
+                    Add Funds
+                  </span>
+                </div>
+
+                <div className="flex flex-col md:flex-row justify-center gap-1 text-sm mt-4 text-green-600">
+                  {/* <span className="text-green-500">*</span> */}
+                  <span className="">*Minimum 7 days locking period</span>
+                  {/* <span className="text-green-500 ml-8">*</span> */}
+                  <span className="md:ml-9">*Start with minimum 100 Rs.</span>
+                </div>
+              </div>
+            </div>
 
             {/* Middle cards section */}
             <FeatureSection />
@@ -545,8 +460,6 @@ const BackButton = () => {
         </section>
       </div>
     </div>
-    </BackButtonContext.Provider>
-
   );
 };
 
