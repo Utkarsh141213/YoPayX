@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Background from "./components/common/Background";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Home from "./pages/Home";
