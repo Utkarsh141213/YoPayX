@@ -24,15 +24,25 @@ export const BackButtonProvider = ({ children }) => {
 
 export const BackButton = (props) => {
   const { goBack } = useContext(BackButtonContext);
-  const baseClassName = "add-fund-home text-xl md:text-2xl rounded-full px-8 py-2 pb-3 text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer";
+  const baseClassName =  "add-fund-home text-xl md:text-2xl rounded-full px-6 py-2 hover:bg-green-900/55 cursor-pointer hover:scale-105 transition-transform flex items-center justify-center"; // Flex for centering
   const combinedClassName = props.className ? `${baseClassName} ${props.className}` : baseClassName;
-
+//dsa
   return (
     <button
       onClick={goBack}
       style={props.style} // Apply styles passed as props
       className={combinedClassName}>
-      &larr; Back
-    </button>
+ <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="w-6 h-6 inline-block mr-2" // Adjust spacing with mr-2
+      >
+        <path
+          fillRule="evenodd"
+          d="M11.788 5.212a.75.75 0 010 1.06l-6.252 6.252 6.252 6.252a.75.75 0 11-1.06 1.06l-7.312-7.312a.75.75 0 010-1.06l7.312-7.312a.75.75 0 011.06 0z"
+          clipRule="evenodd"
+        />
+      </svg>    </button>
   );
 };
