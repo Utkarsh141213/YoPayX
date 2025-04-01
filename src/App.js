@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { createContext, useContext } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Background from "./components/common/Background";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Home from "./pages/Home";
@@ -36,12 +36,45 @@ import { ToastContainer } from "react-toastify";
 import SellWithdrawPage from "./pages/Funds/SellWithdrawPage";
 import OnboardingPages from "./pages/OnboardingPages";
 import IphoneSubTask from "./pages/Reward/IphoneSubTask";
+// import { BackButton, BackButtonProvider } from "./components/BackButton/BackButton";
+import { BackButton,BackButtonProvider } from "./components/hooks/BackButton";
+// const BackButtonContext = createContext();
 
-function App() {
+// // Custom Hook to use the BackButton Context
+// const useBackButton = () => {
+//   return useContext(BackButtonContext);
+// };
+
+// // BackButton Component
+// const BackButton = () => {
+//   const { goBack } = useBackButton();
+
+//   return <button onClick={goBack}>&larr; Back</button>;
+// };
+
+const App=()=> {
+  // const navigate = useNavigate();
+
+  // const goBack = () => {
+  //   navigate(-1);
+  //};
   return (
+    
+      <BackButtonProvider>
     <Background>
       <ToastContainer />
-      <Routes>
+      <div style={{ position: "relative" }}>
+          {" "}
+          {/* Container for positioning */}
+          <BackButton
+            style={{
+              position: "absolute",
+              top: "15vh",
+              left: "2vh",
+              zIndex: "10",
+            }}
+          />{" "}
+        <Routes>
         {/* Public (Unauthenticated) Routes */}
         <Route path="/" element={<Home />} />
         <Route path="*" element={<Home />} />
@@ -55,6 +88,9 @@ function App() {
           path="/profile"
           element={<ProtectedRoute children={<Profile />} />}
         />
+          {/* <Route path="/back" element={useBackButton}/> */}
+                {/* <button onClick={goBack}>&larr; Back</button> */}
+
         <Route
           path="/dashboard"
           element={<ProtectedRoute children={<Dashboard2 />} />}
@@ -139,7 +175,9 @@ function App() {
 
         <Route path="/background" element={<ProtectedRoute children={<Background />} />}/>
       </Routes>
+      </div>
     </Background>
+    </BackButtonProvider>
   );
 }
 
