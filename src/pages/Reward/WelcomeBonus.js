@@ -41,6 +41,8 @@ const WelcomeBonus = () => {
           <SocialMediaScreenshotUpload
             taskId={14}
             setShowSocialMediaProof={setShowSocialMediaProof}
+            step1={'Step 1: Give a 5 Star rating along with a good review on Google PlayStore'}
+            step2={'Step 2: Please upload a screenshot of Rating & Review'}
           />{" "}
         </div>
       )}
