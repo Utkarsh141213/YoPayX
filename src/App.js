@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Background from "./components/common/Background";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Home from "./pages/Home";
@@ -64,7 +64,16 @@ const App=()=> {
     <Background>
       <ToastContainer />
       <div style={{ position: "relative" }}>
-         
+          {" "}
+          {/* Container for positioning */}
+          <BackButton
+            style={{
+              position: "absolute",
+              top: "15vh",
+              left: "2vh",
+              zIndex: "10",
+            }}
+          />{" "}
         <Routes>
         {/* Public (Unauthenticated) Routes */}
         <Route path="/" element={<Home />} />
