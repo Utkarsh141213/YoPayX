@@ -73,7 +73,7 @@ const App=()=> {
               left: "2vh",
               zIndex: "10",
             }}
-          />{" "}
+          />{" "}{" "}
         <Routes>
         {/* Public (Unauthenticated) Routes */}
         <Route path="/" element={<Home />} />
