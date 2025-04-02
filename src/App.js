@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation} from "react-router-dom";
 import Background from "./components/common/Background";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Home from "./pages/Home";
@@ -36,44 +36,30 @@ import { ToastContainer } from "react-toastify";
 import SellWithdrawPage from "./pages/Funds/SellWithdrawPage";
 import OnboardingPages from "./pages/OnboardingPages";
 import IphoneSubTask from "./pages/Reward/IphoneSubTask";
-// import { BackButton, BackButtonProvider } from "./components/BackButton/BackButton";
 import { BackButton,BackButtonProvider } from "./components/hooks/BackButton";
-// const BackButtonContext = createContext();
-
-// // Custom Hook to use the BackButton Context
-// const useBackButton = () => {
-//   return useContext(BackButtonContext);
-// };
-
-// // BackButton Component
-// const BackButton = () => {
-//   const { goBack } = useBackButton();
-
-//   return <button onClick={goBack}>&larr; Back</button>;
-// };
 
 const App=()=> {
-  // const navigate = useNavigate();
+  const location = useLocation(); // Get the current route
 
-  // const goBack = () => {
-  //   navigate(-1);
-  //};
+  // Define routes where the Back Button should NOT be displayed
+  const hiddenRoutes = ["/", "/signup", "/login", "/dashboard", "/dashboard2"];
   return (
     
       <BackButtonProvider>
     <Background>
       <ToastContainer />
       <div style={{ position: "relative" }}>
-          {" "}
-          {/* Container for positioning */}
-          <BackButton
-            style={{
-              position: "absolute",
-              top: "15vh",
-              left: "2vh",
-              zIndex: "10",
-            }}
-          />{" "}{" "}
+      {!hiddenRoutes.includes(location.pathname) && (
+            <BackButton
+              style={{
+                position: "absolute",
+                top: "15vh",
+                left: "2vh",
+                zIndex: "10",
+              }}
+            />
+          )}
+
         <Routes>
         {/* Public (Unauthenticated) Routes */}
         <Route path="/" element={<Home />} />
