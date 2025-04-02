@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
- import TransactionHistory from "../../components/Funds/Sell-Withdraw/TransactionHistory";
- import { getTransactionHistory, getTransactionHistoryWithFilters } from "../../services/fundsAPI/tradingScreenAPI";
- import { toast } from "react-toastify";
+import TransactionHistory from "../../components/Funds/Sell-Withdraw/TransactionHistory";
+import {
+  getTransactionHistory,
+  getTransactionHistoryWithFilters,
+} from "../../services/fundsAPI/tradingScreenAPI";
+import { toast } from "react-toastify";
 
- const TransactionHistoryPage = () => {
+const TransactionHistoryPage = () => {
   const [transactions, setTransactions] = useState();
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -11,27 +14,27 @@ import React, { useEffect, useState, useRef } from "react";
   const [filterData, setFilterData] = useState([
     {
       id: 1,
-      type: 'Buy YTP',
+      type: "Buy YTP",
     },
     {
       id: 2,
-      type: 'Sell YTP',
+      type: "Sell YTP",
     },
     {
       id: 3,
-      type: 'Staking Reward',
+      type: "Staking Reward",
     },
     {
       id: 4,
-      type: 'Referral Reward',
+      type: "Referral Reward",
     },
     {
       id: 5,
-      type: 'Staking Hike',
+      type: "Staking Hike",
     },
     {
       id: 6,
-      type: 'Staking Referral Reward',
+      type: "Staking Referral Reward",
     },
   ]);
 
@@ -39,13 +42,12 @@ import React, { useEffect, useState, useRef } from "react";
     (async () => {
       try {
         let res;
-        if(selectedFilters.length){
-
-           res = await getTransactionHistoryWithFilters({
+        if (selectedFilters.length) {
+          res = await getTransactionHistoryWithFilters({
             trans_type_filter: selectedFilters,
           });
-        }else{
-          res = await getTransactionHistory()
+        } else {
+          res = await getTransactionHistory();
         }
         if (res && res.data && Array.isArray(res.data)) {
           setTransactions(res.data);
@@ -66,9 +68,11 @@ import React, { useEffect, useState, useRef } from "react";
 
   const handleFilterChange = (filterType) => {
     if (selectedFilters.includes(filterType)) {
-      setSelectedFilters(prevFilters => prevFilters.filter(item => item !== filterType));
+      setSelectedFilters((prevFilters) =>
+        prevFilters.filter((item) => item !== filterType)
+      );
     } else {
-      setSelectedFilters(prevFilters => [...prevFilters, filterType]);
+      setSelectedFilters((prevFilters) => [...prevFilters, filterType]);
     }
   };
 
@@ -79,11 +83,11 @@ import React, { useEffect, useState, useRef } from "react";
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener("mousedown", handleOutsideClick);
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener("mousedown", handleOutsideClick);
     };
-  },);
+  });
 
   return (
     <div className="px-8 md:px-[20vw] xl:px-[28vw] space-y-10 pt-10">
@@ -109,7 +113,9 @@ import React, { useEffect, useState, useRef } from "react";
                     checked={selectedFilters.includes(filter.type)}
                     onChange={() => handleFilterChange(filter.type)}
                   />
-                  <label className="ml-2 text-gray-700 whitespace-nowrap">{filter.type}</label>
+                  <label className="ml-2 text-gray-700 whitespace-nowrap">
+                    {filter.type}
+                  </label>
                 </div>
               ))}
             </div>
@@ -120,6 +126,6 @@ import React, { useEffect, useState, useRef } from "react";
       {transactions && <TransactionHistory transactions={transactions} />}
     </div>
   );
- };
+};
 
- export default TransactionHistoryPage;
+export default TransactionHistoryPage;

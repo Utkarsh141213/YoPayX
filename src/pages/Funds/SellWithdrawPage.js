@@ -1,11 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import { useLocation } from "react-router-dom";
-import { getAssets, getAvailableBalace, getAvailableFunds, getCurrencyList } from "../../services/fundsAPI/tradingScreenAPI";
+import {
+  getAssets,
+  getAvailableBalace,
+  getAvailableFunds,
+  getCurrencyList,
+} from "../../services/fundsAPI/tradingScreenAPI";
 import BackToHomeButton from "../../components/common/BackToHomeButton";
 import SellScreen from "../../components/Funds/Sell-Withdraw/SellScreen";
 import WithdrawalScreen from "../../components/Funds/Sell-Withdraw/WithdrawalScreen";
-
 
 const DISPLAY_ORDER = ["BTC", "YTP", "BNB", "USDT"];
 

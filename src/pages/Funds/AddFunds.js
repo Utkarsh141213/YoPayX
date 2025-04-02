@@ -3,7 +3,10 @@ import yatripayLogo from "../../assets/yatripay_logo.svg";
 import { addFundInINR } from "../../services/fundsAPI/fundsAPI";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { getAvailableBalaceByAssetType, getAvailableFunds } from "../../services/fundsAPI/tradingScreenAPI";
+import {
+  getAvailableBalaceByAssetType,
+  getAvailableFunds,
+} from "../../services/fundsAPI/tradingScreenAPI";
 import { GlobalContext } from "../../context/GlobalContext";
 import FAQ from "../../components/common/FAQ";
 import HeaderLogo from "../../components/common/HeaderLogo";
@@ -43,7 +46,7 @@ const AddFunds = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const response = await addFundInINR({
         amount: parseInt(amount),
         fiat: "INR",
@@ -55,8 +58,8 @@ const AddFunds = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || error.message);
-    }finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -119,7 +122,7 @@ const AddFunds = () => {
           </div>
         </form>
       </div>
-      <FAQ code={'buy'} />
+      <FAQ code={"buy"} />
     </div>
   );
 };

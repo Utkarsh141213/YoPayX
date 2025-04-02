@@ -83,7 +83,6 @@ const StakingSummary = () => {
 
     (async () => {
       if (location.state?.stackingCardItems) {
- 
         setStackingCardItems(location.state.stackingCardItems);
       } else {
         console.log("object");
