@@ -16,4 +16,16 @@
     align-items: center;
     padding: 20px;
   }
+  @media ((min-width: 320px) and (max-width:639px)) {
+    .carousel-container {
   
+        position: relative !important;
+        /* left:-50px !important; */
+        right:130px !important;
+        /* height:500px; */
+    }
+    .slide-1{
+      height: 400px;
+      width: 285px;
+    }
+  }

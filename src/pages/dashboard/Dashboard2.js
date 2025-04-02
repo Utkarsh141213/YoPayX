@@ -78,7 +78,7 @@ const Dashboard2 = () => {
   const carouselItems = [
     (
       <div
-        className="relative rounded-3xl py-[26px] px-[10vw] shadow-lg"
+        className="relative rounded-3xl py-[26px] px-[10vw] shadow-lg slide-1"
         style={{
           backgroundImage: `url(${BTCRectangle})`,
           backgroundSize: "cover",
