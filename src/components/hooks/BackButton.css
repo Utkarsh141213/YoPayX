@@ -67,9 +67,8 @@
         width: 45px;
         margin:0 0 10px 0;
         height: 20px;
-    }
-    button{
         position: absolute;
         top:65px !important;
     }
+ 
 }

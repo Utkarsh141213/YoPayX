@@ -75,7 +75,7 @@ const App=()=> {
         clipRule="evenodd"
       />
     </svg>
-    Back  {/* Added "Back" text for clarity */}
+{/* Added "Back" text for clarity */}
   </BackButton>
 )}
       <div style={{ position: "relative" }}>
