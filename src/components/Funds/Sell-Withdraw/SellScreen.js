@@ -6,7 +6,7 @@ import {
   getAvailableBalaceByAssetType,
   getTransactionHistory,
   sellAsset,
-} from "../../../services/fundsAPI/tradingScreenAPI";
+} from "../../../services/fundsAPI/sellWithdrawAPI";
 import { toast } from "react-toastify";
 import Loader from "../../common/Loader";
 import { GlobalContext } from "../../../context/GlobalContext";
@@ -126,7 +126,6 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
     }
   };
 
-
   return (
     <div className="p-4 pb-0 rounded-lg md:w-[600px]">
       <div className="relative mb-4">
@@ -155,9 +154,7 @@ const SellScreen = ({ assets, currencyList, setAvailableBalance }) => {
             );
           })}
         </select>
-        <LiaAngleDownSolid
-        className="absolute right-5 top-14 text-black" />
-
+        <LiaAngleDownSolid className="absolute right-5 top-14 text-black" />
 
         <div className="flex gap-2 mt-2">
           {assets.map((asset) => (
