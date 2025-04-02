@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaRegCopy } from "react-icons/fa";
 import dayjs from "dayjs";
 import { card } from "../../assets/home_page_assets";
-import { getAvailableBalace } from "../../services/fundsAPI/tradingScreenAPI";
+import { getAvailableBalace } from "../../services/fundsAPI/sellWithdrawAPI";
 import { getWalletDetails } from "../../services/fundsAPI/walletAPI";
 
 const TravelCard = () => {

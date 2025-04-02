@@ -24,7 +24,7 @@ import Footer from "../../components/common/Footer";
 import TravelCard from "../../components/dashboard/TravelCard";
 import { toast } from "react-toastify";
 import VideoSection from "../../components/dashboard/VideoSection";
-import { getAvailableFunds } from "../../services/fundsAPI/tradingScreenAPI";
+import { getAvailableFunds } from "../../services/fundsAPI/sellWithdrawAPI";
 import "./dashboard.css";
 const Dashboard2 = () => {
   const [availableBalance, setAvailableBalance] = useState("0.00");
@@ -75,31 +75,30 @@ const Dashboard2 = () => {
     toast.success("Comming soon");
   };
   const carouselItems = [
-    (
-      <div
-        className="relative rounded-3xl py-[26px] px-[10vw] shadow-lg"
-        style={{
-          backgroundImage: `url(${BTCRectangle})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* STARS */}
-        <img
-          src={star1}
-          alt="star"
-          className=" absolute -left-[1.8rem] h-14 bottom-10"
-        />
-        <img
-          src={star1}
-          alt="star"
-          className=" absolute -right-[1.8rem] h-14 top-10"
-        />
-        <img
-          src={star2}
-          alt="star"
-          className="hidden md:block absolute left-[3rem] h-7 top-[11rem]"
-        />
+    <div
+      className="relative rounded-3xl py-[26px] px-[10vw] shadow-lg"
+      style={{
+        backgroundImage: `url(${BTCRectangle})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* STARS */}
+      <img
+        src={star1}
+        alt="star"
+        className=" absolute -left-[1.8rem] h-14 bottom-10"
+      />
+      <img
+        src={star1}
+        alt="star"
+        className=" absolute -right-[1.8rem] h-14 top-10"
+      />
+      <img
+        src={star2}
+        alt="star"
+        className="hidden md:block absolute left-[3rem] h-7 top-[11rem]"
+      />
 
       <div className="text-center">
         <div>
@@ -271,20 +270,21 @@ const Dashboard2 = () => {
 
             {/* Main card with BTCRectangle as background */}
             {/* <div className="relative"> */}
-             <div className="carousel-container">
-      <div
-        className="carousel"
-        style={{
-          transform: `translateX(-${carouselIndex * 100}%)`, // Move forward only
-        }}      >
-        {carouselItems.map((item, i) => (
-          <div key={i} className="carousel-slide">
-            {item}
-          </div>
-        ))}
-      </div>
-    </div>
+            <div className="carousel-container">
+              <div
+                className="carousel"
+                style={{
+                  transform: `translateX(-${carouselIndex * 100}%)`, // Move forward only
+                }}
+              >
+                {carouselItems.map((item, i) => (
+                  <div key={i} className="carousel-slide">
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
+          </div>
           {/* </div> */}
         </section>
 

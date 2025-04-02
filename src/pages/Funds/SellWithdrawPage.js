@@ -6,7 +6,7 @@ import {
   getAvailableBalace,
   getAvailableFunds,
   getCurrencyList,
-} from "../../services/fundsAPI/tradingScreenAPI";
+} from "../../services/fundsAPI/sellWithdrawAPI";
 import BackToHomeButton from "../../components/common/BackToHomeButton";
 import SellScreen from "../../components/Funds/Sell-Withdraw/SellScreen";
 import WithdrawalScreen from "../../components/Funds/Sell-Withdraw/WithdrawalScreen";

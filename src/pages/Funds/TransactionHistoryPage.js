@@ -3,7 +3,7 @@ import TransactionHistory from "../../components/Funds/Sell-Withdraw/Transaction
 import {
   getTransactionHistory,
   getTransactionHistoryWithFilters,
-} from "../../services/fundsAPI/tradingScreenAPI";
+} from "../../services/fundsAPI/sellWithdrawAPI";
 import { toast } from "react-toastify";
 
 const TransactionHistoryPage = () => {

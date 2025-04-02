@@ -5,7 +5,7 @@ import {
   getAssets,
   getAvailableFunds,
   getCurrencyList,
-} from "../../services/fundsAPI/tradingScreenAPI";
+} from "../../services/fundsAPI/sellWithdrawAPI";
 import { buyAssets } from "../../services/fundsAPI/fundsAPI";
 import { toast } from "react-toastify";
 import { GlobalContext } from "../../context/GlobalContext";

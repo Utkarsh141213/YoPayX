@@ -5,7 +5,7 @@ import {
   getCardDetails,
   getStackingCardDetailsById,
 } from "../../services/stacking/stackingAPI";
-import { getAvailableBalace } from "../../services/fundsAPI/tradingScreenAPI";
+import { getAvailableBalace } from "../../services/fundsAPI/sellWithdrawAPI";
 import dayjs from "dayjs";
 import { getUserReferralLink } from "../../services/promotion/promotionAPI";
 import { toast } from "react-toastify";

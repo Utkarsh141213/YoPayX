@@ -6,7 +6,7 @@ import {
   getAvailableBalaceByAssetType,
   getTransactionHistory,
   sellAsset,
-} from "../../../services/fundsAPI/tradingScreenAPI";
+} from "../../../services/fundsAPI/sellWithdrawAPI";
 import { toast } from "react-toastify";
 import Loader from "../../common/Loader";
 import { GlobalContext } from "../../../context/GlobalContext";

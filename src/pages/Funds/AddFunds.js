@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {
   getAvailableBalaceByAssetType,
   getAvailableFunds,
-} from "../../services/fundsAPI/tradingScreenAPI";
+} from "../../services/fundsAPI/sellWithdrawAPI";
 import { GlobalContext } from "../../context/GlobalContext";
 import FAQ from "../../components/common/FAQ";
 import HeaderLogo from "../../components/common/HeaderLogo";
