@@ -1,0 +1,75 @@
+.back-button {
+    position: absolute;
+    /* top: 20px !important; */
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 9999px; /* Fully rounded */
+    padding: 10px 20px;
+    font-size: 1.25rem; /* Default size */
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  }
+  
+  /* Margin styles for different screen sizes */
+  .back-button {
+    bottom: 10px;
+    left: 10px;
+  }
+  
+  @media (min-width: 640px) {
+    .back-button {
+      bottom: 20px;
+      left: 20px;
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .back-button {
+      bottom: 30px;
+      left: 30px;
+      font-size: 1.75rem;
+    }
+  }
+  
+  /* Hover effects */
+  .back-button:hover {
+    transform: scale(1.05);
+    background-color: rgba(34, 197, 94, 0.55); /* Green with transparency */
+  }
+  
+  /* Add additional styles for responsiveness */
+  .back-button {
+    width: 30px; /* Adjust width as needed */
+    height: 30px; /* Adjust height as needed */
+  }
+  
+  @media (min-width: 640px) {
+    .back-button {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .back-button {
+      width: 50px;
+      height: 50px;
+    }
+  }
+  @media ((min-width: 320px) and (max-width:639px)) {
+    .back-button {
+        color: #ffffff;
+        font-size: x-large;
+        padding: 10px 16px 10px 15px;
+        width: 45px;
+        margin:0 0 10px 0;
+        height: 20px;
+    }
+    button{
+        position: absolute;
+        top:65px !important;
+    }
+}

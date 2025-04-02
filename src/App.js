@@ -48,17 +48,38 @@ const App=()=> {
       <BackButtonProvider>
     <Background>
       <ToastContainer />
-      <div style={{ position: "relative" }}>
       {!hiddenRoutes.includes(location.pathname) && (
-            <BackButton
-              style={{
-                position: "absolute",
-                top: "15vh",
-                left: "2vh",
-                zIndex: "10",
-              }}
-            />
-          )}
+  <BackButton
+    className="bg-[#FFFFFF33] rounded-xl flex items-center justify-center"
+    style={{
+      position: "absolute",
+      top: "80px",
+      left: "3vw",
+      zIndex: "50",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      color: "white",
+      padding: "0.5rem 1rem", // Using rem for better scaling
+      borderRadius: "0.5rem",   // Consistent with padding
+      width:"15vw",
+    }}
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="w-5 h-5 mr-2"     // Reduced size, spacing to the right
+    >
+      <path
+        fillRule="evenodd"
+        d="M11.788 5.212a.75.75 0 010 1.06l-6.252 6.252 6.252 6.252a.75.75 0 11-1.06 1.06l-7.312-7.312a.75.75 0 010-1.06l7.312-7.312a.75.75 0 011.06 0z"
+        clipRule="evenodd"
+      />
+    </svg>
+    Back  {/* Added "Back" text for clarity */}
+  </BackButton>
+)}
+      <div style={{ position: "relative" }}>
+      
 
         <Routes>
         {/* Public (Unauthenticated) Routes */}
@@ -74,8 +95,6 @@ const App=()=> {
           path="/profile"
           element={<ProtectedRoute children={<Profile />} />}
         />
-          {/* <Route path="/back" element={useBackButton}/> */}
-                {/* <button onClick={goBack}>&larr; Back</button> */}
 
         <Route
           path="/dashboard"

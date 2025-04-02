@@ -284,7 +284,10 @@ const Dashboard2 = () => {
           transform: `translateX(-${carouselIndex * 100}%)`, // Move forward only
         }}      >
         {carouselItems.map((item, i) => (
-          <div key={i} className="carousel-slide">
+          <div key={i} className={`carousel-slide
+          ${i === carouselIndex % carouselItems.length ? "" : "opacity-60"
+          }
+          `}>
             {item}
           </div>
         ))}
