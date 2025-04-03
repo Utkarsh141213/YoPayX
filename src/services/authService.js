@@ -45,7 +45,7 @@ export const verifyEmail = async (email, email_otp) => {
     });
     return await response.json();
   } catch (error) {
-    return { success: false, message: error.message };
+    throw error
   }
 };
 
