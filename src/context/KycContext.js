@@ -28,7 +28,8 @@ export const KycProvider = ({ children }) => {
   };
 
   const initiateOTP = async () => {
-    await generateOPT({phone_no: kycData.phoneNumber, country_code: '+91'});
+    console.log(kycData.phoneNumber);
+    await generateOPT({phone_no: `${kycData.phoneNumber}`, country_code: '+91'});
   }
 
   const submitKyc = async () => {
