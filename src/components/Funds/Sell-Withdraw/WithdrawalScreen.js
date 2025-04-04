@@ -4,21 +4,18 @@ import {
   getTransactionHistory,
   withdrawFunds,
   getAvailableFunds,
-} from "../../../services/fundsAPI/tradingScreenAPI";
+} from "../../../services/fundsAPI/sellWithdrawAPI";
 import { toast } from "react-toastify";
 import Loader from "../../common/Loader";
 import { GlobalContext } from "../../../context/GlobalContext";
 
 const WithdrawalScreen = ({ setAvailableBalance }) => {
-
-
   const { setIsLoading } = useContext(GlobalContext);
 
   const [amount, setAmount] = useState("");
   const [youWillGet, setYouWillGet] = useState("0.00");
   const [platformFee, setPlatformFee] = useState("0.5");
   const [transactions, setTransactions] = useState(null);
-
 
   useEffect(() => {
     (async () => {
@@ -55,17 +52,16 @@ const WithdrawalScreen = ({ setAvailableBalance }) => {
     calculateWithdrawalAmount(newValue);
   };
 
-
   const handleWithdraw = async () => {
     if (!amount || isNaN(parseFloat(amount))) {
       toast.error("Please enter a valid amount");
       return;
     }
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await withdrawFunds({
         withdraw_request_amount: parseFloat(amount),
-        fiat: "INR"
+        fiat: "INR",
       });
       toast.success("Withdrawal successful");
 
@@ -81,16 +77,14 @@ const WithdrawalScreen = ({ setAvailableBalance }) => {
         setTransactions(transactionList.data);
       }
 
-
       setAmount("");
       setYouWillGet("0.00");
       setPlatformFee("0.00");
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
       console.log(error);
-    }
-    finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -137,7 +131,11 @@ const WithdrawalScreen = ({ setAvailableBalance }) => {
       <h2 className="text-white text-lg font-semibold mb-4">
         Withdrawal Transaction History
       </h2>
-      {transactions ? <TransactionHistory transactions={transactions} /> : <Loader />}
+      {transactions ? (
+        <TransactionHistory transactions={transactions} />
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 };
