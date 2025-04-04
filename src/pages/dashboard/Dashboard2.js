@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, { useState, useEffect,createContext, useContext } from "react";
 import {
   circle1Svg,
   BTCRectangle,
@@ -24,10 +24,12 @@ import Footer from "../../components/common/Footer";
 import TravelCard from "../../components/dashboard/TravelCard";
 import { toast } from "react-toastify";
 import VideoSection from "../../components/dashboard/VideoSection";
-import { getAvailableFunds } from "../../services/fundsAPI/sellWithdrawAPI";
-import "./dashboard.css";
+import {  getAvailableFunds } from "../../services/fundsAPI/tradingScreenAPI";
+import './dashboard.css';
+import Navigation from "../../components/Navigation";
 const Dashboard2 = () => {
-  const [availableBalance, setAvailableBalance] = useState("0.00");
+    const [availableBalance, setAvailableBalance] = useState("0.00");
+  
 
   const location = useLocation();
   const [user, setUser] = useState({
@@ -75,117 +77,122 @@ const Dashboard2 = () => {
     toast.success("Comming soon");
   };
   const carouselItems = [
-    <div
-      className="relative rounded-3xl py-[26px] px-[10vw] shadow-lg"
-      style={{
-        backgroundImage: `url(${BTCRectangle})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* STARS */}
-      <img
-        src={star1}
-        alt="star"
-        className=" absolute -left-[1.8rem] h-14 bottom-10"
-      />
-      <img
-        src={star1}
-        alt="star"
-        className=" absolute -right-[1.8rem] h-14 top-10"
-      />
-      <img
-        src={star2}
-        alt="star"
-        className="hidden md:block absolute left-[3rem] h-7 top-[11rem]"
-      />
+    (
+      <div
+        className="relative rounded-3xl py-[26px] px-[10vw] shadow-lg slide-1"
+        style={{
+          backgroundImage: `url(${BTCRectangle})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* STARS */}
+        <img
+          src={star1}
+          alt="star"
+          className=" absolute -left-[1.8rem] h-14 bottom-10"
+        />
+        <img
+          src={star1}
+          alt="star"
+          className=" absolute -right-[1.8rem] h-14 top-10"
+        />
+        <img
+          src={star2}
+          alt="star"
+          className="hidden md:block absolute left-[3rem] h-7 top-[11rem]"
+        />
 
-      <div className="text-center">
-        <div>
-          <h2 className="text-white text-lg md:font-semibold text-left ml-[4vw] md:ml-[3vw]">
-            Start your
-          </h2>
-          <div className=" text-[3.7rem] md:text-[7.5rem] font-bold leading-none">
-            <span className="bg-gradient-to-r from-[#C3D09D] via-[#31B65E] to-[#3381CD] text-transparent bg-clip-text leading-none">
-              Bitcoin
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-[#C3D09D] via-[#31B65E] to-[#3381CD] text-transparent bg-clip-text leading-none">
-              Journey
-            </span>
+        <div className="text-center">
+          <div>
+            <h2 className="text-white text-lg md:font-semibold text-left ml-[4vw] md:ml-[3vw]">
+              Start your
+            </h2>
+            <div className=" text-[3.7rem] md:text-[7.5rem] font-bold leading-none">
+              <span className="bg-gradient-to-r from-[#C3D09D] via-[#31B65E] to-[#3381CD] text-transparent bg-clip-text leading-none">
+                Bitcoin
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-[#C3D09D] via-[#31B65E] to-[#3381CD] text-transparent bg-clip-text leading-none">
+                Journey
+              </span>
+            </div>
+            <div className="text-white text-lg md:font-semibold text-right mr-[8vw] md:mr-[6vw]">
+              with just ₹100
+            </div>
           </div>
-          <div className="text-white text-lg md:font-semibold text-right mr-[8vw] md:mr-[6vw]">
-            with just ₹100
+          <div className="mt-8 ">
+            <span
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate("/add-fund");
+              }}
+              className=" add-fund-home text-xl md:text-2xl rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
+            >
+              Add Funds
+            </span>
           </div>
         </div>
-        <div className="mt-8 ">
+      </div>
+    ),
+    (
+      <div
+        onClick={() => navigate("/staking")}
+        className="relative rounded-3xl py-5 px-[11.7vw] shadow-lg" // Match padding
+        style={{
+          backgroundImage: `url(${BTCRectangle})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* STARS */}
+        <img
+          src={star1}
+          alt="star"
+          className="absolute -left-[1.8rem] h-14 bottom-10"
+        />
+        <img
+          src={star1}
+          alt="star"
+          className="absolute -right-[1.8rem] h-14 top-10"
+        />
+        <img
+          src={star2}
+          alt="star"
+          className="hidden md:block absolute left-[3rem] h-7 top-[11rem]"
+        />
+        <span className="text-white font-thin text-sm md:leading-none block">
+          Highest return on
+        </span>
+        <span className="text-xl md:text-3xl font-bold leading-none">
+          STAKING
+        </span>
+        <div className="text-6xl mt-3 mb-6 md:mt-0 md:text-[6rem] font-bold">
+          30%
+        </div>
+        <span className="text-sm leading-none">
+          Annual return with{" "}
+          <span className="text-yellow-400">yatripay</span>
+        </span>
+    
+        <div className="mt-8 mb-8">
           <span
             onClick={(e) => {
               e.stopPropagation();
               navigate("/add-fund");
             }}
-            className=" add-fund-home text-xl md:text-2xl rounded-full px-8 py-2  text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
+            className="add-fund-home text-xl md:text-2xl rounded-full px-8 py-2 text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
           >
             Add Funds
           </span>
         </div>
+    
+        <div className="flex flex-col md:flex-row justify-center gap-1 text-sm mt-4 text-green-600">
+          <span className="">*Minimum 7 days locking period</span>
+          <span className="md:ml-9">*Start with minimum 100 Rs.</span>
+        </div>
       </div>
-    </div>,
-    <div
-      onClick={() => navigate("/staking")}
-      className="relative rounded-3xl py-5 px-[11.7vw] shadow-lg" // Match padding
-      style={{
-        backgroundImage: `url(${BTCRectangle})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* STARS */}
-      <img
-        src={star1}
-        alt="star"
-        className="absolute -left-[1.8rem] h-14 bottom-10"
-      />
-      <img
-        src={star1}
-        alt="star"
-        className="absolute -right-[1.8rem] h-14 top-10"
-      />
-      <img
-        src={star2}
-        alt="star"
-        className="hidden md:block absolute left-[3rem] h-7 top-[11rem]"
-      />
-      <span className="text-white font-thin text-sm md:leading-none block">
-        Highest return on
-      </span>
-      <span className="text-xl md:text-3xl font-bold leading-none">
-        STAKING
-      </span>
-      <div className="text-6xl mt-3 mb-6 md:mt-0 md:text-[6rem] font-bold">
-        30%
-      </div>
-      <span className="text-sm leading-none">
-        Annual return with <span className="text-yellow-400">yatripay</span>
-      </span>
-
-      <div className="mt-8 mb-8">
-        <span
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate("/add-fund");
-          }}
-          className="add-fund-home text-xl md:text-2xl rounded-full px-8 py-2 text-green-600 bg-green-900/45 hover:bg-green-900/55 cursor-pointer"
-        >
-          Add Funds
-        </span>
-      </div>
-
-      <div className="flex flex-col md:flex-row justify-center gap-1 text-sm mt-4 text-green-600">
-        <span className="">*Minimum 7 days locking period</span>
-        <span className="md:ml-9">*Start with minimum 100 Rs.</span>
-      </div>
-    </div>,
+    ),
   ];
 
   useEffect(() => {
@@ -198,8 +205,10 @@ const Dashboard2 = () => {
   const navigate = useNavigate();
 
   return (
+
     <div className="flex min-h-screen relative">
       <div className="w-full ">
+         
         <header className="flex justify-between items-center py-2 px-4 md:px-12">
           <Logo />
           <div className="flex gap-4 pt-4">
@@ -256,41 +265,43 @@ const Dashboard2 = () => {
             {/* <div className="text-white text-sm text-center mb-6">
               Hi User! Let's start earning.
             </div> */}
-            <div
-              className="text-white text-sm text-center text-base sm:text-lg md:text-2xl mb-6 font-bold flex flex-col sm:flex-row items-center sm:gap-2"
-              style={{ position: "relative", left: "85vh" }}
-            >
-              <div className="text-white text-xl md:text-xl font-semibold">
-                Available Balance:
-              </div>
-              <div className="text-white/50 md:text-white text-xl ">
-                {availableBalance} INR
-              </div>
-            </div>
+<div 
+  className="text-white text-sm text-center text-base sm:text-lg md:text-2xl mb-6 font-bold flex flex-col sm:flex-row items-center sm:gap-2"
+  style={{ position: 'relative', left: '85vh' }}>
+     <div className="text-white text-xl md:text-xl font-semibold">
+            Available Balance:
+          </div>
+          <div className="text-white/50 md:text-white text-xl ">
+            {availableBalance} INR
+          </div>
+        </div>
 
             {/* Main card with BTCRectangle as background */}
             {/* <div className="relative"> */}
-            <div className="carousel-container">
-              <div
-                className="carousel"
-                style={{
-                  transform: `translateX(-${carouselIndex * 100}%)`, // Move forward only
-                }}
-              >
-                {carouselItems.map((item, i) => (
-                  <div key={i} className="carousel-slide">
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
+             <div className="carousel-container">
+      <div
+        className="carousel"
+        style={{
+          transform: `translateX(-${carouselIndex * 100}%)`, // Move forward only
+        }}      >
+        {carouselItems.map((item, i) => (
+          <div key={i} className={`carousel-slide
+          ${i === carouselIndex % carouselItems.length ? "" : "opacity-60"
+          }
+          `}>
+            {item}
           </div>
+        ))}
+      </div>
+    </div>
+            </div>
           {/* </div> */}
         </section>
 
         <section id="page-2">
           <div className="w-full h-full text-white flex flex-col items-center justify-center p-6 pb-0">
             {/* Top section */}
+            
 
             {/* Middle cards section */}
             <FeatureSection />
@@ -342,12 +353,12 @@ const Dashboard2 = () => {
           </div>
         </section>
 
-        <section id="page-3">
+        <section id="page-3" >
           <div className="w-full text-white flex flex-col items-center justify-center px-6 pb-8">
             {/* CARD COMPONENT */}
             {/* Card display with corner glows */}
             <TravelCard />
-
+           
             {/* Action buttons */}
             <div className="flex gap-4 mb-8">
               <div
@@ -525,6 +536,7 @@ const Dashboard2 = () => {
         </section>
       </div>
     </div>
+
   );
 };
 
