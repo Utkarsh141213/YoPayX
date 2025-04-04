@@ -1,0 +1,25 @@
+.navbar-continer{
+    display: none;
+}
+@media ((min-width: 320px) and (max-width:639px)) {
+    .navbar-continer{
+        position: fixed;  
+        bottom: 0;
+        display: flex; 
+        justify-content: space-around;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        background-color: white;
+        color: black;
+        width: 100%;
+        height: 30px;
+    }
+    .qrcode{
+        color: black;
+    }
+    .fa-icon {
+        text-decoration: none;
+        color:green;
+        /* background-color: black; */
+    }
+}

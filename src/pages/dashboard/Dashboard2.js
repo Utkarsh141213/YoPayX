@@ -26,6 +26,7 @@ import { toast } from "react-toastify";
 import VideoSection from "../../components/dashboard/VideoSection";
 import {  getAvailableFunds } from "../../services/fundsAPI/tradingScreenAPI";
 import './dashboard.css';
+import Navigation from "../../components/Navigation";
 const Dashboard2 = () => {
     const [availableBalance, setAvailableBalance] = useState("0.00");
   
@@ -357,7 +358,7 @@ const Dashboard2 = () => {
             {/* CARD COMPONENT */}
             {/* Card display with corner glows */}
             <TravelCard />
-
+           
             {/* Action buttons */}
             <div className="flex gap-4 mb-8">
               <div
