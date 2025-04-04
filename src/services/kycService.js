@@ -38,7 +38,7 @@ export const getBankDetails = async () => {
 };
 
 export const generateOPT = async (phoneData) => {
-
+  console.log(phoneData);
   await axiosInstance.post(`${API_ENDPOINTS.GENERATE_MOBILE_OTP}`, phoneData, {
         headers: {
       "Content-Type": "application/json"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useKycContext } from "../../context/KycContext"; // added
 
 import { getKYC } from "../../services/kycService";
 
@@ -64,11 +65,10 @@ const CustomSelectField = ({ name, placeholder, value, onChange, options }) => {
 
 const BasicDetials = () => {
   const navigate = useNavigate();
+  const { updateBasicDetails } = useKycContext(); // added
   const [kycData, setKycData] = useState(null);
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
     dateOfBirth: "",
     gender: "",
     country: "",
@@ -95,7 +95,7 @@ const BasicDetials = () => {
       try {
         const response = await getKYC();
         if (response.success && response.data?.length > 0) {
-          setKycData(response.data[0]);
+          // setKycData(response.data[0]);
         }
       } catch (error) {
         console.error("Error fetching KYC:", error);
@@ -113,7 +113,6 @@ const BasicDetials = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     navigate("/kyc/documents");
   };
 
