@@ -9,7 +9,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Profile from "./pages/Profile";
 import Dashboard2 from "./pages/dashboard/Dashboard2";
 import Category from "./pages/Category";
-import KYC from "./components/KYC/KYC";
+import KYC from "./pages/KYC";
 import BasicDetials from "./components/KYC/BasicDetials";
 import Document from "./components/KYC/Documents";
 import BankDetails from "./components/KYC/BankDetails";
