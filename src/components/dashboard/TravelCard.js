@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaRegCopy } from "react-icons/fa";
 import dayjs from "dayjs";
 import { card } from "../../assets/home_page_assets";
-import { getAvailableBalace } from "../../services/fundsAPI/tradingScreenAPI";
+import { getAvailableBalace } from "../../services/fundsAPI/sellWithdrawAPI";
 import { getWalletDetails } from "../../services/fundsAPI/walletAPI";
 
 const TravelCard = () => {
@@ -12,11 +12,10 @@ const TravelCard = () => {
   const [username, setUsername] = useState("name");
   const [copied, setCopied] = useState(false);
 
-
   const formatCardNumber = (fullNumber) => {
     if (!fullNumber) return "xxxx xxxx xxxx xxxx";
 
-    return fullNumber.slice(0, 10)
+    return fullNumber.slice(0, 10);
 
     // let i = 0;
     // const chunks = [];
@@ -48,7 +47,7 @@ const TravelCard = () => {
 
     (async () => {
       try {
-        const res = await getWalletDetails('YTP');
+        const res = await getWalletDetails("YTP");
         if (res && res.data) {
           setCardNumber(res.data.address);
         }
@@ -112,9 +111,7 @@ const TravelCard = () => {
               className="text-white cursor-pointer text-lg"
               onClick={handleCopy}
             />
-            {copied && (
-              <span className="text-green-300 text-sm ">Copied!</span>
-            )}
+            {copied && <span className="text-green-300 text-sm ">Copied!</span>}
           </div>
 
           {/* Name + Expiry */}

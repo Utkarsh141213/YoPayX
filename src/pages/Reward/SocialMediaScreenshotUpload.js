@@ -6,7 +6,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 import { createSubTask, createTask } from "../../services/reward/rewardAPI";
 import { toast } from "react-toastify";
 
-const SocialMediaScreenshotUpload = ({ taskId, setShowSocialMediaProof }) => {
+const SocialMediaScreenshotUpload = ({ taskId, setShowSocialMediaProof, step1, step2 }) => {
   // We'll store each screenshot as an object with { file, preview }
   const [screenshots, setScreenshots] = useState([null, null]);
   const { setIsLoading } = useContext(GlobalContext);
@@ -72,8 +72,7 @@ const SocialMediaScreenshotUpload = ({ taskId, setShowSocialMediaProof }) => {
       {/* Step 1 */}
       <div className="mb-6">
         <h2 className="text-gray-700 text-xl font-medium mb-6">
-          Step 1: Give a 5 Star rating along with a good review on Google
-          PlayStore
+          {step1}
         </h2>
 
         <div className="flex justify-center space-x-8 mt-6">
@@ -115,7 +114,7 @@ const SocialMediaScreenshotUpload = ({ taskId, setShowSocialMediaProof }) => {
       {/* Step 2 */}
       <div className="mb-6">
         <h2 className="text-gray-700 text-xl font-medium mb-4">
-          Step 2: Please upload a screenshot of Rating & Review
+          {step2}
         </h2>
 
         {screenshots.map((screenshot, index) => (

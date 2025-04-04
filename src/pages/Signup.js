@@ -65,7 +65,6 @@ const Signup = () => {
         localStorage.setItem("token", response.data.token);
         setStep(3);
       }
-      throw new Error("Error in registering, please try again");
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
     } finally {
@@ -83,7 +82,8 @@ const Signup = () => {
         navigate("/onboarding");
       }
     } catch (error) {
-      toast.error(error.message || "Something went worng");
+      console.log(error);
+      toast.error(error.response?.data?.password || "Something went worng");
     } finally {
       setIsLoading(false);
     }

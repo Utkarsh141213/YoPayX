@@ -111,6 +111,7 @@ const SpecialTaskCard = ({
 }) => {
   const effectiveReward = getTaskReward(task);
 
+
   const handleCardClick = () => {
     if (task.is_social_media && task.status.toLowerCase() !== "start") {
       setSelectedTaskId(task.id);
@@ -262,7 +263,9 @@ const IphoneSubTask = () => {
           {/* Task List */}
           <div className="xl:px-[16rem]">
             {task?.sub_tasks &&
+              // task.sub_tasks.reverse().map((task, idx) => { required in staging
               task.sub_tasks.map((task, idx) => {
+                
                 if (task.id === 9 || task.id === 19) {
                   return (
                     <SpecialTaskCard
@@ -299,6 +302,8 @@ const IphoneSubTask = () => {
           <SocialMediaScreenshotUpload
             taskId={selectedTaskId}
             setShowSocialMediaProof={setShowSocialMediaProof}
+            step1={'Step 1: Please like or follow any two of the following social media account (Tap on button to open)'}
+            step2={'Step 2: Now upload both the screenshots'}
           />{" "}
         </div>
       )}
