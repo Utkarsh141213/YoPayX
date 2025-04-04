@@ -24,7 +24,7 @@ import Footer from "../../components/common/Footer";
 import TravelCard from "../../components/dashboard/TravelCard";
 import { toast } from "react-toastify";
 import VideoSection from "../../components/dashboard/VideoSection";
-import {  getAvailableFunds } from "../../services/fundsAPI/tradingScreenAPI";
+import {  getAvailableFunds } from "../../services/fundsAPI/sellWithdrawAPI";
 import './dashboard.css';
 const Dashboard2 = () => {
     const [availableBalance, setAvailableBalance] = useState("0.00");

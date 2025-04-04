@@ -43,7 +43,7 @@ const App=()=> {
 
   // Define routes where the Back Button should NOT be displayed
   const hiddenRoutes = ["/", "/signup", "/login", "/dashboard", "/dashboard2"];
-  const hiddenRoutesNav = ["/", "/signup", "/login"];
+  // const hiddenRoutesNav = ["/", "/signup", "/login"];
 
   return (
     
@@ -102,10 +102,10 @@ const App=()=> {
           path="/dashboard"
           element={<ProtectedRoute children={<Dashboard2 />} />}
         />
-        {/* <Route
+        <Route
           path="/dashboard2"
           element={<ProtectedRoute children={<Dashboard2 />} />}
-        /> */}
+        />
         <Route
           path="category"
           element={<ProtectedRoute children={<Category />} />}
@@ -183,9 +183,9 @@ const App=()=> {
         <Route path="/background" element={<ProtectedRoute children={<Background />} />}/>
       </Routes>
       </div>
-      {!hiddenRoutesNav.includes(location.pathname) && (
+      {/* {!hiddenRoutesNav.includes(location.pathname) && (
 
-      <Navigation/>)}
+      <Navigation/>)} */}
     </Background>
     </BackButtonProvider>
   );
