@@ -26,7 +26,6 @@ import { toast } from "react-toastify";
 import VideoSection from "../../components/dashboard/VideoSection";
 import {  getAvailableFunds } from "../../services/fundsAPI/tradingScreenAPI";
 import './dashboard.css';
-import Navigation from "../../components/Navigation";
 const Dashboard2 = () => {
     const [availableBalance, setAvailableBalance] = useState("0.00");
   
