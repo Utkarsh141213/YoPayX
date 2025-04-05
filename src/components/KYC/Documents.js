@@ -66,7 +66,7 @@ const Document = () => {
     });
 
     try {
-      await initiateOTP();
+      await initiateOTP(phoneNumber);
       toast.success("OTP sent to your mobile number");
       navigate("/kyc/otp");
     } catch (error) {

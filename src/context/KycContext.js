@@ -27,8 +27,8 @@ export const KycProvider = ({ children }) => {
     setKycData((prev) => ({ ...prev, ...docData }));
   };
 
-  const initiateOTP = async () => {
-    await generateOPT({phone_no: `${kycData.phoneNumber}`, country_code: '+91'});
+  const initiateOTP = async (phoneNumber) => {
+    await generateOPT({phone_no: `${phoneNumber}`, country_code: `${kycData.country.dial_code}`});
   }
 
   const submitKyc = async () => {
