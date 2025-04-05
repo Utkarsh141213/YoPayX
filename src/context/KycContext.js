@@ -31,7 +31,7 @@ export const KycProvider = ({ children }) => {
     await generateOPT({phone_no: `${phoneNumber}`, country_code: `${kycData.country.dial_code}`});
   }
 
-  const submitKyc = async () => {
+  const submitKyc = async (otp) => {
     try {
       const formData = new FormData();
 
@@ -39,7 +39,7 @@ export const KycProvider = ({ children }) => {
       formData.append("last_name", kycData.lastName);
       formData.append("dob", kycData.dateOfBirth);
       formData.append("gender", kycData.gender);
-      formData.append("country", kycData.country);
+      formData.append("country", kycData.country.name);
 
       if (kycData.govtIdFile) {
         formData.append("id_proof", kycData.govtIdFile);
@@ -49,10 +49,10 @@ export const KycProvider = ({ children }) => {
       }
       formData.append("id_number", kycData.panNumber);
       //   formData.append("mo", kycData.phoneNumber);
-      formData.append("mobile_otp", kycData.otp)
-      
+      formData.append("mobile_otp", otp)
       await createKYC(formData);
     } catch (error) {
+      console.log(error);
       throw error;
     }
   };

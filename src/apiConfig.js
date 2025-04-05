@@ -7,7 +7,7 @@ const API_ENDPOINTS = {
   REGISTER_SECOND: `${API_BASE_URL}/users/auth/second-register/`,
   VERIFY_EMAIL: `${API_BASE_URL}/users/auth/verify-email/`,
   USER_AUTH_STATUS: `${API_BASE_URL}/users/auth/user-auth/`,
-  GENERATE_MOBILE_OTP: `${API_BASE_URL}/users/auth/resend-mobile-otp/`,
+  GENERATE_MOBILE_OTP: `${API_BASE_URL}/users/auth/genrate_mobile_otp/`,
 
   FUND: {
     TRANSACTION_HISTORY_FILTER: "/finance/transaction/list/by_trans_type/",

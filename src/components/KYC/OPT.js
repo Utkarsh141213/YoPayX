@@ -23,7 +23,7 @@ const OTP = () => {
     e.preventDefault();
 
     try {
-        await submitKyc();
+        await submitKyc(formData.otp);
         toast.success("KYC submitted successfully");
         navigate('/dashboard')
       } catch (error) {
