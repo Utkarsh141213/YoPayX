@@ -70,8 +70,7 @@ const Document = () => {
       toast.success("OTP sent to your mobile number");
       navigate("/kyc/otp");
     } catch (error) {
-      console.log(error);
-      toast.error(`${error}`);
+      toast.error(error.response?.data?.message || error.message);
     }
   };
 
