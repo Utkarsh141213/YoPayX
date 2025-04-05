@@ -20,7 +20,7 @@ const OTP = () => {
         toast.success("KYC submitted successfully");
         navigate('/kyc/basic-details')
       } catch (error) {
-        toast.error(`${error}`);
+        toast.error(error.response?.data?.message || "Wrong OTP");
       }
   };
 
