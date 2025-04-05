@@ -6,31 +6,22 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const OTP = () => {
-  const { submitKyc, update } = useKycContext();
+  const { submitKyc } = useKycContext();
 
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    otp: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const [OTP, setOTP ] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-        await submitKyc(formData.otp);
+        await submitKyc(OTP);
         toast.success("KYC submitted successfully");
-        navigate('/dashboard')
+        navigate('/kyc/basic-details')
       } catch (error) {
         toast.error(`${error}`);
       }
-
-    // navigate("/dashboard");
   };
 
   return (
@@ -45,8 +36,8 @@ const OTP = () => {
           name="otp"
           type="number"
           placeholder="OTP"
-          value={formData.otp}
-          onChange={handleChange}
+          value={OTP}
+          onChange={e => setOTP(e.target.value)}
           required
         />
         <input

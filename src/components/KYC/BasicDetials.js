@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 import countryList from './country_code.json'
 
@@ -140,7 +139,6 @@ const BasicDetials = () => {
         }
       } catch (error) {
         console.error("Error fetching KYC:", error);
-        toast.error("Error fetching KYC data");
       }
     };
 

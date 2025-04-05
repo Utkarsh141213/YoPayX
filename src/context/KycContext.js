@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
-import { createKYC,  generateOPT } from "../services/kycService";
+import { createKYC, generateOPT } from "../services/kycService";
 
 const KycContext = createContext();
 
@@ -13,10 +13,12 @@ export const KycProvider = ({ children }) => {
 
     // Document info
     govtIdFile: null,
-    photoFile: null,
+    govIdNumber: "",
     panNumber: "",
+    PANFile: null,
+    photoFile: null,
     phoneNumber: "",
-    otp: ""
+    otp: "",
   });
 
   const updateBasicDetails = (basicData) => {
@@ -28,8 +30,11 @@ export const KycProvider = ({ children }) => {
   };
 
   const initiateOTP = async (phoneNumber) => {
-    await generateOPT({phone_no: `${phoneNumber}`, country_code: `${kycData.country.dial_code}`});
-  }
+    await generateOPT({
+      phone_no: `${phoneNumber}`,
+      country_code: `${kycData.country.dial_code}`,
+    });
+  };
 
   const submitKyc = async (otp) => {
     try {
@@ -40,16 +45,17 @@ export const KycProvider = ({ children }) => {
       formData.append("dob", kycData.dateOfBirth);
       formData.append("gender", kycData.gender);
       formData.append("country", kycData.country.name);
+      // gov id
+      formData.append("id_number", kycData.govIdNumber);
+      formData.append("id_proof", kycData.govtIdFile);
+      // pan card
+      formData.append("pan_number", kycData.panNumber);
+      formData.append("pan_proof", kycData.PANFile)
+      // selfie
+      formData.append("selfie", kycData.photoFile);
+      // OTP
+      formData.append("mobile_otp", otp);
 
-      if (kycData.govtIdFile) {
-        formData.append("id_proof", kycData.govtIdFile);
-      }
-      if (kycData.photoFile) {
-        formData.append("selfie", kycData.photoFile);
-      }
-      formData.append("id_number", kycData.panNumber);
-      //   formData.append("mo", kycData.phoneNumber);
-      formData.append("mobile_otp", otp)
       await createKYC(formData);
     } catch (error) {
       console.log(error);
@@ -64,7 +70,7 @@ export const KycProvider = ({ children }) => {
         updateBasicDetails,
         updateDocumentDetails,
         submitKyc,
-        initiateOTP
+        initiateOTP,
       }}
     >
       {children}
