@@ -84,7 +84,8 @@ const Document = () => {
       toast.success("OTP sent to your mobile number");
       navigate("/kyc/otp");
     } catch (error) {
-      toast.error(error.response?.data?.message || error.message);
+      toast.error(error.response?.data?.message || "Invalid number");
+      console.log(error);
     }
   };
 
@@ -234,8 +235,6 @@ const Document = () => {
                 required
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                pattern="^[6-9]\d{9}$"
-                title="Enter a valid 10-digit Indian phone number (e.g., 9876543210)"
               />
             </div>
 
