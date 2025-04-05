@@ -11,14 +11,17 @@ const Document = () => {
   const navigate = useNavigate();
 
   const [govtIdFile, setGovtIdFile] = useState(null);
-  const [photoFile, setPhotoFile] = useState(null);
+  const [govIdNumber, setGovIdNumber] = useState("");
+  const [PANFile, setPANFile] = useState(null);
   const [panNumber, setPanNumber] = useState("");
+  const [photoFile, setPhotoFile] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [showCamera, setShowCamera] = useState(false);
 
   // Create a ref for the form and webcam
   const formRef = useRef(null);
   const govIdInputRef = useRef(null);
+  const PANInputRef = useRef(null);
   const webcamRef = useRef(null);
 
   const handleGovtIdChange = (e) => {
@@ -27,17 +30,26 @@ const Document = () => {
     }
   };
 
+  const handlePANChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setPANFile(e.target.files[0]);
+    }
+  };
+
+
   // Function to capture photo from webcam
   const capturePhoto = () => {
     if (!webcamRef.current) return;
-    
+
     const imageSrc = webcamRef.current.getScreenshot();
     if (imageSrc) {
       // Convert base64 to file
       fetch(imageSrc)
-        .then(res => res.blob())
-        .then(blob => {
-          const file = new File([blob], "user-photo.jpg", { type: "image/jpeg" });
+        .then((res) => res.blob())
+        .then((blob) => {
+          const file = new File([blob], "user-photo.jpg", {
+            type: "image/jpeg",
+          });
           setPhotoFile(file);
           setShowCamera(false);
         });
@@ -46,7 +58,7 @@ const Document = () => {
 
   // Toggle webcam visibility
   const toggleCamera = () => {
-    setShowCamera(prev => !prev);
+    setShowCamera((prev) => !prev);
   };
 
   const handleSubmit = async (e) => {
@@ -60,8 +72,10 @@ const Document = () => {
 
     updateDocumentDetails({
       govtIdFile,
-      photoFile,
+      govIdNumber,
       panNumber,
+      PANFile,
+      photoFile,
       phoneNumber,
     });
 
@@ -128,6 +142,58 @@ const Document = () => {
                 </span>
               </div>
 
+              {/* GOV ID number */}
+              <input
+                type="text"
+                placeholder="ID Number"
+                className="w-full mb-4 p-3 text-black rounded focus:outline-none"
+                required
+                value={govIdNumber}
+                onChange={(e) => setGovIdNumber(e.target.value)}
+              />
+
+              <div className="flex items-center justify-between mb-3">
+                <label className="text-white/50">PAN Card</label>
+              </div>
+
+              {/* PAN ID Input */}
+              <div className="flex mb-4 bg-white py-1 rounded gap-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={PANInputRef}
+                  onChange={handlePANChange}
+                  required
+                  hidden
+                  className="w-full p-3 rounded focus:outline-none"
+                />
+                {PANFile ? (
+                  <div className="flex items-center gap-2 w-full p-2 text-xs rounded text-black/50 text-left whitespace-nowrap truncate cursor-pointer">
+                    <span className="whitespace-nowrap truncate">
+                      {PANFile.name}
+                    </span>
+                    <span
+                      onClick={() => setPANFile(null)}
+                      className="text-black text-lg w-fit h-fit"
+                    >
+                      <RxCross2 />
+                    </span>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => {
+                      PANInputRef.current && PANInputRef.current.click();
+                    }}
+                    className="w-full p-3 text-xs rounded text-black/50 text-left whitespace-nowrap truncate cursor-pointer"
+                  >
+                     Upload document here...
+                  </div>
+                )}
+
+                <span className="text-gray-400 text-sm min-h-full whitespace-nowrap flex items-center pr-3">
+                  Max size 2MB
+                </span>
+              </div>
               {/* PAN Number Input */}
               <input
                 type="text"
@@ -140,6 +206,9 @@ const Document = () => {
                 title="Enter a valid PAN number in uppercase (e.g., ABCDE1234F)"
               />
 
+              <div className="flex items-center justify-between mb-3">
+                <label className="text-white/50">Selfie with ID Card</label>
+              </div>
               {/* Camera + Take Photo */}
               <div className="relative flex items-center justify-between py-3 px-8 sm:px-8 gap-2 mb-4 bg-white rounded">
                 <div className="p-2 rounded text-black">
@@ -174,11 +243,15 @@ const Document = () => {
             <div
               className={`${
                 photoFile ? "w-full md:w-1/3 flex" : "hidden"
-              } relative md:flex items-center justify-center w-1/3`}
+              } relative md:flex items-center justify-center w-1/3 max-h-80`}
             >
               {photoFile ? (
                 <img
-                  src={photoFile instanceof File ? URL.createObjectURL(photoFile) : photoFile}
+                  src={
+                    photoFile instanceof File
+                      ? URL.createObjectURL(photoFile)
+                      : photoFile
+                  }
                   alt="Preview"
                   className="w-full h-full object-cover rounded-2xl"
                 />
@@ -207,7 +280,7 @@ const Document = () => {
           <div className="bg-white rounded-lg p-4 w-full max-w-lg md:max-w-xl">
             <div className="flex justify-between items-center mb-2">
               <h3 className="text-lg font-bold text-black">Take Your Photo</h3>
-              <button 
+              <button
                 onClick={() => setShowCamera(false)}
                 className="text-black text-xl"
               >
@@ -221,7 +294,7 @@ const Document = () => {
               videoConstraints={{
                 facingMode: "user",
                 width: { ideal: 1280 },
-                height: { ideal: 720 }
+                height: { ideal: 720 },
               }}
               className="w-full rounded"
             />
