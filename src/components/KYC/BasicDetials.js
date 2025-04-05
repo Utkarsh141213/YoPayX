@@ -136,7 +136,7 @@ const BasicDetials = () => {
       try {
         const response = await getKYC();
         if (response && response.data) {
-          // setKycData(response.data[0]);
+          setKycData(response.data[0]);
         }
       } catch (error) {
         console.error("Error fetching KYC:", error);
