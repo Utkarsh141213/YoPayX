@@ -81,7 +81,7 @@ const SellWithdrawPage = () => {
   return (
     <div className="min-h-screen text-white p-4 relative">
       <div className="absolute md:top-10 md:left-8">
-        <BackToHomeButton />
+        {/* <BackToHomeButton /> */}
       </div>
       <div className="w-fit mx-auto mt-16">
         <div className="flex mb-4 justify-center">

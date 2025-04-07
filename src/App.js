@@ -43,14 +43,14 @@ const App=()=> {
 
   // Define routes where the Back Button should NOT be displayed
   const hiddenRoutes = ["/", "/signup", "/login", "/dashboard", "/dashboard2"];
-  // const hiddenRoutesNav = ["/", "/signup", "/login"];
+  const hiddenRoutesNav = ["/", "/signup", "/login"];
 
   return (
     
       <BackButtonProvider>
     <Background>
       <ToastContainer />
-      {!hiddenRoutes.includes(location.pathname) && (
+      {/* {!hiddenRoutes.includes(location.pathname) && (
   <BackButton
     className="bg-[#FFFFFF33] rounded-xl flex items-center justify-center"
     style={{
@@ -77,9 +77,8 @@ const App=()=> {
         clipRule="evenodd"
       />
     </svg>
-{/* Added "Back" text for clarity */}
   </BackButton>
-)}
+)} */}
       <div style={{ position: "relative" }}>
       
 
@@ -183,9 +182,9 @@ const App=()=> {
         <Route path="/background" element={<ProtectedRoute children={<Background />} />}/>
       </Routes>
       </div>
-      {/* {!hiddenRoutesNav.includes(location.pathname) && (
+      {!hiddenRoutesNav.includes(location.pathname) && (
 
-      <Navigation/>)} */}
+      <Navigation/>)}
     </Background>
     </BackButtonProvider>
   );
