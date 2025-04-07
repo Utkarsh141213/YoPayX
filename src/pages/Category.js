@@ -49,7 +49,7 @@ const Category = () => {
         <div
           className="absolute top-8 left-10 text-lg cursor-pointer"
         >
-          <BackToHomeButton />
+          {/* <BackToHomeButton /> */}
         </div>
 
         <div

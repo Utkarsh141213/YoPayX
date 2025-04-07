@@ -50,7 +50,7 @@ const App=()=> {
       <BackButtonProvider>
     <Background>
       <ToastContainer />
-      {!hiddenRoutes.includes(location.pathname) && (
+      {/* {!hiddenRoutes.includes(location.pathname) && (
   <BackButton
     className="bg-[#FFFFFF33] rounded-xl flex items-center justify-center"
     style={{
@@ -77,9 +77,8 @@ const App=()=> {
         clipRule="evenodd"
       />
     </svg>
-{/* Added "Back" text for clarity */}
   </BackButton>
-)}
+)} */}
       <div style={{ position: "relative" }}>
       
 
@@ -102,10 +101,10 @@ const App=()=> {
           path="/dashboard"
           element={<ProtectedRoute children={<Dashboard2 />} />}
         />
-        {/* <Route
+        <Route
           path="/dashboard2"
           element={<ProtectedRoute children={<Dashboard2 />} />}
-        /> */}
+        />
         <Route
           path="category"
           element={<ProtectedRoute children={<Category />} />}

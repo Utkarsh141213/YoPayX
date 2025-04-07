@@ -87,7 +87,7 @@ const Profile = () => {
         <div
           className="absolute top-8 left-10 text-lg cursor-pointer"
         >
-          <BackToHomeButton />
+          {/* <BackToHomeButton /> */}
         </div>
         <div
           onClick={handleLogout}

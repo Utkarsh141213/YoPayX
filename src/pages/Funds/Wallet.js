@@ -36,7 +36,7 @@ const Wallet = () => {
   return (
     <div className="min-h-screen flex items-center justify-center text-white p-6">
       <div className="absolute top-4 left-4 md:top-8 md:left-10">
-        <BackToHomeButton />
+        {/* <BackToHomeButton /> */}
       </div>
       <div className="border shadow-lg p-6 rounded-lg w-full max-w-md sm:max-w-lg">
         <h2 className="text-2xl font-bold mb-4 text-center">Wallet Details</h2>
