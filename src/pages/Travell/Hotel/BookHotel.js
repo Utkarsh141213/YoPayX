@@ -60,10 +60,10 @@ const BookHotel = () => {
     }
   };
 
-  const handlePinSubmit = (pin) => {
+  const handlePinSubmit = async (pin) => {
     try {
         setIsLoading(true)
-        const res = sendYTP({
+        const res = await sendYTP({
             pin,
             amount,
             ticker: "YTP",
