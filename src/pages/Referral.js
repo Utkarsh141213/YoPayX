@@ -151,7 +151,7 @@ const Referral = () => {
     <>
       <div className="text-white w-full max-w-md mx-auto p-4 space-y-8">
         <div className="absolute top-6 left-4 md:top-10 md:left-8">
-          <BackToHomeButton />
+          {/* <BackToHomeButton /> */}
         </div>
         <header>
           <div className="flex flex-col justify-center items-center py-6">

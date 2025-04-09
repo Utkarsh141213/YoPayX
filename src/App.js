@@ -55,60 +55,38 @@ const App = () => {
     <BackButtonProvider>
       <Background>
         <ToastContainer />
-        {!hiddenRoutes.includes(location.pathname) && (
-          <BackButton
-            className="bg-[#FFFFFF33] rounded-xl flex items-center justify-center"
-            style={{
-              position: "absolute",
-              top: "80px",
-              left: "3vw",
-              zIndex: "50",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              color: "white",
-              padding: "0.5rem 1rem", // Using rem for better scaling
-              borderRadius: "0.5rem", // Consistent with padding
-              width: "15vw",
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-5 h-5 mr-2" // Reduced size, spacing to the right
-            >
-              <path
-                fillRule="evenodd"
-                d="M11.788 5.212a.75.75 0 010 1.06l-6.252 6.252 6.252 6.252a.75.75 0 11-1.06 1.06l-7.312-7.312a.75.75 0 010-1.06l7.312-7.312a.75.75 0 011.06 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-            {/* Added "Back" text for clarity */}
-          </BackButton>
-        )}
+
         <div style={{ position: "relative" }}>
           <Routes>
-            {/* Public (Unauthenticated) Routes */}
-            <Route path="/" element={<Home />} />
+
+          <Route path="/" element={<Home />} />
             <Route path="*" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgotPassword" element={<ForgotPassword />} />
             <Route path="/onboarding" element={<OnboardingPages />} />
 
+            
             {/* Protected (Authenticated) Routes */}
             <Route
               path="/profile"
               element={<ProtectedRoute children={<Profile />} />}
             />
 
+            {/* Protected (Authenticated) Routes */}
+            {/* <Route
+              path="/profile"
+              element={<ProtectedRoute children={<Profile />} />}
+            /> */}
+
             <Route
               path="/dashboard"
               element={<ProtectedRoute children={<Dashboard2 />} />}
             />
-            {/* <Route
-          path="/dashboard2"
-          element={<ProtectedRoute children={<Dashboard2 />} />}
-        /> */}
+            <Route
+              path="/dashboard2"
+              element={<ProtectedRoute children={<Dashboard2 />} />}
+            />
             <Route
               path="category"
               element={<ProtectedRoute children={<Category />} />}

@@ -42,7 +42,7 @@ const Ticket = () => {
   return (
     <div className="min-h-screen text-white p-6">
       <div className="absolute md:top-10 md:left-8">
-        <BackToHomeButton />
+        {/* <BackToHomeButton /> */}
       </div>
       <header>
         <div className="flex flex-col justify-center items-center py-6">

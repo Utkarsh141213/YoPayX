@@ -5,7 +5,10 @@ import {
   getVideoList,
 } from "../../services/promotion/promotionAPI";
 import Loader from "../common/Loader";
-
+import AboutYatriPay from './AboutYatriPay.jpeg';
+import HowToStart from './HowToStart.jpeg';
+import WhatIsYatriPay from './WhatIsYatriPay.jpeg';
+import YatriPayVision from './YatriPayVision.jpeg';
 //Helper functions
 const convertVideoURLtoEmbedLink = (url) => {
   const urlInPartsArr = url.split("/");
@@ -162,6 +165,7 @@ const VideoCard = ({
   setCurrVideo,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const images = [YatriPayVision, HowToStart, WhatIsYatriPay, AboutYatriPay];
 
   return (
     <div
@@ -187,7 +191,12 @@ const VideoCard = ({
             }}
             className="absolute sm:hidden h-full w-full bg-transparent"
           ></div>
-          <span>{video.title}</span>
+          <span>
+            {video.title}
+            {/* {images.map((img, index) => (
+          <img key={index} src={img} width="2px" height="2px" alt={`Image ${index + 1}`} />
+        ))} */}
+            </span>
         </>
       ) : (
         <>
