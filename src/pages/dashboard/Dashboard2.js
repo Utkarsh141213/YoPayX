@@ -420,7 +420,9 @@ const Dashboard2 = () => {
                     text1="Hotel"
                     text2="Book affordable stays"
                     image={hotel}
-                    onClick={handleComminSoon}
+                    onClick={() => {
+                      navigate("/search-hotel");
+                    }}
                     classNameMain="md:justify-self-end"
                     classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
                     classNameImg="h-[6rem] md:h-[8rem] origin-center"

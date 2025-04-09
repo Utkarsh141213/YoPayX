@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import countryList from './country_code.json'
+import countryList from "./country_code.json";
 
 import { getKYC } from "../../services/kycService";
 
@@ -118,8 +118,7 @@ const BasicDetials = () => {
   const navigate = useNavigate();
   const [kycData, setKycData] = useState(null);
 
-  const { updateBasicDetails } = useKycContext()
-
+  const { updateBasicDetails } = useKycContext();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -131,7 +130,6 @@ const BasicDetials = () => {
 
   useEffect(() => {
     const fetchCountriesAndKYC = async () => {
-
       try {
         const response = await getKYC();
         if (response && response.data) {
@@ -157,7 +155,7 @@ const BasicDetials = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateBasicDetails(formData)
+    updateBasicDetails(formData);
     navigate("/kyc/documents");
   };
 
