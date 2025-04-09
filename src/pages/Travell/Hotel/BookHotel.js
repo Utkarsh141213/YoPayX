@@ -34,26 +34,22 @@ const BookHotel = () => {
 
   const checkInDate = new Date(checkIn);
   const checkOutDate = new Date(checkOut);
-  console.log(checkInDate);
   const nights = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
 
   const handleBookHotel = async () => {
     try {
       const KYC = await getKYC();
-      console.log(KYC);
       if (KYC && KYC.data && KYC.data[0].status === "APPROVED") {
         setIsLoading(true);
         const res = await bookHotel(bookingData);
         setShowPinScreen(true);
         setIsLoading(false)
-        // console.log(res);
         // toast.success("Hotel booked successfully, enjoy your stay");
 
       } else {
         throw new Error("KYC Verification Required");
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.response?.data?.message || error.message);
     } finally {
       setIsLoading(false);
@@ -72,7 +68,7 @@ const BookHotel = () => {
         toast.success("Your booking has been successfully completed. Thank you! You’ll receive a confirmation email shortly")
         setShowPinScreen(false)
     } catch (error) {
-        toast.error('Sorry, your booking was unsuccessful. Please try again later or contact support for assistance')
+        toast.error(error.response?.data?.message || 'Sorry, your booking was unsuccessful. Please try again later or contact support for assistance')
     }
     finally{
         setIsLoading(false)

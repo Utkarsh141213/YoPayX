@@ -66,7 +66,6 @@ const RoomTypeSection = ({
       {isErrorShown && <div className="text-center text-red-400">Please select a room</div>}
       <div
         onClick={() => {
-          console.log(roomType);
           if (selectedRooms[roomType.code]) {
             openBookingModal(roomType.code);
           } else {
