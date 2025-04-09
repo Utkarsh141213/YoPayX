@@ -1,5 +1,6 @@
 const API_BASE_URL = "https://app.yatripay.com/api/v1"; // Replace with the actual base URL
 // const API_BASE_URL = "https://chiru-stage.yatripay.com/api/v1"; // Replace with the actual base URL
+const TRAVEL_API_BASE_URL = "https://travel.api.yatripay.com/api/v1"
 
 const API_ENDPOINTS = {
   LOGIN: `${API_BASE_URL}/users/auth/login/`,
@@ -52,6 +53,16 @@ const API_ENDPOINTS = {
     CREATE_TICKET: '/support/create-ticket/',
     GET_TICKETS: '/support/user-tickets/',
   },
+
+  TRAVEL: {
+    HOTEL: {
+      SEARCH_SUGGESTION: '/hotel/placesAutoComplete/?max=5&lang=en&q=DELHI',
+      SEARCH_HOTELS: '/hotel/searchProperty/',
+      GET_HOTEL_DETAILS: '/hotel/fetchHotelDetails/',
+      CHECK_HOTEL_AVAILABILITY: '/hotel/fetchRoomsAvailability/',
+      BOOK_HOTEL: '/hotel/bookHotel/',
+    }
+  }
 };
 
-export { API_BASE_URL, API_ENDPOINTS };
+export { API_BASE_URL, TRAVEL_API_BASE_URL , API_ENDPOINTS };
