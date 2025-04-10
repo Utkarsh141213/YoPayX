@@ -12,9 +12,6 @@ import {
   referral,
   reward,
   sellYTP,
-  transaction,
-  wallet,
-  withdraw,
 } from "../../assets/dashboard_assets";
 import Logo from "../../components/logo";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -483,7 +480,7 @@ const Dashboard2 = () => {
                       <ExploreYatripayCards
                         text1="Withdraw"
                         text2="Transfer to your bank"
-                        image={withdraw}
+                        image={'/assets/withdraw.svg'}
                         onClick={() => {
                           navigate("/fund", { state: { tab: "withdraw" } });
                         }}
@@ -495,7 +492,7 @@ const Dashboard2 = () => {
                       <ExploreYatripayCards
                         text1="Wallet"
                         text2="Receive and Send YTP"
-                        image={wallet}
+                        image={'/assets/wallet.svg'}
                         onClick={() => {
                           navigate("/wallet");
                         }}
@@ -507,7 +504,7 @@ const Dashboard2 = () => {
                       <ExploreYatripayCards
                         text1="Transactions"
                         text2="Track your transactions"
-                        image={transaction}
+                        image={'/assets/transaction.svg'}
                         onClick={() => navigate("/transaction-history")}
                         classNameMain="md:justify-self-start"
                         classNameTex1="bg-gradient-to-r from-[#979DD8] to-[#4431BA]"

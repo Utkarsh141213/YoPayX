@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { phoneSvg } from "../../assets/stacking";
 import { useNavigate } from "react-router-dom";
-import { bigGift, taskListSmallGift } from "../../assets/reward";
+import { taskListSmallGift } from "../../assets/reward";
 import Footer from "../../components/common/Footer";
 import yatripayLogo from "../../assets/yatripay_logo.svg";
 import { claimReward } from "../../services/reward/rewardAPI";
@@ -62,7 +62,7 @@ const RewardPage = () => {
         {/* Gift icon - you'll provide this */}
         <div className="mb-6">
           <img
-            src={bigGift || "/api/placeholder/100/100"}
+            src={'/assets/big-gift.svg' || "/api/placeholder/100/100"}
             alt="Gift box"
             className="w-40 h-40 object-contain"
           />
