@@ -145,9 +145,9 @@ export default function FlightSearch() {
         params.flightCategory = selectedClass.name;
       } else {
         params.adults = travelers?.adults;
-        params.children = travelers?.children;
+        params.children = travelers?.children.length;
         params.infants = travelers?.infants;
-        params.isOneWay = true;
+        params.isOneWay = false;
         params.source = fromLocation?.CityCode;
         params.sourceCountry = fromLocation?.CountryName;
         params.destination = toLocation?.CityCode;
@@ -179,7 +179,7 @@ export default function FlightSearch() {
         toast.error('Failed to fetch flight detials')
       }
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       toast.error(error.response?.data?.message || error.message);
     } finally {
       setIsLoading(false);

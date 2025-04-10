@@ -65,9 +65,6 @@ input::placeholder {
     text-align: left;
   }
 
-  .flight-border{
-    border: 2 solid #fbbf24;
-  }
 
 
 ::-webkit-scrollbar {

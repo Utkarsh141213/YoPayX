@@ -223,6 +223,7 @@ const HotelSearch = () => {
               type="text"
               name="location"
               placeholder="Location"
+              autoComplete="off"
               value={formData.location}
               onChange={handleChange}
               onFocus={() => setShowSuggestions(true)}
@@ -236,7 +237,7 @@ const HotelSearch = () => {
                     <li
                       key={index}
                       onMouseDown={() => handleSuggestionSelect(sugg)}
-                      className="py-2 px-4 text-left list-none text-black hover:bg-gray-100 cursor-pointer whitespace-nowrap"
+                      className="py-2 text-left list-none text-black hover:bg-gray-100 cursor-pointer whitespace-nowrap"
                     >
                       {sugg.fullname}
                     </li>

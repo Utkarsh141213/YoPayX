@@ -84,7 +84,7 @@ const DisplayHotels = () => {
       try {
         setIsLoading(true);
         const coin = await getValueOfCoinByType('YTP')
-        setYtpToInr(Number(coin.data.INR).toFixed(2))
+        setYtpToInr(Number(coin.data.INR))
         const res = await getHotelList(location.state.data);
         setHotels(res.HotelLists.HotelList);
       } catch (error) {

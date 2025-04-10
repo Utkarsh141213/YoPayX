@@ -78,7 +78,7 @@ export default function ShowFlights() {
     (async () => {
       try {
         const coin = await getValueOfCoinByType("YTP");
-        setInrToYtp(Number(coin.data.INR).toFixed(2));
+        setInrToYtp(Number(coin.data.INR));
       } catch (error) {
         // console.log(error);
       }
@@ -165,7 +165,7 @@ export default function ShowFlights() {
       <div className=" space-x-2 ">
         <div className="flex items-center">
           {imgLoadErr ? (
-            <div className="w-8"></div>
+            <div className=""></div>
           ) : (
             <img
               src={airlineLogoUri}
