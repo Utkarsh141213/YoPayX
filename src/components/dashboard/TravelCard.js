@@ -41,7 +41,7 @@ const TravelCard = () => {
           setAvailableBalace(res.data.balance);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     })();
 
@@ -52,7 +52,7 @@ const TravelCard = () => {
           setCardNumber(res.data.address);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     })();
 

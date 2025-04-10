@@ -76,7 +76,7 @@ const BookHotel = () => {
   }
 
   if(showPinScreen){
-    return <TransactionPin isTransaction={true} onSubmitPin={handlePinSubmit}/>
+    return <TransactionPin isTransaction={true} onSubmitPin={handlePinSubmit} transactionDetails={amount}/>
   }
 
   return (

@@ -38,7 +38,7 @@ const AddFunds = () => {
           setAvailableBalance(balance.inr_balance);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     })();
   }, []);
@@ -56,7 +56,7 @@ const AddFunds = () => {
         navigate(`/confirm-add-fund`, { state: { qr_code, upi_id, amount } });
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.response?.data?.message || error.message);
     } finally {
       setIsLoading(false);

@@ -55,7 +55,7 @@ const SocialMediaScreenshotUpload = ({ taskId, setShowSocialMediaProof, step1, s
         error.response?.data?.message ||
           "Something went wrong, please try again"
       );
-      console.log(error);
+      // console.log(error);
     } finally {
       setIsLoading(false);
     }

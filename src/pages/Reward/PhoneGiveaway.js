@@ -115,11 +115,10 @@ const PhoneGiveaway = () => {
       try {
         const res = await getIphoneTaskList();
         if (res) {
-          console.log(res);
           setTaskList(res);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       } finally {
         setIsLoading(false);
       }

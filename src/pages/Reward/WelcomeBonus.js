@@ -15,17 +15,16 @@ const WelcomeBonus = () => {
       try {
         const res = await getTaskList();
         if (res) {
-          console.log(res);
           setTaskList(res);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     })();
   }, []);
 
   const handleCardClick = (taskId) => {
-    console.log(taskId);
+    // console.log(taskId);
     if (taskId === 12) {
       navigate("/staking-summary");
     } else if (taskId === 14) {

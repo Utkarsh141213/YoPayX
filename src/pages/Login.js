@@ -68,7 +68,7 @@ function Login() {
         <div className="form-group">
           <InputField
             type="text"
-            placeholder="Email"
+            placeholder="Email or Phone number"
             value={email} // Controlled state
             onChange={(e) => setEmail(e.target.value)} // Update email state
           />

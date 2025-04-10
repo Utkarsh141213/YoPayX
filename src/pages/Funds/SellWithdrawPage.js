@@ -7,7 +7,6 @@ import {
   getAvailableFunds,
   getCurrencyList,
 } from "../../services/fundsAPI/sellWithdrawAPI";
-import BackToHomeButton from "../../components/common/BackToHomeButton";
 import SellScreen from "../../components/Funds/Sell-Withdraw/SellScreen";
 import WithdrawalScreen from "../../components/Funds/Sell-Withdraw/WithdrawalScreen";
 
@@ -49,7 +48,7 @@ const SellWithdrawPage = () => {
         setAssets(sortedAssets);
         setCurrencyList(currency.data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       } finally {
         setIsLoading(false);
       }

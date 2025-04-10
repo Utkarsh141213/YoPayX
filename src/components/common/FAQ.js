@@ -15,7 +15,7 @@ const FAQ = ({ code }) => {
           setFAQList(respone.data);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       } finally {
         setIsLoading(false);
       }

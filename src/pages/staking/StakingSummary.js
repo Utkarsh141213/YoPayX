@@ -55,10 +55,10 @@ const StakingSummary = () => {
           if (balanceRes && balanceRes.data)
             setAvailableBalace(balanceRes.data?.balance);
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       } finally {
         setIsLoading(false);
       }
@@ -73,7 +73,7 @@ const StakingSummary = () => {
           if (resReferral && resReferral.data)
             setReferralLink(resReferral.data.url);
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         } finally {
           setIsLoading(false);
         }
@@ -85,7 +85,6 @@ const StakingSummary = () => {
       if (location.state?.stackingCardItems) {
         setStackingCardItems(location.state.stackingCardItems);
       } else {
-        console.log("object");
         const res = await getCardDetails();
         if (res && res.data) {
           setStackingCardItems(res.data);
@@ -120,7 +119,7 @@ const StakingSummary = () => {
       });
       toast.success("Staking created successfully");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.response?.data?.message || error.message);
     } finally {
       setIsLoading(false);

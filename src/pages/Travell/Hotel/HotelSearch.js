@@ -3,6 +3,8 @@ import { IoMdRemove, IoMdAdd } from "react-icons/io";
 import { getSearchsuggestions } from "../../../services/travel/hotelAPI/hotelAPI";
 import { useNavigate } from "react-router-dom";
 import CommonHotelHeader from "./CommonHotelHeader";
+import { toast } from "react-toastify";
+import logo from "../../../assets/yatripay_logo.svg"
 
 const HotelSearch = () => {
   const navigate = useNavigate();
@@ -13,12 +15,13 @@ const HotelSearch = () => {
     checkIn: "",
     checkOut: "",
     roomsAndGuests: "",
-    totalRooms: null,
+    totalRooms: 0,
     roomsInfo: [],
   });
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const debounceTimer = useRef(null);
+  const [suggestionSelected, setSuggestionSelected] = useState(false); // New state to track if a suggestion was selected
 
   const checkInRef = useRef(null);
   const checkOutRef = useRef(null);
@@ -39,7 +42,7 @@ const HotelSearch = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "location") {
-      // Update the input field and call API with debounce
+      setSuggestionSelected(false); // Reset suggestionSelected when input changes
       setFormData((prev) => ({ ...prev, location: value }));
       if (debounceTimer.current) clearTimeout(debounceTimer.current);
       debounceTimer.current = setTimeout(() => {
@@ -61,7 +64,53 @@ const HotelSearch = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!formData.destinationCode) {
+      toast.error("Please select a location from the suggestions.");
+      return;
+    }
+
+    if (!formData.checkIn || !formData.checkOut) {
+      toast.error("Please enter both check-in and check-out dates.");
+      return;
+    }
+
+    if (formData.totalRooms === 0) {
+      toast.error("Please add at least one room.");
+      return;
+    }
+
+    for (const room of rooms) {
+      if (room.adults < 1) {
+        toast.error("Each room must have at least one adult.");
+        return;
+      }
+      if (room.children > 0 && room.childrenAges.length !== room.children) {
+        toast.error("Please provide the age for each child in every room.");
+        return;
+      }
+    }
+
     navigate("/hotels", { state: { data: formData } });
+  };
+
+  const handleSuggestionSelect = (sugg) => {
+    setFormData((prev) => ({
+      ...prev,
+      location: sugg.fullname,
+      destinationCode: sugg.destinationCode,
+    }));
+    setShowSuggestions(false);
+    setSuggestionSelected(true); // Set to true when a suggestion is selected
+  };
+
+  const handleLocationBlur = () => {
+    setTimeout(() => {
+      setShowSuggestions(false);
+      if (!suggestionSelected) {
+        setFormData((prev) => ({ ...prev, location: "", destinationCode: "" }));
+        setSuggestions([]);
+      }
+    }, 100);
   };
 
   // Get today's date in YYYY-MM-DD format for min date attribute
@@ -72,9 +121,6 @@ const HotelSearch = () => {
   nextYear.setFullYear(nextYear.getFullYear() + 1);
   const maxDate = nextYear.toISOString().split("T")[0];
 
-  // -----------------------------
-  // ROOMS & GUESTS POPUP LOGIC
-  // -----------------------------
   const [showRoomsPopup, setShowRoomsPopup] = useState(false);
   // Each element: { adults: number, children: number, childrenAges: [] }
   const [rooms, setRooms] = useState([
@@ -158,7 +204,10 @@ const HotelSearch = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex flex-col px-2 items-center justify-center min-h-screen">
+      <div className="mb-10">
+        <img src={logo} alt="yatri pay logo" />
+      </div>
       <div className="w-full max-w-md relative">
         <div className="pb-5 px-2">
           <CommonHotelHeader
@@ -174,14 +223,11 @@ const HotelSearch = () => {
               type="text"
               name="location"
               placeholder="Location"
+              autoComplete="off"
               value={formData.location}
               onChange={handleChange}
               onFocus={() => setShowSuggestions(true)}
-              onBlur={() =>
-                setTimeout(() => {
-                  setShowSuggestions(false);
-                }, 100)
-              }
+              onBlur={handleLocationBlur}
               className="w-full bg-white rounded py-3 px-4 text-black placeholder-black/60 text-sm"
             />
             {showSuggestions && formData.location && (
@@ -190,16 +236,8 @@ const HotelSearch = () => {
                   suggestions.map((sugg, index) => (
                     <li
                       key={index}
-                      onMouseDown={() => {
-                        // On selection, show fullname and store destinationCode
-                        setFormData((prev) => ({
-                          ...prev,
-                          location: sugg.fullname,
-                          destinationCode: sugg.destinationCode,
-                        }));
-                        setShowSuggestions(false);
-                      }}
-                      className="py-2 px-4 text-left list-none text-black hover:bg-gray-100 cursor-pointer whitespace-nowrap"
+                      onMouseDown={() => handleSuggestionSelect(sugg)}
+                      className="py-2 text-left list-none text-black hover:bg-gray-100 cursor-pointer whitespace-nowrap"
                     >
                       {sugg.fullname}
                     </li>
@@ -373,7 +411,7 @@ const HotelSearch = () => {
                                 }
                                 className="w-full border rounded py-1 px-2 text-sm"
                               >
-                                {[...Array(18)].map((_, ageOption) => (
+                                {[...Array(13)].map((_, ageOption) => (
                                   <option key={ageOption} value={ageOption}>
                                     {ageOption}{" "}
                                     {ageOption === 0

@@ -44,6 +44,7 @@ import HotelDetails from "./pages/Travell/Hotel/HotelDetails";
 import FlightSearch from "./pages/Travell/Flight/FlightSearch";
 import BookHotel from "./pages/Travell/Hotel/BookHotel";
 import HotelHistory from "./pages/Travell/Hotel/HotelHistory";
+import ShowFlights from "./pages/Travell/Flight/ShowFlights";
 const App = () => {
   const location = useLocation(); // Get the current route
 
@@ -66,7 +67,7 @@ const App = () => {
             <Route path="/forgotPassword" element={<ForgotPassword />} />
             <Route path="/onboarding" element={<OnboardingPages />} />
 
-            
+
             {/* Protected (Authenticated) Routes */}
             <Route
               path="/profile"
@@ -205,7 +206,8 @@ const App = () => {
               element={<ProtectedRoute children={<HotelHistory />} />}
             />
 
-            <Route path="/flight" element={<FlightSearch />} />
+            <Route path="/flight-search" element={<FlightSearch />} />
+            <Route path="/flights" element={<ShowFlights />} />
           </Routes>
         </div>
         {!hiddenRoutesNav.includes(location.pathname) && <Navigation />}

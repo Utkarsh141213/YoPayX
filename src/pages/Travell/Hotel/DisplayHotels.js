@@ -75,23 +75,20 @@ const DisplayHotels = () => {
   const [ytpToInr, setYtpToInr] = useState([]);
 
   useEffect(() => {
-
-    
-
     if (!location.state || !location.state.data) {
       toast.error('All the fields are required to fill')
       navigate("/search-hotel");
     }
 
     (async () => {
-      const coin = await getValueOfCoinByType('YTP')
-      setYtpToInr(Number(coin.data.INR).toFixed(2))
       try {
         setIsLoading(true);
+        const coin = await getValueOfCoinByType('YTP')
+        setYtpToInr(Number(coin.data.INR))
         const res = await getHotelList(location.state.data);
         setHotels(res.HotelLists.HotelList);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         toast.error(error.response?.data?.message)
         navigate("/search-hotel")
       } finally {

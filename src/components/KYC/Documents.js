@@ -85,7 +85,7 @@ const Document = () => {
       navigate("/kyc/otp");
     } catch (error) {
       toast.error(error.response?.data?.message || "Invalid number");
-      console.log(error);
+      // console.log(error);
     }
   };
 

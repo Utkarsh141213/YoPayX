@@ -56,11 +56,18 @@ const API_ENDPOINTS = {
 
   TRAVEL: {
     HOTEL: {
-      SEARCH_SUGGESTION: '/hotel/placesAutoComplete/?max=5&lang=en&q=DELHI',
+      SEARCH_SUGGESTION: '/hotel/placesAutoComplete/',
       SEARCH_HOTELS: '/hotel/searchProperty/',
       GET_HOTEL_DETAILS: '/hotel/fetchHotelDetails/',
       CHECK_HOTEL_AVAILABILITY: '/hotel/fetchRoomsAvailability/',
       BOOK_HOTEL: '/hotel/bookHotel/',
+    },
+
+    FLIGHT: {
+      SEARCH_SUGGESTION: '/flight/placesAutoComplete/',
+      SEARCH_FLIGHT: '/flight/search/',
+      // GET_FLIGHT_LOGO: (code) => `https://travel.api.yatripay.com/static/airline_logos/${segment?.Airline?.AirlineCode?.toLowerCase()}.png`
+      GET_FLIGHT_LOGO: (code) => `https://travel.api.yatripay.com/static/airline_logos/${code}.png`
     }
   }
 };

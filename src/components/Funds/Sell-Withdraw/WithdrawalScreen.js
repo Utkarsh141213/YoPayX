@@ -26,7 +26,7 @@ const WithdrawalScreen = ({ setAvailableBalance }) => {
         }
       } catch (error) {
         toast.error(error.response?.data?.message || error.message);
-        console.log(error);
+        // console.log(error);
       }
     })();
   }, []);
@@ -82,7 +82,7 @@ const WithdrawalScreen = ({ setAvailableBalance }) => {
       setPlatformFee("0.00");
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
-      console.log(error);
+      // console.log(error);
     } finally {
       setIsLoading(false);
     }
