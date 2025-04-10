@@ -54,7 +54,6 @@ const BuyAssets = () => {
 
         // Process assets
         if (assetsRes) {
-          console.log(assetsRes);
           const sortedAssets = sortAssets(assetsRes.data);
           setAssets(sortedAssets);
         }
@@ -69,7 +68,7 @@ const BuyAssets = () => {
           setAvailableBalance(balanceRes.inr_balance);
         }
       } catch (error) {
-        console.log("ERROR", error);
+        // console.log("ERROR", error);
       } finally {
         setIsLoading(false);
       }
@@ -145,7 +144,7 @@ const BuyAssets = () => {
         setAvailableBalance(funds.inr_balance);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.response?.data?.message || error.message);
     } finally {
       setIsLoading(false);

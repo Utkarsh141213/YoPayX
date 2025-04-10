@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo from "../../assets/yatri-pay-logo-main.png";
 
-const TransactionPin = ({ onSubmitPin, onClose, isTransaction }) => {
+const TransactionPin = ({ onSubmitPin, onClose, isTransaction, transactionDetails }) => {
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
 
@@ -30,14 +30,17 @@ const TransactionPin = ({ onSubmitPin, onClose, isTransaction }) => {
   };
 
   return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-md">
           <img
             src={logo}
             alt="YatriPay Logo"
-            className="max-w-[150px] h-auto mx-auto mb-16"
+            className="max-w-[150px] h-auto mx-auto mb-8"
           />
-          <p className="text-white/50 text-sm text-center mb-16">
+          {isTransaction && transactionDetails && <div>
+            <p>Sending: {transactionDetails}</p>
+            </div>}
+          <p className="text-white/50 text-sm text-center mb-8">
             {isTransaction ? 'Enter Your pin' : 'Create your 4-digit Transaction PIN'}
           </p>
 

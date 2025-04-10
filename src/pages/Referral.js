@@ -60,14 +60,14 @@ const Referral = () => {
           url: referralLink,
         })
         .catch((err) => {
-          console.log("Share canceled or failed: ", err);
+          // console.log("Share canceled or failed: ", err);
           navigator.clipboard
             .writeText(referralLink)
             .then(() => {
               toast.success("Referral link copied to clipboard.");
             })
             .catch((err) => {
-              console.error("Failed to copy referral link: ", err);
+              // console.error("Failed to copy referral link: ", err);
             });
         });
     } else {

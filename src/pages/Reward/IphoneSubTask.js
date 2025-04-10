@@ -124,7 +124,7 @@ const SpecialTaskCard = ({
       await quitTask({ task_id: id, is_exit: 1 });
       toast.success("Requested Quit successfully");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.response?.data?.message || error.message)
     }
   };
@@ -219,7 +219,6 @@ const IphoneSubTask = () => {
 
   useEffect(() => {
     const { task } = location.state;
-    console.log(task);
     setTask(task);
   }, [location.state]);
 

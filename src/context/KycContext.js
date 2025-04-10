@@ -58,7 +58,7 @@ export const KycProvider = ({ children }) => {
 
       await createKYC(formData);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       throw error;
     }
   };

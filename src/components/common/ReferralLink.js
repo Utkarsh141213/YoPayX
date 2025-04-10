@@ -24,7 +24,7 @@ const ReferralLink = () => {
         if (resReferral && resReferral.data)
           setReferralLink(`${WEB_REFERRAL_LINK}${resReferral.data.code}`);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     fetchReferral();

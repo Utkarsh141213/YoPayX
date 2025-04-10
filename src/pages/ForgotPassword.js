@@ -38,10 +38,10 @@ const ForgotPassword = () => {
     try {
       setIsLoading(true)
       const res = await sendOtp(email);
-      console.log(res);
+      // console.log(res);
       setStep(2);
     } catch (error) {
-      console.log('ERROR', error);
+      // console.log('ERROR', error);
       toast.error(error.response?.data?.message || "Error sending OTP");
     }
     finally{

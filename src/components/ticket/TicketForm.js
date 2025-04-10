@@ -60,7 +60,7 @@ const TicketForm = () => {
       navigate('/support')
       
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.response.data.message || 'Error in creating ticket')
     }
 

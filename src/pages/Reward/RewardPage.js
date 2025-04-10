@@ -21,7 +21,7 @@ const RewardPage = () => {
         toast.success(res.message);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.response?.data?.message || error.message);
     } finally {
       setIsLoading(false)

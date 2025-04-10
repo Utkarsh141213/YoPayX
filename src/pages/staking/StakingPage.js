@@ -63,7 +63,7 @@ const StakingPage = () => {
         }
       } catch (error) {
         toast.error(error.response?.data?.message || error.message || 'Something went wrong')
-        console.log("Error in Promise.all:", error);
+        // console.log("Error in Promise.all:", error);
       } finally {
         setIsLoading(false);
       }

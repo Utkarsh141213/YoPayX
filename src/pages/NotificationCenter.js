@@ -15,7 +15,7 @@ const NotificationCenter = () => {
           setTaskList(res.data);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       } finally {
         setLoading(false);
       }

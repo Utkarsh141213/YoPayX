@@ -23,7 +23,7 @@ export const getReferredUserList = async () => {
     );
     return respone.data.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return null;
   }
 };

@@ -68,7 +68,7 @@ const Dashboard2 = () => {
           setAvailableBalance(balance.inr_balance);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     })();
   }, []);
@@ -390,7 +390,7 @@ const Dashboard2 = () => {
                     text1="Flights"
                     text2="Budget-friendly travel"
                     image={flight}
-                    onClick={handleComminSoon}
+                    onClick={() => navigate('/flight-search')}
                     classNameMain="md:justify-self-end py-20"
                     classNameTex1="bg-gradient-to-r from-[#C5882D] to-[#B72346]"
                     classNameImgDiv="mb-10"
