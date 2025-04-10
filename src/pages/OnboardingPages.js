@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import logo from "../assets/yatri-pay-logo-main.png";
 import {
   page1SVG,
-  page2SVG,
   page3SVG,
-  page4SVG,
-  page6SVG,
 } from "../assets/onboardingAssets";
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +24,7 @@ const PAGE_DATA = [
     headingLine1: "Book Hotel",
     headingLine2: "& Flights",
     buttonText: "Next",
-    svg: page2SVG,
+    svg: '/assets/page-2.svg',
     svgSize: "h-36 md:h-44",
     handleClick: (fn) => {
       fn();
@@ -49,7 +46,7 @@ const PAGE_DATA = [
     headingLine1: "Chance to win an iPhone",
     headingLine2: "& a trip",
     buttonText: "Next",
-    svg: page4SVG,
+    svg: '/assets/page-4.svg',
     svgSize: "h-44",
     handleClick: (fn) => {
       fn();
@@ -70,7 +67,7 @@ const PAGE_DATA = [
     headingLine1: "Zero Fees & Cashback Reward",
     headingLine2: "on YatriPay Transactions",
     buttonText: "Next",
-    svg: page6SVG,
+    svg: '/assets/page-6.svg',
     svgSize: "h-44",
     handleClick: (fn) => {
       fn();
