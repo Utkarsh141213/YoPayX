@@ -19,4 +19,8 @@ Before running the application, ensure you have [Node.js](https://nodejs.org/) i
 
    ```bash
    git clone https://github.com/yourusername/my-react-app.git
-   cd my-react-app
+   
+   npm install
+
+   npm start
+   
