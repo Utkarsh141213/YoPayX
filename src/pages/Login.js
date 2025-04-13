@@ -100,12 +100,12 @@ function Login() {
       </form>
 
       <p className="forgotpassword d-non mt-2">
-        <a href="#/forgotPassword" className="text-white">
+        <a href="/#/forgotPassword" className="text-white">
           Forgot Password
         </a>
       </p>
       <p className="signup-link mt-2 login-link">
-        Not signed in yet? <a href="#/signup">Sign up</a>
+        Not signed in yet? <a href="/#/signup">Sign up</a>
       </p>
       <p className="terms">Terms of Service & Privacy Policy</p>
     </div>
