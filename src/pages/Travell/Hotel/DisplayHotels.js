@@ -88,9 +88,9 @@ const DisplayHotels = () => {
         const res = await getHotelList(location.state.data);
         setHotels(res.HotelLists.HotelList);
       } catch (error) {
-        // console.log(error);
-        toast.error(error.response?.data?.message)
-        navigate("/search-hotel")
+        console.log(error);
+        toast.error(error.response?.data?.message || error.message)
+        // navigate("/search-hotel")
       } finally {
         setIsLoading(false);
       }

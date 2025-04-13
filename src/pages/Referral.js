@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { GlobalContext } from "../context/GlobalContext";
 import BackToHomeButton from "../components/common/BackToHomeButton";
 
-export const WEB_REFERRAL_LINK = "https://webapp.yatripay.com/YoPayX#/signup?ref=";
+export const WEB_REFERRAL_LINK = "https://webapp.yatripay.com/#/signup?ref=";
 
 
 export const CopyableText = ({ label, text }) => {
