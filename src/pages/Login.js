@@ -18,6 +18,11 @@ function Login() {
 
   const { setIsLoading } = useContext(GlobalContext);
 
+  const isEmailValid = (text) => {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(text);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -27,12 +32,23 @@ function Login() {
 
     try {
       setIsLoading(true);
+
+      const reqData = {
+        password
+      }
+
+      if(isEmailValid(email)){
+        reqData.email = email
+      }else{
+        reqData.phone_no = email
+      }
+      console.log(reqData);
       const response = await fetch(API_ENDPOINTS.LOGIN, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(reqData),
       });
 
       const data = await response.json();

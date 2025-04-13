@@ -9,6 +9,9 @@ export const getSearchsuggestions = async (params) => {
 
 export const getHotelList = async (data) => {
     const res = await axios.post(`${TRAVEL_API_BASE_URL}${API_ENDPOINTS.TRAVEL.HOTEL.SEARCH_HOTELS}`, data)
+    if(res.data?.Error?.ErrorMessage){
+        throw new Error(res.data?.Error?.ErrorMessage)
+    }
     return res.data.responseData
 }
 
