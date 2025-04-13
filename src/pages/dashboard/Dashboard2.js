@@ -20,7 +20,7 @@ import Logo from "../../components/logo";
 import { useLocation, useNavigate } from "react-router-dom";
 import FeatureSection from "../../components/dashboard/FeatureSection";
 import Footer from "../../components/common/Footer";
-
+import aiChatbot from './happy.png';
 import TravelCard from "../../components/dashboard/TravelCard";
 import { toast } from "react-toastify";
 import VideoSection from "../../components/dashboard/VideoSection";
@@ -29,7 +29,9 @@ import './dashboard.css';
 const Dashboard2 = () => {
     const [availableBalance, setAvailableBalance] = useState("0.00");
   
-
+    const handleClick = () => {
+      navigate('/support');
+    };
   const location = useLocation();
   const [user, setUser] = useState({
     name: "Profile",
@@ -164,7 +166,7 @@ const Dashboard2 = () => {
           Highest return on
         </span>
         <span className="text-xl md:text-3xl font-bold leading-none">
-          STAKING
+          AI Powered STAKING
         </span>
         <div className="text-6xl mt-3 mb-6 md:mt-0 md:text-[6rem] font-bold">
           30%
@@ -408,7 +410,7 @@ const Dashboard2 = () => {
                       30%
                     </div>
                     <span className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-[#979DD8] to-[#4431BA] text-transparent bg-clip-text leading-none">
-                      Staking
+                    AI Powered Staking
                     </span>
                     <p className="text-white text-center md:font-semibold">
                       Minimum 30% p.a.
@@ -535,6 +537,17 @@ const Dashboard2 = () => {
         <section className="flex md:my-10 ml-[4vw] md:ml-[16vw]">
           <Footer />
         </section>
+        <div style={{position:"fixed",bottom:"30px",right:"10px"}}>
+          <div
+          onClick={handleClick}
+          className="help-button fixed bottom-6 right-6 z-50 bg-gradient-to-r from-teal-500 to-green-400 text-white px-4 py-3 rounded-full shadow-lg hover:scale-105 cursor-pointer transition-all duration-300 flex items-center gap-2"
+          >
+            {/* <MessageCircle size={20} /> */}
+            <span className="help-icon">💬</span>
+
+            <span className="hidden sm:inline help-text">May I Help You?</span>
+          </div>
+        </div>
       </div>
     </div>
 

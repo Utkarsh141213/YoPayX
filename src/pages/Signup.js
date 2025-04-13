@@ -185,7 +185,7 @@ const Signup = () => {
       <CryptoFloatingIcons />
 
       <p className="login-link">
-        Already a member? <a href="/YoPayX#/login">Log in</a>
+        Already a member? <a href="#/login">Log in</a>
       </p>
       <p className="terms">
         By creating an account, you agree to YatriPay's{" "}
