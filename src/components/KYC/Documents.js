@@ -36,7 +36,6 @@ const Document = () => {
     }
   };
 
-
   // Function to capture photo from webcam
   const capturePhoto = () => {
     if (!webcamRef.current) return;
@@ -187,7 +186,7 @@ const Document = () => {
                     }}
                     className="w-full p-3 text-xs rounded text-black/50 text-left whitespace-nowrap truncate cursor-pointer"
                   >
-                     Upload document here...
+                    Upload document here...
                   </div>
                 )}
 
@@ -278,13 +277,13 @@ const Document = () => {
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black/80 z-50 p-4">
           <div className="bg-white rounded-lg p-4 w-full max-w-lg md:max-w-xl">
             <div className="flex justify-between items-center mb-2">
-              <h3 className="text-lg font-bold text-black">Take Your Photo</h3>
-              <button
+              <h3 className="text-lg font-bold text-black">Upload image with Id proof</h3>
+              <div
                 onClick={() => setShowCamera(false)}
-                className="text-black text-xl"
+                className="text-white bg-[#4BAF2A] w-10 rounded-md text-xl cursor-pointer"
               >
                 <RxCross2 />
-              </button>
+              </div>
             </div>
             <Webcam
               audio={false}
@@ -298,13 +297,12 @@ const Document = () => {
               className="w-full rounded"
             />
             <div className="flex justify-center mt-4">
-              <button
-                type="button"
+              <div
                 onClick={capturePhoto}
-                className="bg-[#4BAF2A] text-white py-2 px-8 rounded-xl text-lg font-semibold hover:bg-green-600 transition"
+                className="bg-[#4BAF2A] text-white py-2 px-8 rounded-xl text-lg font-semibold hover:bg-green-600 transition cursor-pointer"
               >
                 Capture
-              </button>
+              </div>
             </div>
           </div>
         </div>
