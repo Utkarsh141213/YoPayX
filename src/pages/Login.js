@@ -18,6 +18,11 @@ function Login() {
 
   const { setIsLoading } = useContext(GlobalContext);
 
+  const isEmailValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -27,6 +32,17 @@ function Login() {
 
     try {
       setIsLoading(true);
+
+      const reqData = {
+        password
+      }
+
+      if(isEmailValid(email)){
+        reqData.email = email
+      }else{
+        reqData.phone_no = email
+      }
+
       const response = await fetch(API_ENDPOINTS.LOGIN, {
         method: "POST",
         headers: {
@@ -41,7 +57,11 @@ function Login() {
         localStorage.setItem("user", JSON.stringify(data.data.user));
         navigate("/dashboard");
       } else {
-        setError(data.message || "Invalid credentials. Try again.");
+        if(isEmailValid(email)){
+          setError(data.message || "Invalid credentials. Try again.");
+        }else{
+          setError("Invalid credentials. Try again")
+        }
       }
     } catch (error) {
       setError("Something went wrong. Please try again later.");
