@@ -18,6 +18,11 @@ function Login() {
 
   const { setIsLoading } = useContext(GlobalContext);
 
+  const isEmailValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,7 +57,11 @@ function Login() {
         localStorage.setItem("user", JSON.stringify(data.data.user));
         navigate("/dashboard");
       } else {
-        setError(data.message || "Invalid credentials. Try again.");
+        if(isEmailValid(email)){
+          setError(data.message || "Invalid credentials. Try again.");
+        }else{
+          setError("Invalid credentials. Try again")
+        }
       }
     } catch (error) {
       setError("Something went wrong. Please try again later.");
