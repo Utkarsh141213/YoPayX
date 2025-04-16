@@ -18,11 +18,6 @@ function Login() {
 
   const { setIsLoading } = useContext(GlobalContext);
 
-  const isEmailValid = (text) => {
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(text);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -48,7 +43,7 @@ function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(reqData),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();

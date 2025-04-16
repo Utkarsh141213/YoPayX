@@ -147,7 +147,7 @@ const StakingSummary = () => {
       <div className="w-full max-w-lg mt-16 sm:mt-8">
         {/* Header */}
         <h1 className="text-4xl md:text-5xl font-bold text-center md:mt-10 mb-4">
-          Staking
+          AI Powered Staking
         </h1>
 
         {/* Available Balance */}

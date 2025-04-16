@@ -20,7 +20,7 @@ function Navigation () {
                 </Link>
             <i class="fa-thin fa-qrcode"></i>
              </div>
-            <div className='qrcode nav-icon'><Link to="">
+            <div className='qrcode nav-icon'><Link to="/sell-withdraw">
             <FontAwesomeIcon className='fa-icon' icon={faQrcode} />
             </Link>
 
