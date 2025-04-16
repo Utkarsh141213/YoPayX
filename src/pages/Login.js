@@ -42,7 +42,7 @@ function Login() {
       }else{
         reqData.phone_no = email
       }
-      console.log(reqData);
+
       const response = await fetch(API_ENDPOINTS.LOGIN, {
         method: "POST",
         headers: {

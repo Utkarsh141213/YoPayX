@@ -90,7 +90,7 @@ const Document = () => {
   };
 
   return (
-    <div className="min-h-screen md:pt-16 flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4 pt-16">
       <div className="w-full max-w-4xl px-4 md:px-40">
         <h1 className="text-white text-2xl font-bold text-center mb-6">
           Identity Verification
@@ -242,7 +242,7 @@ const Document = () => {
             <div
               className={`${
                 photoFile ? "w-full md:w-1/3 flex" : "hidden"
-              } relative md:flex items-center justify-center w-1/3 max-h-80`}
+              } relative md:flex items-center justify-center w-1/3 max-h-fit md:max-h-80`}
             >
               {photoFile ? (
                 <img
