@@ -15,6 +15,8 @@ import { toast } from "react-toastify";
 import { GlobalContext } from "../context/GlobalContext";
 
 const Signup = () => {
+  const isHotmail = (email) => /@hotmail\.[a-z]+$/i.test(email);
+
   const [step, setStep] = useState(1); // Steps: 1 -> Email, 2 -> OTP, 3 -> password
   const [email, setEmail] = useState("");
   const [first_name, setfirst_name] = useState("");
@@ -35,8 +37,18 @@ const Signup = () => {
   const { setIsLoading } = useContext(GlobalContext);
 
   const handleEmailSubmit = async () => {
+    if (isHotmail(email)) {
+      toast.warning("Hotmail emails are not allowed. Please use a different email.");
+      return;
+    }
+  
+    if (!email || !first_name) {
+      toast.warning("Please fill in all required fields.");
+      return;
+    }
+  
     setIsLoading(true);
-
+  
     try {
       let response;
       if (referral_id) {
@@ -44,7 +56,7 @@ const Signup = () => {
       } else {
         response = await registerFirst({ email, first_name });
       }
-
+  
       if (response.success) {
         setStep(2);
       } else if (!response.success && response.message === "Reset Email") {
@@ -56,6 +68,7 @@ const Signup = () => {
       setIsLoading(false);
     }
   };
+  
 
   const handleVerifyEmail = async () => {
     try {

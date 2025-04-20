@@ -7,7 +7,26 @@ import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 
 const Document = () => {
-  const { updateDocumentDetails, initiateOTP } = useKycContext();
+  const { updateDocumentDetails, initiateOTP, kycData } = useKycContext();
+  const selectedCountry = kycData?.country?.name || "";
+
+  const isAustralia = selectedCountry === "Australia";
+
+  const govtIdLabel = isAustralia ? "Driving License" : "Government ID";
+  const govtIdPlaceholder = isAustralia
+    ? "Driving License (Front/Back)"
+    : "Govt. ID (PAN, Aadhaar card, Passport...)";
+const placeholderForFirstField = isAustralia
+    ? "Driving License Number"
+    : "ID Number";
+
+  const secondDocLabel = isAustralia ? "Goverment ID" : "PAN Card";
+  const secondDocPlaceholder = isAustralia
+    ? "Upload Goverment ID"
+    : "Upload PAN Card";
+const placeholderForSecondField= isAustralia
+    ? "ID Number"
+    : "PAN Card";
   const navigate = useNavigate();
 
   const [govtIdFile, setGovtIdFile] = useState(null);
@@ -98,7 +117,8 @@ const Document = () => {
 
         <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col ">
           <div className="flex items-center justify-between mb-3">
-            <label className="text-white/50">Government ID</label>
+            {/* <label className="text-white/50">Government ID</label> */}
+            <label className="text-white/50">{govtIdLabel}</label>
           </div>
 
           <div className="rounded-md flex flex-col md:flex-row gap-6">
@@ -128,14 +148,22 @@ const Document = () => {
                     </span>
                   </div>
                 ) : (
+                  // <div
+                  //   onClick={() => {
+                  //     govIdInputRef.current && govIdInputRef.current.click();
+                  //   }}
+                  //   className="w-full p-3 text-xs rounded text-black/50 text-left whitespace-nowrap truncate cursor-pointer"
+                  // >
+                  //   Govt. ID (PAN, Aadhaar card, Passport...)
+                  // </div>
                   <div
-                    onClick={() => {
-                      govIdInputRef.current && govIdInputRef.current.click();
-                    }}
-                    className="w-full p-3 text-xs rounded text-black/50 text-left whitespace-nowrap truncate cursor-pointer"
-                  >
-                    Govt. ID (PAN, Aadhaar card, Passport...)
-                  </div>
+  onClick={() => {
+    govIdInputRef.current && govIdInputRef.current.click();
+  }}
+  className="w-full p-3 text-xs rounded text-black/50 text-left whitespace-nowrap truncate cursor-pointer"
+>
+  {govtIdPlaceholder}
+</div>
                 )}
 
                 <span className="text-gray-400 text-sm min-h-full whitespace-nowrap flex items-center pr-3">
@@ -146,7 +174,7 @@ const Document = () => {
               {/* GOV ID number */}
               <input
                 type="text"
-                placeholder="ID Number"
+                placeholder={placeholderForFirstField}
                 className="w-full mb-4 p-3 text-black rounded focus:outline-none"
                 required
                 value={govIdNumber}
@@ -154,7 +182,10 @@ const Document = () => {
               />
 
               <div className="flex items-center justify-between mb-3">
-                <label className="text-white/50">PAN Card</label>
+                {/* <label className="text-white/50">PAN Card</label> */}
+              {/* Second Doc Label */}
+                <label className="text-white/50">{secondDocLabel}</label>
+
               </div>
 
               {/* PAN ID Input */}
@@ -181,14 +212,22 @@ const Document = () => {
                     </span>
                   </div>
                 ) : (
+                  // <div
+                  //   onClick={() => {
+                  //     PANInputRef.current && PANInputRef.current.click();
+                  //   }}
+                  //   className="w-full p-3 text-xs rounded text-black/50 text-left whitespace-nowrap truncate cursor-pointer"
+                  // >
+                  //    Upload document here...
+                  // </div>
                   <div
-                    onClick={() => {
-                      PANInputRef.current && PANInputRef.current.click();
-                    }}
-                    className="w-full p-3 text-xs rounded text-black/50 text-left whitespace-nowrap truncate cursor-pointer"
-                  >
-                     Upload document here...
-                  </div>
+  onClick={() => {
+    PANInputRef.current && PANInputRef.current.click();
+  }}
+  className="w-full p-3 text-xs rounded text-black/50 text-left whitespace-nowrap truncate cursor-pointer"
+>
+  {secondDocPlaceholder}
+</div>
                 )}
 
                 <span className="text-gray-400 text-sm min-h-full whitespace-nowrap flex items-center pr-3">
@@ -198,7 +237,7 @@ const Document = () => {
               {/* PAN Number Input */}
               <input
                 type="text"
-                placeholder="PAN Number"
+                placeholder={placeholderForSecondField}
                 className="w-full mb-4 p-3 text-black rounded focus:outline-none"
                 required
                 value={panNumber}
