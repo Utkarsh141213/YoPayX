@@ -11,6 +11,7 @@ import { IoMdEye, IoMdEyeOff  } from "react-icons/io";
 
 function Login() {
   const [email, setEmail] = useState("");
+  const [phone_no, setPhone_No] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -39,8 +40,10 @@ function Login() {
 
       if(isEmailValid(email)){
         reqData.email = email
+        console.log("if email",reqData.email)
       }else{
         reqData.phone_no = email
+        console.log("if phone no.",reqData.phone_no)
       }
 
       const response = await fetch(API_ENDPOINTS.LOGIN, {
@@ -48,7 +51,7 @@ function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(reqData),
       });
 
       const data = await response.json();

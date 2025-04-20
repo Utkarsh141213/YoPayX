@@ -67,7 +67,7 @@ const Dashboard2 = () => {
       try {
         const balance = await getAvailableFunds();
         if (balance) {
-          setAvailableBalance(balance.inr_balance);
+          setAvailableBalance(Math.floor(balance.inr_balance));
         }
       } catch (error) {
         // console.log(error);
