@@ -58,7 +58,7 @@ const AllStaking = () => {
             <span className="text-white text-lg font-semibold">
               Unlock Date
             </span>
-            <span className="text-white text-lg font-semibold">Stacking %</span>
+            <span className="text-white text-lg font-semibold">Staking %</span>
             <span className="text-white text-lg font-semibold">Status</span>
           </div>
 
@@ -74,7 +74,7 @@ const AllStaking = () => {
               <span className="text-sm">{stack.created_at}</span>
               <span className="text-sm">{stack.updated_at}</span>
               <span className="text-sm">{stack.end_at}</span>
-              <span>{stack.per_annum}%</span>
+              <span>{stack.per_annum + stack.per_annum_hike}%</span>
               <span>{stack.status}</span>
             </div>
           ))}
