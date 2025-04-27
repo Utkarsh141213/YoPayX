@@ -15,13 +15,13 @@ const BankDetails = () => {
     accountNumber: "",
     IFSCCode: "",
     UPIId: "",
+    AccountName: "",
   });
 
   useEffect(() => {
     const fetchBankDetails = async () => {
       try {
         const response = await getBankDetails();
-
         if (response && response.length > 0) {
           setBankDetails(response[0]);
         }
@@ -40,14 +40,14 @@ const BankDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await createBankDetials({
         account_holder_name: formData.accountHolderName,
         bank_name: formData.bankName,
         account_number: parseInt(formData.accountNumber, 10),
         ifsc_code: formData.IFSCCode,
-        upi_id: formData.UPIId,
+        upi_id: formData.UPIId || "test@ybl",
+        account_name: formData.australianAccountName || null,
       });
       toast.success("Bank details created successfully");
       navigate("/dashboard");
@@ -146,19 +146,27 @@ const BankDetails = () => {
         />
         <InputField
           name="IFSCCode"
-          placeholder="IFSC code"
+          placeholder="IFSC code or Branch Code (for Australian users)"
           value={formData.IFSCCode}
           onChange={handleChange}
-          pattern="^[A-Z]{4}0[A-Z0-9]{6}$"
-          title="IFSC code should be 11 characters: 4 letters, followed by 0, then 6 alphanumeric characters"
         />
-        <InputField
+        <input
+          type="text"
           name="UPIId"
-          placeholder="UPI Id"
+          placeholder="UPI Id (if applicable)"
           value={formData.UPIId}
           onChange={handleChange}
           pattern="^[a-zA-Z0-9._-]+@[a-zA-Z]+$"
           title="Enter a valid UPI id (e.g. username@bank)"
+          className="w-full border border-gray-300 rounded py-3 px-3 focus:outline-none focus:border-green-500 text-black mb-3"
+        />
+        <input
+          type="text"
+          name="australianAccountName"
+          placeholder="Account Name (for Australian users)"
+          value={formData.australianAccountName}
+          onChange={handleChange}
+          className="w-full border border-gray-300 rounded py-3 px-3 focus:outline-none focus:border-green-500 text-black mb-3"
         />
 
         <input
